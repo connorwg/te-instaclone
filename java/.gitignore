@@ -29,3 +29,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/database/dataTest.sql
+/database/newDb.sql
