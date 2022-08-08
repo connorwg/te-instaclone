@@ -26,8 +26,12 @@ public class UserController {
     @DeleteMapping("/delete/{userId}")
     public void deleteUserAccount(@PathVariable int userId) {
 
-        if(userDao.deleteUserAccount(userId)) {
+        if(!userDao.deleteUserAccount(userId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found");
-        } else {userDao.deleteUserAccount(userId);}
+        } else {
+            userDao.deleteUserAccount(userId);
+            throw new ResponseStatusException(HttpStatus.ACCEPTED, "User Deleted");
+
+        }
     }
 }
