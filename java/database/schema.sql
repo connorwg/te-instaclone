@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS is_favorited, liked_by_user,comments, posts,users;
 CREATE TABLE IF NOT EXISTS public.users
 (
     user_id serial NOT NULL,
-    username character varying(50) NOT NULL,
+    username character varying(50) NOT NULL UNIQUE,
     email character varying(150) NOT NULL,
     first_name character varying(50) NOT NULL,
     last_name character varying(60) NOT NULL,
