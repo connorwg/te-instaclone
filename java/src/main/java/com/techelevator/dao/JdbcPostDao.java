@@ -19,7 +19,7 @@ public class JdbcPostDao implements PostDao {
 
     public Post getPostById(int postId) {
 
-        String sql = "SELECT * FROM pictures WHERE picture_id = ?";
+        String sql = "SELECT * FROM posts WHERE post_id = ?;";
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, postId);
 
         if(returned.next()) {
@@ -41,7 +41,7 @@ public class JdbcPostDao implements PostDao {
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();
 
-        post.setPost_id(rowSet.getInt("picture_id"));
+        post.setPost_id(rowSet.getInt("post_id"));
         post.setUser_id(rowSet.getInt("user_id"));
         post.setPictureLink(rowSet.getString("s3_link"));
         post.setDescription(rowSet.getString("description"));
