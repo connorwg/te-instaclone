@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.users
 CREATE TABLE IF NOT EXISTS public.posts
 (
     post_id serial NOT NULL,
-    user_id integer NOT NULL,
+    user_id integer,
     s3_link character varying NOT NULL,
     description character varying(200),
     "time" timestamp with time zone NOT NULL,
@@ -28,14 +28,14 @@ CREATE TABLE IF NOT EXISTS public.comments
 (
     comment_id serial NOT NULL,
     comment character varying(200) NOT NULL,
-    user_id integer NOT NULL,
+    user_id integer,
     post_id integer,
     PRIMARY KEY (post_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.liked_by_user
 (
-    user_id integer NOT NULL,
+    user_id integer,
     post_id integer NOT NULL,
     liked_by_user boolean NOT NULL
 );
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS public.liked_by_user
 CREATE TABLE IF NOT EXISTS public.is_favorited
 (
     post_id integer NOT NULL,
-    user_id integer NOT NULL,
+    user_id integer,
     is_favorited boolean NOT NULL
 );
 
