@@ -83,10 +83,29 @@ public class JdbcUserDao implements UserDao {
         return jdbcTemplate.update(insertUserSql, username, password_hash, ssRole) == 1;
     }
 
+    public boolean deleteUserAccount(int userId) {
+
+        String updateFKs = "BEGIN; " +
+                "UPDATE posts SET user_id = NULL WHERE user_id = ?; " +
+                "UPDATE liked_by_user SET user_id = NULL WHERE user_id = ?; " +
+                "UPDATE comments SET user_id = NULL WHERE user_id = ?; " +
+                "UPDATE is_favorited SET user_id = NULL WHERE user_id = ?; " +
+                "COMMIT;";
+        jdbcTemplate.update(updateFKs, userId, userId,userId,userId);
+
+        String deleteSQL = "DELETE FROM users WHERE user_id = ?;";
+
+        return jdbcTemplate.update(deleteSQL, userId) == 1;
+    }
+
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
         user.setUsername(rs.getString("username"));
+        user.setEmail(rs.getString("email"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
         user.setPassword(rs.getString("password_hash"));
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
