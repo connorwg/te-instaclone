@@ -18,10 +18,43 @@ if(currentToken != null) {
 
 export default new Vuex.Store({
   state: {
+    active: 'home',
+    icon: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    images: [{
+      id: '1',
+      userId: '',
+      picture: "https://ca.slack-edge.com/T0GNFLF6D-U03E9U67GNL-bd5c7423ccc1-512",
+      description: 'Prachi',
+      timeStamp: ''
+    },
+    {
+      id: '2',
+      userId: '',
+      picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3TBG8HK-c6b48e687235-512",
+      description: 'Connor',
+      timeStamp: ''
+    },{
+      id: '3',
+      userId: '',
+      picture: "https://ca.slack-edge.com/T0GNFLF6D-U03DK8YV9LZ-3d43d76e3219-512",
+      description: 'Andrew',
+      timeStamp: ''
+    },{
+      id: '4',
+      userId: '',
+      picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
+      description: 'Dave',
+      timeStamp: ''
+    },
+  
+  ]
   },
   mutations: {
+    SET_TAB(state, active) {
+      state.active = active;
+    },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);

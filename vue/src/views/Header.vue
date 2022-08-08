@@ -1,0 +1,70 @@
+<template>
+  <ul>
+    <li class="logo">TEgram  <img :src="$store.state.icon"  alt="none" class="icon"></li>
+    <li></li>
+    <li
+      @click="setTab('home')"
+      :class="{ active: $store.state.active === 'home' }"
+    >
+      Home
+    </li>
+    <li
+      @click="setTab('post')"
+      :class="{ active: $store.state.active === 'post' }"
+    >
+      Post a Picture
+    </li>
+    <li
+      @click="setTab('logout')"
+      :class="{ active: $store.state.active === 'logout' }"
+    >
+    <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  methods: {
+    setTab(active) {
+      this.$store.commit("SET_TAB", active);
+    },
+  },
+};
+</script>
+
+<style>
+/*
+@font-face {
+    font-family:"Billabong";
+    src: local("Billabong"),
+    url(./fonts/Billabong/Billabong.ttf) format("truetype");
+}
+*/
+ul {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  top: 0;
+}
+
+ul > li {
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.logo {
+  font-family:"Billabong";
+  color: cadetblue;
+}
+
+.icon {
+    height: .8em;
+    width: .8em;
+}
+</style>
