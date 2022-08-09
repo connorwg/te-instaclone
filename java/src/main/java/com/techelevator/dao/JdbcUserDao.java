@@ -106,11 +106,8 @@ public class JdbcUserDao implements UserDao {
         List<User> users = findAll(); List<Integer> userIds = new ArrayList<>();
 
         for(User user :users) userIds.add(user.getId());
-
         if(!userIds.contains(userToFollowId)) { return -1;}
-
         if(currentUserId == userToFollowId) { return -2;}
-
         if(alreadyFollow) { return -3;}
 
         jdbcTemplate.update(query, currentUserId, userToFollowId);
