@@ -1,57 +1,64 @@
 <template>
-
   <div class="home">
     <h1>
       <Header></Header>
     </h1>
-  
-   <div style="position: relative; display: flex; flex-direction: column; padding-bottom: 150px; padding-top: 80px; border-color: black; margin: 10px;">
-     
-   
-    <section  class="post" v-for="p in $store.state.images" v-bind:key="p.id">
-      <author>
-      {{p.userId}}
-      </author>
 
-      <description>
-        {{p.description}}
-      </description>
+    <div
+      style="
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 150px;
+        padding-top: 80px;
+        border-color: black;
+        margin: 10px;
+      "
+    >
+      <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
+        <author>
+          {{ p.userId }}
+        </author>
 
-      <img :src="p.picture"  alt="none">
+        <description>
+          {{ p.description }}
+        </description>
 
-      <p button>
-        <button class="btn btn-like" v-on:click="likeThis">Like</button>
-        {{p.likes}} Likes
-      </p>
+        <img :src="p.picture" alt="none" />
 
-      <p class="comments">
-      {{p.comments}} 
-      </p>
+        <p button>
+          <button class="btn btn-like" v-on:click="likeThis()">Like</button>
+          {{ p.likes }} Likes
+        </p>
 
-      <p class="addCom">Add Comment</p>
+        <p class="comments">
+          {{ p.comments[0] }}
+        </p>
+        <p class="comments">
+          {{ p.comments[1] }}
+        </p>
 
-      <input
+        <p class="addCom">Add Comment</p>
+
+        <input
           type="addComment"
           id="name"
           class="addComment"
           placeholder="add your comment here"
           v-model="p.newComment"
-          
-          />
-      
-          
-
-    </section>
-   </div>
-    
+          v-on:submit="addComment(p.newComment)"
+        />
+        <button class="btn btn-submit" type="submit">Submit</button>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
-import Header from './Header.vue';
-/*
-import photoService from './PhotoService.js';
-*/
+import Header from "./Header.vue";
+
+import photoService from "../services/PhotoService.js";
+
 export default {
   name: "home",
   components: {
@@ -60,48 +67,52 @@ export default {
   data() {
     return {
       images: [],
-      
     };
   },
-  /*
+  methods: {
+    addComment(comment) {
+      this.$store.images.comments.unshift(comment);
+    },
+    likeThis() {
+
+      this.$store.images.likes++;
+      photoService.addLike(this.$store.images.id);
+    },
+  },
+  
   created() {
     photoService.getPhotos().then(response => {
       this.$store.commit("SET_PHOTOS", response.data);
       
     });
   }
-  */
   
 };
 </script>
 
 <style scoped>
-
-
-  .home {
+.home {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(255,255,255);
-  
+  background: rgb(255, 255, 255);
+
   color: rgb(38, 38, 38);
   font-size: 14px;
   line-height: 18px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-
- 
 h1 {
   position: fixed;
   margin-top: 0;
   top: 0;
   z-index: 200;
-  background-color: rgb(230,230,230);
+  background-color: rgb(230, 230, 230);
   width: 100%;
   justify-content: space-around;
 }
-
 
 section {
   display: grid;
@@ -111,16 +122,15 @@ section {
   border: 1px solid lightgray;
   margin-bottom: 20px;
   padding: 20px;
-  font-size: .8rem;
-  text-align: left;;
+  font-size: 0.8rem;
+  text-align: left;
 }
 author {
   font-size: 1rem;
   background-color: lightgray;
-  
 }
-.addCom {color: purple;
-
+.addCom {
+  color: purple;
 }
 .addComment {
   border: 1px solid lightgray;

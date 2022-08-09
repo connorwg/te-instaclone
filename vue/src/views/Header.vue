@@ -67,5 +67,6 @@ ul > li {
 .icon {
     height: .8em;
     width: .8em;
+    margin-left: 10px;
 }
 </style>

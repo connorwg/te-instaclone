@@ -29,7 +29,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '7',
-      comments: 'blah blah comments'
+      comments: ['blah  comments blah', 'comments blah']
     },
     {
       id: '2',
@@ -38,7 +38,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '9',
-      comments: 'blah comments'
+      comments: ['blah comments comments blah', 'comments']
     }, {
       id: '3',
       userId: 'Andrew',
@@ -46,7 +46,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '11',
-      comments: 'blah comments blah'
+      comments: ['blah blah comments comments', 'comments blah blah']
     }, {
       id: '4',
       userId: 'Dave',
@@ -54,7 +54,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '6',
-      comments: 'comments blah'
+      comments: ['blah comments blah', 'comments']
     },
 
     ]
