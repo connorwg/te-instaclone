@@ -10,10 +10,22 @@
         <!--<label for="name" class="sr-only">Name</label> -->
         <input
           type="text"
-          id="name"
+          id="firstName"
           class="form-control"
-          placeholder="Full Name"
-          v-model="user.name"
+          placeholder="First Name"
+          v-model="user.firstName"
+          required
+          />
+      </div>  
+
+      <div>
+        <!--<label for="name" class="sr-only">Name</label> -->
+        <input
+          type="text"
+          id="lastName"
+          class="form-control"
+          placeholder="Last Name"
+          v-model="user.lastName"
           required
           />
       </div>  
@@ -25,7 +37,7 @@
           id="emailid"
           class="form-control"
           placeholder="email@example.com"
-          v-model="user.emailId"
+          v-model="user.email"
           required
         />
       </div>
@@ -70,12 +82,14 @@
         <div v-if="!passwordsMatch">Passwords Not Matching</div>
       </div>
       
+      <!--
       <div>
         <label for="image" class="sr-only">Upload a Profile picture</label> 
       </div>
       <div>
         <input type="file" accept="image/*" id="file-input" />
       </div>
+      -->
       
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
@@ -100,12 +114,12 @@ export default {
   data() {
     return {
       user: {
-        name: '',
-        emailId: '',
+        firstName: '',
+        lastName:'',
+        email: '',
         username: '',
         password: '',
         confirmPassword: '',
-        image: '',
         role: 'user',
       },
       registrationErrors: false,
@@ -188,8 +202,7 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   width: 25%;
-  height: 400px;
-  margin: 10px;
+  margin: 5px;
   row-gap: 10px;
   column-gap: 30px;
   padding-bottom: 20px;
@@ -204,7 +217,7 @@ export default {
   border-radius: 5px;
   width: 25%;
   height: 50px;
-  margin: 10px;
+  margin: 5px;
   padding-bottom: 10px;
   padding-top: 10px;
   row-gap: 10px;
