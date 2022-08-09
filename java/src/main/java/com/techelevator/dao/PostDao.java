@@ -3,4 +3,6 @@ import com.techelevator.model.Post;
 
 public interface PostDao {
     Post getPostById(int postId);
+
+    Post createPost(Post post);
 }
