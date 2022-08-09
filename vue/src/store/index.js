@@ -12,7 +12,7 @@ Vue.use(Vuex)
 const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
 
-if(currentToken != null) {
+if (currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
 }
 
@@ -24,32 +24,40 @@ export default new Vuex.Store({
     user: currentUser || {},
     images: [{
       id: '1',
-      userId: '',
+      userId: 'Prachi',
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03E9U67GNL-bd5c7423ccc1-512",
-      description: 'Prachi',
-      timeStamp: ''
+      description: 'photo description here',
+      timeStamp: '',
+      likes: '7',
+      comments: 'blah blah comments'
     },
     {
       id: '2',
-      userId: '',
+      userId: 'Connor',
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3TBG8HK-c6b48e687235-512",
-      description: 'Connor',
-      timeStamp: ''
-    },{
+      description: 'photo description here',
+      timeStamp: '',
+      likes: '9',
+      comments: 'blah comments'
+    }, {
       id: '3',
-      userId: '',
+      userId: 'Andrew',
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03DK8YV9LZ-3d43d76e3219-512",
-      description: 'Andrew',
-      timeStamp: ''
-    },{
+      description: 'photo description here',
+      timeStamp: '',
+      likes: '11',
+      comments: 'blah comments blah'
+    }, {
       id: '4',
-      userId: '',
+      userId: 'Dave',
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
-      description: 'Dave',
-      timeStamp: ''
+      description: 'photo description here',
+      timeStamp: '',
+      likes: '6',
+      comments: 'comments blah'
     },
-  
-  ]
+
+    ]
   },
   mutations: {
     SET_TAB(state, active) {
@@ -60,9 +68,12 @@ export default new Vuex.Store({
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     },
+    SET_PHOTOS(state, data) {
+      state.images = data;
+    },
     SET_USER(state, user) {
       state.user = user;
-      localStorage.setItem('user',JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
     },
     LOGOUT(state) {
       localStorage.removeItem('token');

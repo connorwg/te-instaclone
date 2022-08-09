@@ -1,9 +1,9 @@
 <template>
   <ul>
-    <li class="logo">TEgram  <img :src="$store.state.icon"  alt="none" class="icon"></li>
+    <li class="logo">ClicknShare  <img :src="$store.state.icon"  alt="none" class="icon"></li>
     <li></li>
     <li
-      @click="setTab('home')"
+      @click="this.$router.push({ name: 'home' })"
       :class="{ active: $store.state.active === 'home' }"
     >
       Home
@@ -39,7 +39,7 @@ export default {
 @font-face {
     font-family:"Billabong";
     src: local("Billabong"),
-    url(./fonts/Billabong/Billabong.ttf) format("truetype");
+    url(./fonts/Billabong.ttf);
 }
 */
 ul {
@@ -61,6 +61,7 @@ ul > li {
 .logo {
   font-family:"Billabong";
   color: cadetblue;
+  font-size: 50px;
 }
 
 .icon {
