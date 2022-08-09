@@ -28,6 +28,7 @@ public class JdbcPostDao implements PostDao {
             throw new PostNotFoundException();
         }
     }
+    //separate for getting comments based on post id
 
     public Post createPost(Post post) throws PostNotFoundException {
         userDao.getUserById(post.getUser_id());

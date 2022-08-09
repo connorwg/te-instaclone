@@ -18,15 +18,18 @@ public class PostController {
         this.postDao = postDao;
     }
 
-    @GetMapping(value = "/{postId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{postId}")
     public Post getPostById(@PathVariable int postId) {
         return postDao.getPostById(postId);
     }
+    //get comments for a post
+//    @GetMapping(value=  "/{postId}/comments")
 
     @PostMapping(value = "/create")
     public Post createPost(@RequestBody Post post) throws PostNotFoundException  {
         return postDao.createPost(post);
     }
-
+    //add comment to post. post id -> insert into comments
+    // check PostNotFoundException comment reasonable size
 
 }
