@@ -1,7 +1,8 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
+      <h1>ClicknShare</h1>
+      <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
       <div
         class="alert alert-danger"
         role="alert"
@@ -12,7 +13,6 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
       <input
         type="text"
         id="username"
@@ -22,8 +22,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
-      <input
+       <input
         type="password"
         id="password"
         class="form-control"
@@ -31,9 +30,12 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+      
+      <button type="submit">Log In</button>
     </form>
+    <div id="register-user">
+      <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
+    </div>
   </div>
 </template>
 
@@ -53,6 +55,10 @@ export default {
     };
   },
   methods: {
+    register(){
+      this.$router.push({name: 'register'});
+    },
+
     login() {
       authService
         .login(this.user)
@@ -74,3 +80,54 @@ export default {
   }
 };
 </script>
+
+<style>
+#login {
+  display: grid;
+  justify-items: center;
+  grid-template-areas: "form-register"
+                       "back-to-login";
+}
+
+.form-signin {
+  display: grid;
+  grid-area: form-register;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 25%;
+  margin: 5px;
+  row-gap: 10px;
+  column-gap: 30px;
+  padding-bottom: 20px;
+  background-color: aliceblue;
+  justify-items: center;
+}
+
+#register-user {
+  display: grid;
+  grid-area: back-to-login;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 25%;
+  margin: 5px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  row-gap: 10px;
+  background-color: aliceblue;
+  justify-items: center;
+}
+
+h1 {
+  font-family: emoji;
+  font-weight: 1000;
+  font-style: italic;
+  margin-bottom: 0%;
+  
+}
+
+h2 {
+  font-family: emoji;
+  font-style: italic;
+  margin: 0%;
+}
+</style>

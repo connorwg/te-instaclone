@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <h1>TEgram</h1>
+      <h1>ClicknShare</h1>
       <h2 class="h3 mb-3 font-weight-normal">Create an Account</h2>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -98,10 +98,7 @@
 
     <div class="back-to-login">
       <!--<router-link :to="{ name: 'login' }">Already have an account?</router-link>-->
-      <label>Already have an account?</label>
-      <button class="btn btn-lg btn-primary btn-block" type="login" v-on:click="backToLogin">
-        Log in
-      </button>
+      <label>Already have an account? <router-link :to="{ name: 'login' }">Log in</router-link></label>
     </div>
   </div>
 </template>
@@ -216,7 +213,6 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   width: 25%;
-  height: 50px;
   margin: 5px;
   padding-bottom: 10px;
   padding-top: 10px;
