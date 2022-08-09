@@ -1,7 +1,6 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.validation.constraints.Email;
 import java.util.HashSet;
@@ -25,13 +24,15 @@ public class User {
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities, String email, String firstName, String lastName) {
+   public User(int id, String username, String password, String authorities, String email, String firstName,
+               String lastName, String profileImage) {
       this.id = id;
       this.username = username;
       this.password = password;
       this.email = email;
       this.firstName = firstName;
       this.lastName = lastName;
+      this.profileImage = profileImage;
       if(authorities != null) this.setAuthorities(authorities);
       this.activated = true;
    }

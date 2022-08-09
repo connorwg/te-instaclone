@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.User;
 import com.techelevator.model.UserNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,7 @@ public class UserController {
     }
     //could be different path for a delete page
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUserAccount(Principal principal) {
+    public ResponseEntity<String> deleteUserAccount(@NotNull Principal principal) {
 
         String username = principal.getName();
         int userId = userDao.findIdByUsername(username);

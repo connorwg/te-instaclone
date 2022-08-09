@@ -45,16 +45,14 @@ public class JdbcPostDao implements PostDao {
 
                 return getPostById(postId);
     };
-
-
-
-
-
-
-
-
-
-
+//    public List<Post> listAllPosts() {
+//
+//        String sql = "SELECT * FROM posts " +
+//                "INNER JOIN comments USING (post_id) " +
+//                "";
+//
+//
+//    }
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();
 
