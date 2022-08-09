@@ -3,10 +3,13 @@ package com.techelevator.controller;
 import com.techelevator.dao.PostDao;
 import com.techelevator.model.Post;
 import com.techelevator.model.PostNotFoundException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
+@PreAuthorize("isAuthenticated()")
+@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST})
 public class PostController {
 
     private PostDao postDao;
@@ -15,12 +18,12 @@ public class PostController {
         this.postDao = postDao;
     }
 
-    @RequestMapping(value = "/post/{postId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
     public Post getPostById(@PathVariable int postId) {
         return postDao.getPostById(postId);
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     public Post createPost(@RequestBody Post post) throws PostNotFoundException  {
         return postDao.createPost(post);
     }

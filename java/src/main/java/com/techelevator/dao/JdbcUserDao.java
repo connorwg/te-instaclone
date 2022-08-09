@@ -86,11 +86,9 @@ public class JdbcUserDao implements UserDao {
 
         String updateFKs = "BEGIN; " +
                 "UPDATE posts SET user_id = NULL WHERE user_id = ?; " +
-                "UPDATE liked_by_user SET user_id = NULL WHERE user_id = ?; " +
-                "UPDATE comments SET user_id = NULL WHERE user_id = ?; " +
-                "UPDATE is_favorited SET user_id = NULL WHERE user_id = ?; " +
+                "UPDATE comments SET author_id = NULL WHERE author_id = ?; " +
                 "COMMIT;";
-        jdbcTemplate.update(updateFKs, userId, userId,userId,userId);
+        jdbcTemplate.update(updateFKs, userId, userId);
 
         String deleteSQL = "DELETE FROM users WHERE user_id = ?;";
 
@@ -106,6 +104,7 @@ public class JdbcUserDao implements UserDao {
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setPassword(rs.getString("password_hash"));
+        user.setProfileImage(rs.getString("profile_picture_link"));
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
         return user;
