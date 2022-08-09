@@ -15,6 +15,10 @@ INSERT INTO comments (comment, author_id, post_id) VALUES ('nice hahahahahah wow
 INSERT INTO comments (comment, author_id, post_id) VALUES ('wow that looks good gerry !!!!! -love mom', 1, 4);
 INSERT INTO comments (comment, author_id, post_id) VALUES ('art school is rlly paying off huh ????' , 2, 2);
 INSERT INTO comments (comment, author_id, post_id) VALUES ('i hate this picture' , 1, 2);
+--2 follows 1
+INSERT INTO following VALUES (2,1);
+INSERT INTO following VALUES (3,1);
+INSERT INTO following VALUES (4,1);
 
 --INSERT INTO liked_by_user VALUES (1, 2, TRUE);
 --INSERT INTO liked_by_user VALUES (2, 2, TRUE);

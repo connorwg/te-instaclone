@@ -17,4 +17,6 @@ public interface UserDao {
     public boolean create(String username, String password, String role, String email, String firstName, String lastName);
 
     public boolean deleteUserAccount(int userId);
+
+    public int followUser(int currentUserId, int userToFollowId);
 }

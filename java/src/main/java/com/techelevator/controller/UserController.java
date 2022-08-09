@@ -40,4 +40,16 @@ public class UserController {
             return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
         }
     }
+    @GetMapping("/{userId}/follow")
+    public ResponseEntity<String> followUser(@NotNull Principal principal, @PathVariable int userId) {
+
+        int currentUserId = userDao.findIdByUsername(principal.getName());
+
+        int response = userDao.followUser(currentUserId, userId);
+        if(response == -1) { throw new UserNotFoundException();}
+        if(response == -2) {return new ResponseEntity<>("Can't Follow Self.", HttpStatus.BAD_REQUEST );}
+        if(response == -3) {return new ResponseEntity<>("Already Follow User.", HttpStatus.BAD_REQUEST);}
+        if(response == 1) { return new ResponseEntity<>("Followed User.", HttpStatus.OK);}
+        return new ResponseEntity<>("Random Error.", HttpStatus.BAD_REQUEST);
+    }
 }

@@ -84,15 +84,37 @@ public class JdbcUserDao implements UserDao {
 
     public boolean deleteUserAccount(int userId) {
 
-        String updateFKs = "BEGIN; " +
+        String updateFKs =
+                "BEGIN; " +
                 "UPDATE posts SET user_id = NULL WHERE user_id = ?; " +
                 "UPDATE comments SET author_id = NULL WHERE author_id = ?; " +
+                "UPDATE following SET follower_id = NULL WHERE follower_id = ?;" +
+                "UPDATE following SET followee_id = NULL WHERE followee_id = ?  " +
                 "COMMIT;";
-        jdbcTemplate.update(updateFKs, userId, userId);
+        jdbcTemplate.update(updateFKs, userId, userId, userId, userId);
 
         String deleteSQL = "DELETE FROM users WHERE user_id = ?;";
 
         return jdbcTemplate.update(deleteSQL, userId) == 1;
+    }
+
+    public int followUser(int currentUserId, int userToFollowId) {
+
+        String query = "INSERT INTO following VALUES (?, ?);";
+        String checkIfFollowing = "SELECT ? in (SELECT follower_id FROM following WHERE followee_id = ?) as tf;";
+        boolean alreadyFollow = jdbcTemplate.queryForObject(checkIfFollowing, boolean.class, currentUserId, userToFollowId);
+        List<User> users = findAll(); List<Integer> userIds = new ArrayList<>();
+
+        for(User user :users) userIds.add(user.getId());
+
+        if(!userIds.contains(userToFollowId)) { return -1;}
+
+        if(currentUserId == userToFollowId) { return -2;}
+
+        if(alreadyFollow) { return -3;}
+
+        jdbcTemplate.update(query, currentUserId, userToFollowId);
+        return 1;
     }
 
 
