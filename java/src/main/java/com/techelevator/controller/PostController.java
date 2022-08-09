@@ -18,7 +18,7 @@ public class PostController {
         this.postDao = postDao;
     }
 
-    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{postId}", method = RequestMethod.GET)
     public Post getPostById(@PathVariable int postId) {
         return postDao.getPostById(postId);
     }

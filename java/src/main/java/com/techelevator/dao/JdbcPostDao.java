@@ -29,7 +29,7 @@ public class JdbcPostDao implements PostDao {
         }
     }
 
-    public Post createPost(Post post)  throws PostNotFoundException {
+    public Post createPost(Post post) throws PostNotFoundException {
         userDao.getUserById(post.getUser_id());
 
         String sql = "" +
