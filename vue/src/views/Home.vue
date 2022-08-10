@@ -16,15 +16,15 @@
       "
     >
       <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
-        <!--
-        <author>
+        
+        <p class="author">
           {{ p.userId }}
-        </author>
+        </p>
 
-        <description>
+        <p class="description">
           {{ p.description }}
-        </description>
-        -->
+        </p>
+        
         <img :src="p.picture" alt="none" />
 
         <p button>
