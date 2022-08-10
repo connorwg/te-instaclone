@@ -1,5 +1,6 @@
 <template>
   <div id="login" class="text-center">
+    <icon-image id="login-image"/>
     <form class="form-signin" @submit.prevent="login">
       <h1>ClicknShare</h1>
       <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
@@ -41,10 +42,13 @@
 
 <script>
 import authService from "../services/AuthService";
+import IconImage from "../components/IconImage.vue"
 
 export default {
   name: "login",
-  components: {},
+  components: {
+    IconImage
+  },
   data() {
     return {
       user: {
@@ -85,18 +89,20 @@ export default {
 #login {
   display: grid;
   justify-items: center;
-  padding-top: 50px;
-  grid-template-areas: "form-register"
-                       "back-to-login";
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "login-image form-signin"
+                       "login-image register-user";
 }
 
 .form-signin {
   display: grid;
-  grid-area: form-register;
+  grid-area: form-signin;
   border: 1px solid black;
   border-radius: 5px;
-  width: 25%;
+  width: 50%;
   margin: 5px;
+  margin-top: 110px;
+  margin-left: -10%;
   row-gap: 10px;
   column-gap: 30px;
   padding-bottom: 20px;
@@ -106,16 +112,24 @@ export default {
 
 #register-user {
   display: grid;
-  grid-area: back-to-login;
+  grid-area: register-user;
   border: 1px solid black;
   border-radius: 5px;
-  width: 25%;
+  width: 50%;
+  height: 20px;
   margin: 5px;
+  margin-left: -10%;
   padding-bottom: 10px;
   padding-top: 10px;
   row-gap: 10px;
   background-color:aliceblue;
   justify-items: center;
+}
+
+#login-image {
+  grid-area: login-image;
+  margin-top: 75px;
+  margin-right: -20%;
 }
 
 h1 {

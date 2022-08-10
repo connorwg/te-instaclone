@@ -1,5 +1,6 @@
 <template>
   <div id="register" class="text-center">
+    <icon-image id="image"/>
     <form class="form-register" @submit.prevent="register">
       <h1>ClicknShare</h1>
       <h2 class="h3 mb-3 font-weight-normal">Create an Account</h2>
@@ -94,9 +95,13 @@
 
 <script>
 import authService from '../services/AuthService';
+import IconImage from "../components/IconImage.vue"
 
 export default {
   name: 'register',
+  components: {
+    IconImage
+  },
   data() {
     return {
       user: {
@@ -168,9 +173,9 @@ export default {
 #register {
   display: grid;
   justify-items: center;
-  padding-top: 25px;
-  grid-template-areas: "form-register"
-                       "back-to-login";                     
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "image form-register"
+                       "image back-to-login";                                         
 }
 
 .form-register {
@@ -178,9 +183,11 @@ export default {
   grid-area: form-register;
   border: 1px solid black;
   border-radius: 5px;
-  width: 25%;
+  width: 50%;
   margin: 5px;
+  margin-left: -10%;
   row-gap: 10px;
+  margin-top: 40px;
   column-gap: 30px;
   padding-bottom: 20px;
   background-color:aliceblue;
@@ -192,8 +199,9 @@ export default {
   grid-area: back-to-login;
   border: 1px solid black;
   border-radius: 5px;
-  width: 25%;
+  width: 50%;
   margin: 5px;
+  margin-left: -10%;
   padding-bottom: 10px;
   padding-top: 10px;
   row-gap: 10px;
@@ -207,6 +215,12 @@ h1 {
   font-style: italic;
   margin-bottom: 0%; 
   color:black;
+}
+
+#image {
+  grid-area: image;
+  margin-right: -20%;
+  margin-top: 75px;
 }
 
 h2 {
