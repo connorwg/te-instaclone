@@ -6,9 +6,8 @@ export default {
     return axios.get('/post');
   },
 
-  addComment(newComment, userName) {
-      return axios.put(`/posts/${this.images.id}`, newComment, userName);
-
+  addComment(commentObj) {
+      return axios.post('/comments/comment/create', commentObj);
   },
 
   addLike(newImage) {

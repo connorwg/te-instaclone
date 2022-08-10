@@ -88,6 +88,13 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    ADD_COMMENT(state, commentObj){
+      state.images.forEach(image => {
+        if(image.id === commentObj.post_id){
+          image.comments.push(0, commentObj.comment);
+        }
+      });
     }
   }
 })

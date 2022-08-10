@@ -46,8 +46,8 @@
           id="name"
           class="addComment"
           placeholder="add your comment here"
-          v-model="p.newComment"
-          v-on:submit="addComment(p.newComment)"
+          v-model="newComment"
+          v-on:submit="addComment(p.id)"
         />
         <button class="btn btn-submit" type="submit">Submit</button>
       </section>
@@ -82,11 +82,12 @@ export default {
   },
 
   methods: {
+    /*
     addComment(comment) {
       this.$store.images.comments.unshift(comment);
       this.$router.push({ name: "home" });
     },
-
+*/
     likeThis(p) {
       let newImage = {};
       newImage.id = p.id;
@@ -110,6 +111,22 @@ export default {
         */
        this.$store.commit("SET_PHOTO", newImage);
     },
+    addComment(id) {
+      if(this.newComment !== ''){
+        let commentObj = {
+          post_id: id,
+          author_id: this.$store.state.user,
+          comment: this.newComment
+        };
+        photoService.addComment(commentObj).then(response => {
+          if(response.status === 201){
+            commentObj = response.data;
+            this.$store.commit("ADD_COMMENT", commentObj);
+            this.$router.push({name: 'home'});
+          }
+        });
+      }
+    }
   },
 
   props: ["images"],

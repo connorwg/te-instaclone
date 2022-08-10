@@ -1,8 +1,8 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.UserDao;
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.User;
-import com.techelevator.model.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
