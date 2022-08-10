@@ -4,6 +4,8 @@ INSERT INTO users (username,password_hash,role, email, first_name, last_name) VA
 INSERT INTO users (username,password_hash,role, email, first_name, last_name) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN', 'red@test.com', 'John', 'John');
 INSERT INTO users (username,password_hash,role, email, first_name, last_name) VALUES ('user2','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER', 'blue@test.com', 'Smith', 'Smith');
 INSERT INTO users (username,password_hash,role, email, first_name, last_name) VALUES ('user3','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER', 'green@test.com', 'Smith', 'John');
+INSERT INTO users (username,password_hash,role, email, first_name, last_name) VALUES ('testing','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER', 'fake@gmail.com', 'a', 'b');
+
 
 INSERT INTO posts (user_id, s3_link, description, time)  VALUES (1, 'https://funnypicture.com', 'this is a funny pic', NOW());
 INSERT INTO posts (user_id, s3_link, description, time)  VALUES (2, 'hahahahahaha', 'WOW', NOW());

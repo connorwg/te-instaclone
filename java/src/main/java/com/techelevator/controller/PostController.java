@@ -27,8 +27,7 @@ public class PostController {
     public Post getPostById(@PathVariable int postId) {
         return postDao.getPostById(postId);
     }
-    //get comments for a post
-    //@GetMapping(value=  "/{postId}/comments")
+
 
     @PostMapping(value = "/create")
     public @ResponseBody Post createPost(@RequestParam("desc") String desc, Principal principal,
@@ -46,8 +45,6 @@ public class PostController {
 
         return postDao.createPost(currentUserId, url, desc);
     }
-
-
 
 
 

@@ -4,9 +4,11 @@ import com.techelevator.model.Comment;
 
 public interface CommentDao {
 
-    Comment getCommentById(int commentId);
+    Comment getCommentByCommentId(int commentId);
 
-    Comment createComment(Comment comment);
+    Comment createComment(String comment, int post_id, int author_id);
 
-    Comment getCommentByPostId(int postId);
+    Comment getCommentsByPostId(int postId);
+
+
 }
