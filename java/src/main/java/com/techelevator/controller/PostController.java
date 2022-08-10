@@ -46,10 +46,13 @@ public class PostController {
         return postDao.createPost(currentUserId, url, desc);
     }
 
-
-
-
-    //add comment to post. post id -> insert into comments
-    // check PostNotFoundException comment reasonable size
+//    public int likePost(Principal principal, @PathVariable int postId){
+//
+//        int currentUserId = userDao.findIdByUsername(principal.getName());
+//
+//
+//
+//
+//    }
 
 }

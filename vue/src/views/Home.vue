@@ -45,8 +45,8 @@
           id="name"
           class="addComment"
           placeholder="add your comment here"
-          v-model="p.newComment"
-          v-on:submit="addComment(p.newComment)"
+          v-model="newComment"
+          v-on:submit="addComment(p.id)"
         />
         <button class="btn btn-submit" type="submit">Submit</button>
       </section>
@@ -67,15 +67,30 @@ export default {
   data() {
     return {
       images: [],
+      newComment: ''
     };
   },
   methods: {
-    addComment(comment) {
-      this.$store.images.comments.unshift(comment);
+    addComment(id) {
+      if(this.newComment !== ''){
+        let commentObj = {
+          post_id: id,
+          author_id: this.$store.state.user,
+          comment: this.newComment
+        };
+        photoService.addComment(commentObj).then(response => {
+          if(response.status === 201){
+            commentObj = response.data;
+            this.$store.commit("ADD_COMMENT", commentObj);
+            this.$router.push({name: 'home'});
+          }
+        });
+      }
     },
     likeThis() {
 
-      this.$store.images.likes++;
+      this.$store.images.likes++;// instead of this, write a mutation to update likes in $store.state. this mutation
+                                // should be called when we get 200/201 response from the REST Service.
       photoService.addLike(this.$store.images.id);
     },
   },

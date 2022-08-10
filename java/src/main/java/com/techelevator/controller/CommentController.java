@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.CommentDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.exceptions.CommentNotFoundException;
 import com.techelevator.model.Comment;
 import com.techelevator.model.CommentNotFoundException;
 import com.techelevator.model.PostNotFoundException;
