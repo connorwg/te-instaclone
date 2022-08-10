@@ -31,7 +31,7 @@ public class JdbcPostDao implements PostDao {
             throw new PostNotFoundException();
         }
     }
-    //separate for getting comments based on post id
+
 
     public Post createPost(int user_id, String s3_link, String description) {
 
@@ -45,11 +45,11 @@ public class JdbcPostDao implements PostDao {
 
     }
 
-    ;
-
     public int likePost(int userId, int postId) {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
+        List<Integer> postIds = new ArrayList<>();
+        findAllPosts().forEach(post -> postIds.add(post.getPost_id()));
 
         String checkIfUserAlreadyLikes =
                 "SELECT ? IN" +
@@ -60,11 +60,15 @@ public class JdbcPostDao implements PostDao {
                         " ) " +
                         "as user_liked_post;";
 
-        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes, boolean.class, userId, postId));
-
-        if (alreadyLiked) {
-            return 1;
+        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
+                boolean.class, userId, postId));
+        if (!postIds.contains(postId)) {
+            return -1;
         }
+        if (alreadyLiked) {
+            return 2;
+        }
+
         return 1;
     }
 
@@ -87,8 +91,7 @@ public class JdbcPostDao implements PostDao {
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
-            Post post = mapRowToPost(results);
-            posts.add(post);
+            posts.add(mapRowToPost(results));
         }
         return posts;
     }

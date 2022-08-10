@@ -29,7 +29,9 @@ public class CommentController {
 
 
     @PostMapping(value = "post/{postId}/create")
-    public ResponseEntity<String> createComment(@RequestParam("comment") @Valid String comment, @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+    public ResponseEntity<String> createComment(@RequestParam("comment") @Valid String comment,
+                                                @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+
         int currentAuthorId = userDao.findIdByUsername(principal.getName());
         int response = commentDao.createComment(comment, postId, currentAuthorId);
 
