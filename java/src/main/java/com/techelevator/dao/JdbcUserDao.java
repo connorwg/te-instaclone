@@ -109,7 +109,6 @@ public class JdbcUserDao implements UserDao {
 
         List<Integer> userIds = findAll().stream().map(User::getId).collect(Collectors.toList());
 
-//        findAll().forEach(user -> userIds.add(user.getId()));
 
         if (!userIds.contains(userToFollowId)) {
             return -1;

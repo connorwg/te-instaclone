@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JdbcPostDao implements PostDao {
@@ -48,27 +49,30 @@ public class JdbcPostDao implements PostDao {
     public int likePost(int userId, int postId) {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
-        List<Integer> postIds = new ArrayList<>();
-        findAllPosts().forEach(post -> postIds.add(post.getPost_id()));
+        String unlikePost = "DELETE FROM likes WHERE (user_id = ? AND post_id = ?);";
+        List<Integer> postIds = findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
 
         String checkIfUserAlreadyLikes =
                 "SELECT ? IN" +
                         " ( " +
                         "SELECT likes.user_id FROM POSTS " +
                         "INNER JOIN likes USING (post_id) " +
-                        "WHERE likes.post_id = 1" +
+                        "WHERE likes.post_id = ?" +
                         " ) " +
                         "as user_liked_post;";
 
         boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
                 boolean.class, userId, postId));
+
         if (!postIds.contains(postId)) {
             return -1;
         }
         if (alreadyLiked) {
+            jdbcTemplate.update(unlikePost, userId, postId);
             return 2;
         }
 
+        jdbcTemplate.update(likePost, userId, postId);
         return 1;
     }
 
