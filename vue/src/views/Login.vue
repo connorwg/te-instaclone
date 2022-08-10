@@ -85,6 +85,7 @@ export default {
 #login {
   display: grid;
   justify-items: center;
+  padding-top: 50px;
   grid-template-areas: "form-register"
                        "back-to-login";
 }
@@ -113,7 +114,7 @@ export default {
   padding-bottom: 10px;
   padding-top: 10px;
   row-gap: 10px;
-  background-color: aliceblue;
+  background-color:aliceblue;
   justify-items: center;
 }
 
@@ -121,8 +122,7 @@ h1 {
   font-family: emoji;
   font-weight: 1000;
   font-style: italic;
-  margin-bottom: 0%;
-  
+  margin-bottom: 0%; 
 }
 
 h2 {

@@ -56,18 +56,18 @@
       </div>
       
       <div>
-        <!-- <label for="password" class="sr-only">Password</label> -->
+         <!--<label for="password" class="sr-only">Password</label> -->
         <input
           type="password"
           id="password"
           class="form-control"
-          placeholder="Password"
+          placeholder="password"
           v-model="user.password"
           required
           v-on:change="checkPassword"
         />
-        <div v-if="!validPassword">Invalid Password</div>
       </div>
+      <div class="alert invalidPwd" role="alert" v-if="!validPassword">Password length must be at least 8. It must contain 1 uppercase letter, 1 number and 1 special character @$%!</div>
 
       <div>
         <input
@@ -77,19 +77,8 @@
           placeholder="Confirm Password"
           v-model="user.confirmPassword"
           required
-          v-on:change="checkConfirmPassword"
         />
-        <div v-if="!passwordsMatch">Passwords Not Matching</div>
       </div>
-      
-      <!--
-      <div>
-        <label for="image" class="sr-only">Upload a Profile picture</label> 
-      </div>
-      <div>
-        <input type="file" accept="image/*" id="file-input" />
-      </div>
-      -->
       
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
@@ -112,7 +101,7 @@ export default {
     return {
       user: {
         firstName: '',
-        lastName:'',
+        lastName: '',
         email: '',
         username: '',
         password: '',
@@ -122,7 +111,6 @@ export default {
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
       validPassword : true,
-      passwordsMatch : true
     };
   },
   methods: {
@@ -132,23 +120,14 @@ export default {
 
     checkPassword(){
       const pwd = this.user.password;
-      const smallLettersRule = /[a-z]/;
       const upperLettersRule = /[A-Z]/;
       const numbersRule = /[0-9]/;
       const splCharRule = /[@$%!]/;
-      if(pwd.length < 8 || !smallLettersRule.test(pwd) || !upperLettersRule.test(pwd) 
+      if(pwd.length < 8  || !upperLettersRule.test(pwd) 
       || !numbersRule.test(pwd) || !splCharRule.test(pwd)){
         this.validPassword = false;
       } else{
         this.validPassword = true;
-      }
-    },
-
-    checkConfirmPassword(){
-      if(this.user.password === this.user.confirmPassword){
-        this.passwordsMatch = true;
-      } else {
-        this.passwordsMatch = false;
       }
     },
     
@@ -189,8 +168,9 @@ export default {
 #register {
   display: grid;
   justify-items: center;
+  padding-top: 25px;
   grid-template-areas: "form-register"
-                       "back-to-login";
+                       "back-to-login";                     
 }
 
 .form-register {
@@ -203,7 +183,7 @@ export default {
   row-gap: 10px;
   column-gap: 30px;
   padding-bottom: 20px;
-  background-color: aliceblue;
+  background-color:aliceblue;
   justify-items: center;
 }
 
@@ -217,7 +197,7 @@ export default {
   padding-bottom: 10px;
   padding-top: 10px;
   row-gap: 10px;
-  background-color: aliceblue;
+  background-color:aliceblue;
   justify-items: center;
 }
 
@@ -225,19 +205,29 @@ h1 {
   font-family: emoji;
   font-weight: 1000;
   font-style: italic;
-  margin-bottom: 0%;
-  
+  margin-bottom: 0%; 
+  color:black;
 }
 
 h2 {
   font-family: emoji;
   font-style: italic;
   margin: 0%;
+  color:black;
 }
 
 .form-control {
   width: 200px;
   height: 30px;
+}
+
+.alert {
+  align-self: center;
+  color: red;
+}
+
+.invalidPwd {
+  margin-left: 20px;
 }
 
 </style>
