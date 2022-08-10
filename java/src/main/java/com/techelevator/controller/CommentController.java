@@ -7,8 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @PreAuthorize("isAuthenticated()")
-//@RequestMapping(value  = "/comments", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/comments", method = {RequestMethod.GET, RequestMethod.POST})
 public class CommentController {
 
     private CommentDao commentDao;
@@ -17,7 +18,7 @@ public class CommentController {
         this.commentDao = commentDao;
     }
 
-    //FIXME: Not sure on paths for create and getCommentById, finish CRUD
+//FIXME: Not sure on paths for create and getCommentById, finish CRUD
 
     @GetMapping(value = "/{commentId}")
     public Comment getCommentById(@PathVariable int commentId) {
