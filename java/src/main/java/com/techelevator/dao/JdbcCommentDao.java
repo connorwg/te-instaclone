@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Comment;
+import com.techelevator.model.CommentNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -14,30 +15,33 @@ public class JdbcCommentDao {
         this.postDao = postDao;
     }
 
-    public Comment getCommentById(int commentId) {
+    public Comment getCommentByCommentId(int commentId) {
 
         String sql = "SELECT comment_id, comment, post_id, author_id " +
                 "FROM comments" +
                 "WHERE comment_id = ?;";
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, commentId);
 
-        return mapRowToComment(returned);
-//        if (returned.next()) {
-//            return mapRowToComment(returned);
-//        } else {
-//            throw new CommentNotFoundException();
-//        }
+        if (returned.next()) {
+            return mapRowToComment(returned);
+        } else {
+            throw new CommentNotFoundException();
+        }
 
     }
 
-    public Comment getCommentByPostId(int postId) {
+    public Comment getCommentsByPostId(int postId) {
 
         String sql = "SELECT comment_id, comment, post_id, author_id " +
                 "FROM comments " +
                 "WHERE post_id = ?;";
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, postId);
 
-        return mapRowToComment(returned);
+        if (returned.next()) {
+            return mapRowToComment(returned);
+        } else {
+            throw new CommentNotFoundException();
+        }
     }
 
     public Comment createComment(Comment comment)  {
@@ -53,9 +57,10 @@ public class JdbcCommentDao {
                 comment.getPost_id(),
                 comment.getAuthor_id());
 
-                return getCommentById(commentId);
-
+                return getCommentByCommentId(commentId);
     }
+
+
 
 
     private Comment  mapRowToComment(SqlRowSet rowSet)  {

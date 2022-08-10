@@ -22,15 +22,12 @@ public class PostController {
     public Post getPostById(@PathVariable int postId) {
         return postDao.getPostById(postId);
     }
-    //get comments for a post
-    //@GetMapping(value=  "/{postId}/comments")
+
 
     @PostMapping(value = "/create")
     public Post createPost(@RequestBody Post post) throws PostNotFoundException  {
         return postDao.createPost(post);
     }
-
-
 
 
 
