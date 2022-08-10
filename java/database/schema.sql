@@ -3,6 +3,20 @@
 BEGIN;
 DROP TABLE IF EXISTS comments, posts,following, users;
 
+CREATE TABLE IF NOT EXISTS public.comments
+(
+    comment_id serial NOT NULL,
+    comment character varying(200),
+    post_id integer NOT NULL,
+    author_id integer,
+    PRIMARY KEY (comment_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.following
+(
+    follower_id integer,
+    followee_id integer
+);
 
 CREATE TABLE IF NOT EXISTS public.posts
 (
@@ -48,14 +62,24 @@ ALTER TABLE public.posts
     NOT VALID;
 
 
-ALTER TABLE public.comments
-    ADD FOREIGN KEY (post_id)
-    REFERENCES public.posts (post_id)
+ALTER TABLE public.following
+    ADD FOREIGN KEY (follower_id)
+    REFERENCES public.users (user_id)
+    NOT VALID;
+
+
+ALTER TABLE public.following
+    ADD FOREIGN KEY (followee_id)
+    REFERENCES public.users (user_id)
     NOT VALID;
 
 ALTER TABLE ONLY public.users
 	ALTER COLUMN profile_picture_link
 	SET DEFAULT 'https://stock.adobe.com/hu/search/images?k=default+profile+picture';
 
+ALTER TABLE public.comments
+    ADD FOREIGN KEY (post_id)
+    REFERENCES public.posts (post_id)
+    NOT VALID;
 
 END;
