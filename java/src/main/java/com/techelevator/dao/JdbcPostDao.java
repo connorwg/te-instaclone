@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcPostDao implements PostDao {
 
@@ -50,6 +53,12 @@ public class JdbcPostDao implements PostDao {
 //                "";
 //
 //
+//    }
+
+//    public List<Post> findAllPosts() {
+//        List<Post> posts = new ArrayList<>();
+//        String sql = "SELECT post_id, user_id, s3_link, description, time " +
+//                "FROM posts;";
 //    }
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();

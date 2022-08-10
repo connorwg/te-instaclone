@@ -66,7 +66,6 @@ public class JdbcCommentDao implements CommentDao{
 
 
 
-
     private Comment  mapRowToComment(SqlRowSet rowSet)  {
         Comment comment = new Comment();
 
