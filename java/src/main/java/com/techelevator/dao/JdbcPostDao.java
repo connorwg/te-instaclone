@@ -55,11 +55,18 @@ public class JdbcPostDao implements PostDao {
 //
 //    }
 
-//    public List<Post> findAllPosts() {
-//        List<Post> posts = new ArrayList<>();
-//        String sql = "SELECT post_id, user_id, s3_link, description, time " +
-//                "FROM posts;";
-//    }
+    public List<Post> findAllPosts() {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT post_id, user_id, s3_link, description, time " +
+                "FROM posts;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            Post post = mapRowToPost(results);
+            posts.add(post);
+        }
+        return posts;
+    }
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();
 

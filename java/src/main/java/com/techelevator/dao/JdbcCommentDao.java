@@ -1,20 +1,26 @@
 package com.techelevator.dao;
 
-import com.techelevator.dao.CommentDao;
 import com.techelevator.model.Comment;
 import com.techelevator.model.CommentNotFoundException;
+import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcCommentDao implements CommentDao{
+
+    private final JdbcPostDao jdbcPostDao;
 
 
     private final JdbcTemplate jdbcTemplate;
     private final PostDao postDao;
 
-    public JdbcCommentDao(JdbcTemplate jdbcTemplate, PostDao postDao) {
+    public JdbcCommentDao(JdbcPostDao jdbcPostDao, JdbcTemplate jdbcTemplate, PostDao postDao) {
+        this.jdbcPostDao = jdbcPostDao;
         this.jdbcTemplate = jdbcTemplate;
         this.postDao = postDao;
     }
@@ -48,8 +54,15 @@ public class JdbcCommentDao implements CommentDao{
         }
     }
 
-    public Comment createComment(String comment,  int postId, int author_id)  {
+    public int createComment(String comment,  int postId, int author_id)  {
+// check if post exists
 
+        List<Post> posts = jdbcPostDao.findAllPosts();
+        List<Integer> postIds  = new ArrayList<>();
+
+        for(Post post : posts) {
+            postIds.add(post.getPost_id());
+        }
 
         String sql = "" +
                 "INSERT INTO comments (comment, post_id, author_id) " +
@@ -61,8 +74,14 @@ public class JdbcCommentDao implements CommentDao{
                 postId,
                 author_id);
 
-                return getCommentByCommentId(commentId);
+        if (!postIds.contains(postId)) {
+            return -1;
+        }
+
+        return 1;
+
     }
+
 
 
 

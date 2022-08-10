@@ -4,6 +4,9 @@ import com.techelevator.dao.CommentDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Comment;
 import com.techelevator.model.CommentNotFoundException;
+import com.techelevator.model.PostNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +29,16 @@ public class CommentController {
 
 
     @PostMapping(value = "post/{postId}/create")
-    public Comment createComment(@RequestParam("comment") @Valid String comment, @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+    public ResponseEntity<String> createComment(@RequestParam("comment") @Valid String comment, @PathVariable int postId, Principal principal) throws CommentNotFoundException {
         int currentAuthorId = userDao.findIdByUsername(principal.getName());
-        return commentDao.createComment(comment, postId, currentAuthorId);
+        int response = commentDao.createComment(comment, postId, currentAuthorId);
+
+        if (response == -1) {
+            throw new PostNotFoundException();
+        }
+        return new ResponseEntity<>("Comment Posted", HttpStatus.CREATED);
     }
 
-    //FIXME: Not sure on paths for create and getCommentById, finish CRUD
 
 
     @GetMapping(value = "/{commentId}")
