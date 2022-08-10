@@ -16,6 +16,7 @@
       "
     >
       <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
+        <!--
         <author>
           {{ p.userId }}
         </author>
@@ -23,11 +24,11 @@
         <description>
           {{ p.description }}
         </description>
-
+        -->
         <img :src="p.picture" alt="none" />
 
         <p button>
-          <button class="btn btn-like" v-on:click="likeThis()">Like</button>
+          <button class="btn btn-like" v-on:click="likeThis(p)">Like</button>
           {{ p.likes }} Likes
         </p>
 
@@ -66,27 +67,63 @@ export default {
   },
   data() {
     return {
-      images: [],
+      image: [],
+
+      newImage: {
+        id: "",
+        userId: "",
+        picture: "",
+        description: "",
+        timeStamp: "",
+        likes: "",
+        comments: [],
+      },
     };
   },
+
   methods: {
     addComment(comment) {
       this.$store.images.comments.unshift(comment);
+      this.$router.push({ name: "home" });
     },
-    likeThis() {
 
-      this.$store.images.likes++;
-      photoService.addLike(this.$store.images.id);
+    likeThis(p) {
+      let newImage = {};
+      newImage.id = p.id;
+      newImage.userId = p.userId;
+      newImage.picture = p.picture;
+      newImage.description = p.description;
+      newImage.timeStamp = p.timeStamp;
+      newImage.likes = Number.parseInt(p.likes) + 1;
+      newImage.comments = p.comments;
+/*
+      photoService
+  
+        .addLike(newImage)
+
+        .then(() => {
+          photoService.getPhotos().then((response) => {
+            this.$store.commit("SET_PHOTOS", response.data);
+          });
+          this.$router.push({ name: "home" });
+        });
+        */
+       this.$store.commit("SET_PHOTO", newImage);
     },
   },
-  
+
+  props: ["images"],
+  computed: {
+    currentLikes() {
+      return Number.parseInt(this.$store.images.likes);
+    },
+  },
+
   created() {
-    photoService.getPhotos().then(response => {
+    photoService.getPhotos().then((response) => {
       this.$store.commit("SET_PHOTOS", response.data);
-      
     });
-  }
-  
+  },
 };
 </script>
 

@@ -11,9 +11,8 @@ export default {
 
   },
 
-  addLike() {
-      this.images.likes++;
-      return axios.put(`/posts/${this.images.id}`, this.images.likes);
+  addLike(newImage) {
+      return axios.put(`/posts/${newImage.id}`, newImage);
   },
 
   unLike() {

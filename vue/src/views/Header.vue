@@ -3,11 +3,23 @@
     <li class="logo">ClicknShare  <img :src="$store.state.icon"  alt="none" class="icon"></li>
     <li></li>
     <li
+      v-if="$route.name != 'home'"
       @click="this.$router.push({ name: 'home' })"
       :class="{ active: $store.state.active === 'home' }"
     >
       Home
     </li>
+  <li
+        v-else
+       
+   @click="$window.scrollTo(0,0)"
+        :class="{ active: $store.state.active === 'home' }"
+      >
+        Home
+  </li>
+
+
+
     <li
       @click="setTab('post')"
       :class="{ active: $store.state.active === 'post' }"
@@ -25,6 +37,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+Vue.prototype.$window = window
 export default {
   methods: {
     setTab(active) {
@@ -35,13 +49,13 @@ export default {
 </script>
 
 <style>
-/*
+
 @font-face {
     font-family:"Billabong";
     src: local("Billabong"),
-    url(./fonts/Billabong.ttf);
+    url(../fonts/Billabong.ttf);
 }
-*/
+
 ul {
   display: flex;
   justify-content: space-around;

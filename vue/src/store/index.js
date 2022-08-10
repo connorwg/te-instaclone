@@ -29,7 +29,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '7',
-      comments: ['blah  comments blah', 'comments blah']
+      comments: ['blah  comments blah', 'comments blah', 'more comments']
     },
     {
       id: '2',
@@ -38,7 +38,7 @@ export default new Vuex.Store({
       description: 'photo description here',
       timeStamp: '',
       likes: '9',
-      comments: ['blah comments comments blah', 'comments']
+      comments: ['blah comments comments blah', 'comments', 'extra comments']
     }, {
       id: '3',
       userId: 'Andrew',
@@ -70,6 +70,13 @@ export default new Vuex.Store({
     },
     SET_PHOTOS(state, data) {
       state.images = data;
+    },
+    SET_PHOTO(state,data) {
+      let photoToUpdate = state.images.findIndex(photo => {
+         return photo.id == data.id
+      });
+      state.images[photoToUpdate].likes= data.likes;
+    
     },
     SET_USER(state, user) {
       state.user = user;
