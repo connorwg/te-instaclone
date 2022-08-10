@@ -23,12 +23,18 @@ public class PostController {
         return postDao.getPostById(postId);
     }
     //get comments for a post
-//    @GetMapping(value=  "/{postId}/comments")
+    //@GetMapping(value=  "/{postId}/comments")
 
     @PostMapping(value = "/create")
     public Post createPost(@RequestBody Post post) throws PostNotFoundException  {
         return postDao.createPost(post);
     }
+
+
+
+
+
+
     //add comment to post. post id -> insert into comments
     // check PostNotFoundException comment reasonable size
 

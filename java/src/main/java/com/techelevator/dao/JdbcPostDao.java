@@ -47,6 +47,7 @@ public class JdbcPostDao implements PostDao {
                 return getPostById(postId);
     };
     //grabs current users following pictures, sort by timestamp
+
 //    public List<Post> listAllPosts() {
 //
 //        String sql = "SELECT * FROM posts " +
