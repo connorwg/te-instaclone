@@ -31,8 +31,8 @@ public class PostController {
 //    @GetMapping(value=  "/{postId}/comments")
 
     @PostMapping(value = "/create")
-    public @ResponseBody String createPost(String description, Principal principal,
-                                           @RequestParam("mpf") MultipartFile mpf) {
+    public @ResponseBody Post createPost(@RequestParam("desc") String desc, Principal principal,
+                                         @RequestParam("mpf") MultipartFile mpf) {
 
         int currentUserId = userDao.findIdByUsername(principal.getName());
         String fileName = currentUserId + "_" + mpf.getOriginalFilename().replaceAll(" ", "_");
@@ -44,8 +44,7 @@ public class PostController {
             System.out.println(e.getMessage());
         }
 
-        postDao.createPost(currentUserId, url, description);
-        return url;
+        return postDao.createPost(currentUserId, url, desc);
     }
     //add comment to post. post id -> insert into comments
     // check PostNotFoundException comment reasonable size
