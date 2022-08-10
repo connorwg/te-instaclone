@@ -1,7 +1,7 @@
 package com.techelevator.dao;
 
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.User;
-import com.techelevator.model.UserNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -102,7 +102,7 @@ public class JdbcUserDao implements UserDao {
 
         String query = "INSERT INTO following VALUES (?, ?);";
         String checkIfFollowing = "SELECT ? in (SELECT follower_id FROM following WHERE followee_id = ?) as tf;";
-        boolean alreadyFollow = jdbcTemplate.queryForObject(checkIfFollowing, boolean.class, currentUserId, userToFollowId);
+        boolean alreadyFollow = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfFollowing, boolean.class, currentUserId, userToFollowId));
         List<User> users = findAll(); List<Integer> userIds = new ArrayList<>();
 
         for(User user :users) userIds.add(user.getId());
