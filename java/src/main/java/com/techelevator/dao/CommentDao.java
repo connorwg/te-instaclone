@@ -6,7 +6,9 @@ public interface CommentDao {
 
     Comment getCommentByCommentId(int commentId);
 
-    Comment createComment(Comment comment);
+    Comment createComment(String comment, int post_id, int author_id);
 
     Comment getCommentsByPostId(int postId);
+
+
 }

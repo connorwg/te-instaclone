@@ -1,29 +1,38 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.CommentDao;
-import com.techelevator.dao.PostDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.model.Comment;
 import com.techelevator.model.CommentNotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.security.Principal;
+
 @RestController
+@CrossOrigin
 @PreAuthorize("isAuthenticated()")
-//@RequestMapping(value  = "/comments", method = {RequestMethod.GET, RequestMethod.POST})
+
 public class CommentController {
 
     private CommentDao commentDao;
+    private UserDao userDao;
 
-    public CommentController(CommentDao commentDao) {
+    public CommentController(CommentDao commentDao, UserDao userDao) {
         this.commentDao = commentDao;
+        this.userDao = userDao;
     }
 
-    @PostMapping(value = "comment/create")
-    public Comment createComment(@RequestBody Comment comment) throws CommentNotFoundException {
-        return commentDao.createComment(comment);
+
+    @PostMapping(value = "post/{postId}/create")
+    public Comment createComment(@RequestParam("comment") @Valid String comment, @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+        int currentAuthorId = userDao.findIdByUsername(principal.getName());
+        return commentDao.createComment(comment, postId, currentAuthorId);
     }
 
     //FIXME: Not sure on paths for create and getCommentById, finish CRUD
+
 
     @GetMapping(value = "/{commentId}")
     public Comment getCommentByCommentId(@PathVariable int commentId) {
@@ -31,13 +40,11 @@ public class CommentController {
     }
 
 
-    //get comments for a post
-    //@GetMapping(value=  "/{postId}/comments")
-    @GetMapping(value  = "/{postId}/comments")
-    public Comment getCommentsByPostId(@PathVariable int postId) {
+    @GetMapping(value  = "/post/{postId}/comments")
+    public Comment getCommentsByPostId(@Valid @PathVariable int postId) {
         return commentDao.getCommentsByPostId(postId);
     }
 
-    // getCommentsByPostId
+
 
 }
