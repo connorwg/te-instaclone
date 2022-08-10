@@ -4,5 +4,5 @@ import com.techelevator.model.Post;
 public interface PostDao {
     Post getPostById(int postId);
 
-    Post createPost(Post post);
+    Post createPost(int user_id, String s3_link, String description);
 }

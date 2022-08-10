@@ -30,21 +30,16 @@ public class JdbcPostDao implements PostDao {
     }
     //separate for getting comments based on post id
 
-    public Post createPost(Post post) throws PostNotFoundException {
-        userDao.getUserById(post.getUser_id());
+    public Post createPost(int user_id, String s3_link, String description) {
 
         String sql = "" +
                 "INSERT INTO posts (user_id, s3_link, description, time) " +
-                "VALUES (?, ?, ?, ?) " +
-                "RETURNING post_id;";
+                "VALUES (?, ?, ?, NOW()) " +
+                "RETURNING post_id";
 
-        Integer postId = jdbcTemplate.queryForObject(sql, Integer.class,
-                post.getUser_id(),
-                post.getPictureLink(),
-                post.getDescription(),
-                post.getTimestamp());
+        int newPostId = jdbcTemplate.queryForObject(sql, int.class, user_id, s3_link, description);
+        return getPostById(newPostId);
 
-                return getPostById(postId);
     };
     //grabs current users following pictures, sort by timestamp
 
