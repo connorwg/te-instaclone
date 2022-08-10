@@ -1,11 +1,14 @@
 package com.techelevator.dao;
 
+import com.techelevator.dao.CommentDao;
 import com.techelevator.model.Comment;
 import com.techelevator.model.CommentNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
-public class JdbcCommentDao {
+@Component
+public class JdbcCommentDao implements CommentDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final PostDao postDao;
