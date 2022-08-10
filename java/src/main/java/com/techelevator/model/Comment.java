@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Comment {
 
-    @NotNull
+    
     private int comment_id;
     private String comment;
     @NotNull

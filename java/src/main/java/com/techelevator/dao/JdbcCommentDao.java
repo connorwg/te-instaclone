@@ -1,7 +1,7 @@
 package com.techelevator.dao;
 
+import com.techelevator.exceptions.CommentNotFoundException;
 import com.techelevator.model.Comment;
-import com.techelevator.model.CommentNotFoundException;
 import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
