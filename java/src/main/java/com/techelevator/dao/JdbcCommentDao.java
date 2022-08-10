@@ -40,18 +40,19 @@ public class JdbcCommentDao implements CommentDao{
 
     }
 
-    public Comment getCommentsByPostId(int postId) {
-
+    public List<Comment> getCommentsByPostId(int postId) {
+        List<Comment> comments = new ArrayList<>();
         String sql = "SELECT comment_id, comment, post_id, author_id " +
                 "FROM comments " +
                 "WHERE post_id = ?;";
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, postId);
-
-        if (returned.next()) {
-            return mapRowToComment(returned);
-        } else {
+        if (!returned.next()) {
             throw new CommentNotFoundException();
         }
+        while (returned.next()) {
+            comments.add(mapRowToComment(returned));
+        }
+        return comments;
     }
 
     public int createComment(String comment,  int postId, int author_id)  {

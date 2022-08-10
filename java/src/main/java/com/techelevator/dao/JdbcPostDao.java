@@ -65,7 +65,7 @@ public class JdbcPostDao implements PostDao {
                 boolean.class, userId, postId));
 
         if (!postIds.contains(postId)) {
-            return -1;
+            throw new PostNotFoundException();
         }
         if (alreadyLiked) {
             jdbcTemplate.update(unlikePost, userId, postId);

@@ -63,18 +63,14 @@ public class PostController {
         int userId = userDao.findIdByUsername(principal.getName());
         int response = postDao.likePost(userId, postId);
 
-        if (response == -1) {
-            return new ResponseEntity<>("No post", HttpStatus.BAD_REQUEST);
-        }
         if (response == 2) {
-            return new ResponseEntity<>("Unliked", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Unliked", HttpStatus.OK);
         }
         if (response == 1) {
             return new ResponseEntity<>("Liked", HttpStatus.OK);
         }
 
         return new ResponseEntity<>("oof", HttpStatus.BAD_REQUEST);
-
     }
 
 //    public int likePost(Principal principal, @PathVariable int postId){

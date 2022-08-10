@@ -3,6 +3,6 @@ package com.techelevator.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Comment Not Found.")
-public class CommentNotFoundException extends RuntimeException  {
+@ResponseStatus(reason = "Can't Follow Self.", value = HttpStatus.BAD_REQUEST)
+public class CantFollowSelfException extends RuntimeException {
 }

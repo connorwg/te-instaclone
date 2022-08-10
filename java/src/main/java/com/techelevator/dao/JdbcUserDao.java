@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.exceptions.CantFollowSelfException;
 import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.User;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -87,14 +88,18 @@ public class JdbcUserDao implements UserDao {
 
         String updateFKs =
                 "BEGIN; " +
-                "UPDATE posts SET user_id = NULL WHERE user_id = ?; " +
-                "UPDATE comments SET author_id = NULL WHERE author_id = ?; " +
-                "UPDATE following SET follower_id = NULL WHERE follower_id = ?;" +
-                "UPDATE following SET followee_id = NULL WHERE followee_id = ?  " +
-                "COMMIT;";
-        jdbcTemplate.update(updateFKs, userId, userId, userId, userId);
+                        "UPDATE posts SET user_id = NULL WHERE user_id = ?; " +
+                        "UPDATE comments SET author_id = NULL WHERE author_id = ?; " +
+                        "UPDATE following SET follower_id = NULL WHERE follower_id = ?;" +
+                        "UPDATE following SET followee_id = NULL WHERE followee_id = ?  " +
+                        "UPDATE likes SET user_id = NULL WHERE user_id = ? " +
+                        "COMMIT;";
+        jdbcTemplate.update(updateFKs, userId, userId, userId, userId, userId);
 
         String deleteSQL = "DELETE FROM users WHERE user_id = ?;";
+        if (jdbcTemplate.update(deleteSQL, userId) != 1) {
+            throw new UserNotFoundException();
+        }
 
         return jdbcTemplate.update(deleteSQL, userId) == 1;
     }
@@ -102,6 +107,7 @@ public class JdbcUserDao implements UserDao {
     public int followUser(int currentUserId, int userToFollowId) {
 
         String query = "INSERT INTO following VALUES (?, ?);";
+        String unfollow = "DELETE FROM following WHERE (follower_id = ? AND followee_id = ?);";
         String checkIfFollowing = "SELECT ? in (SELECT follower_id FROM following WHERE followee_id = ?) as tf;";
 
         boolean alreadyFollow = Boolean.TRUE.equals(jdbcTemplate.queryForObject
@@ -110,14 +116,12 @@ public class JdbcUserDao implements UserDao {
         List<Integer> userIds = findAll().stream().map(User::getId).collect(Collectors.toList());
 
 
-        if (!userIds.contains(userToFollowId)) {
-            return -1;
-        }
-        if (currentUserId == userToFollowId) {
-            return -2;
-        }
+        if (!userIds.contains(userToFollowId)) throw new UserNotFoundException();
+        if (currentUserId == userToFollowId) throw new CantFollowSelfException();
+
         if (alreadyFollow) {
-            return -3;
+            jdbcTemplate.update(unfollow, currentUserId, userToFollowId);
+            return 2;
         }
 
         jdbcTemplate.update(query, currentUserId, userToFollowId);
