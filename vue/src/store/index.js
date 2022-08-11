@@ -19,7 +19,9 @@ if (currentToken != null) {
 export default new Vuex.Store({
   state: {
     active: 'home',
-    icon: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
+    
+    icon2: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
+    isLiked: false,
     token: currentToken || '',
     user: currentUser || {},
     images: [{
@@ -71,7 +73,7 @@ export default new Vuex.Store({
     SET_PHOTOS(state, data) {
       state.images = data;
     },
-    SET_PHOTO(state,data) {
+    SET_PHOTO_LIKES(state,data) {
       let photoToUpdate = state.images.findIndex(photo => {
          return photo.id == data.id
       });

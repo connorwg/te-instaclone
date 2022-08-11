@@ -28,7 +28,8 @@
         <img :src="p.picture" alt="none" />
 
         <p button>
-          <button class="btn btn-like" v-on:click="likeThis(p)">Like</button>
+          <button class="btn btn-like" v-on:click="likeThis(p)" v-if="!isLiked">Like</button>
+          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>Unlike</button>
           {{ p.likes }} Likes
         </p>
 
@@ -97,6 +98,7 @@ export default {
       newImage.timeStamp = p.timeStamp;
       newImage.likes = Number.parseInt(p.likes) + 1;
       newImage.comments = p.comments;
+      this.isLiked = true;
 /*
       photoService
   
@@ -109,8 +111,33 @@ export default {
           this.$router.push({ name: "home" });
         });
         */
-       this.$store.commit("SET_PHOTO", newImage);
+       this.$store.commit("SET_PHOTO_LIKES", newImage);
     },
+    unLikeThis(p) {
+      let newImage = {};
+      newImage.id = p.id;
+      newImage.userId = p.userId;
+      newImage.picture = p.picture;
+      newImage.description = p.description;
+      newImage.timeStamp = p.timeStamp;
+      newImage.likes = Number.parseInt(p.likes) - 1;
+      newImage.comments = p.comments;
+      this.isLiked = false;
+/*
+      photoService
+  
+        .addLike(newImage)
+
+        .then(() => {
+          photoService.getPhotos().then((response) => {
+            this.$store.commit("SET_PHOTOS", response.data);
+          });
+          this.$router.push({ name: "home" });
+        });
+        */
+       this.$store.commit("SET_PHOTO_LIKES", newImage);
+    },
+
     addComment(id) {
       if(this.newComment !== ''){
         let commentObj = {
@@ -179,7 +206,7 @@ section {
   font-size: 0.8rem;
   text-align: left;
 }
-author {
+.author {
   font-size: 1rem;
   background-color: lightgray;
 }
@@ -190,4 +217,5 @@ author {
   border: 1px solid lightgray;
   color: purple;
 }
+
 </style>

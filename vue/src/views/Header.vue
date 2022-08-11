@@ -1,6 +1,7 @@
 <template>
   <ul>
-    <li class="logo">ClicknShare  <img :src="$store.state.icon"  alt="none" class="icon"></li>
+    <li class="logo">ClicknShare  <img  class="ico" src="../../public/logo.jpeg"/> </li>
+  
     <li></li>
     <li
       v-if="$route.name != 'home'"
@@ -39,7 +40,11 @@
 <script>
 import Vue from 'vue'
 Vue.prototype.$window = window
+
 export default {
+  components: {
+   
+  },
   methods: {
     setTab(active) {
       this.$store.commit("SET_TAB", active);
@@ -75,12 +80,15 @@ ul > li {
 .logo {
   font-family:"Billabong";
   color: cadetblue;
-  font-size: 50px;
+  font-size: 60px;
 }
 
-.icon {
-    height: .8em;
-    width: .8em;
-    margin-left: 10px;
+.ico {
+    height: 50px;
+    width: 50px;
+    margin-left: 20px;
+    line-height: 10px;
+    
+   
 }
 </style>
