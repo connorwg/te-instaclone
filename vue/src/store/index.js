@@ -26,36 +26,36 @@ export default new Vuex.Store({
     user: currentUser || {},
     images: [{
       id: '1',
-      userId: 'Prachi',
+      userId: "Prachi",
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03E9U67GNL-bd5c7423ccc1-512",
       description: 'photo description here',
       timeStamp: '',
-      likes: '7',
+      likes: [7, 8, "Dave"],
       comments: ['blah  comments blah', 'comments blah', 'more comments']
     },
     {
       id: '2',
-      userId: 'Connor',
+      userId: "Connor",
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3TBG8HK-c6b48e687235-512",
       description: 'photo description here',
       timeStamp: '',
-      likes: '9',
+      likes: [9, "Dave"],
       comments: ['blah comments comments blah', 'comments', 'extra comments']
     }, {
       id: '3',
-      userId: 'Andrew',
+      userId: "Andrew",
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03DK8YV9LZ-3d43d76e3219-512",
       description: 'photo description here',
       timeStamp: '',
-      likes: '11',
+      likes: [11, "Dave"],
       comments: ['blah blah comments comments', 'comments blah blah']
     }, {
       id: '4',
-      userId: 'Dave',
+      userId: "Dave",
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
       description: 'photo description here',
       timeStamp: '',
-      likes: '6',
+      likes: [6],
       comments: ['blah comments blah', 'comments']
     },
 

@@ -66,6 +66,8 @@ ul {
   justify-content: space-around;
   list-style-type: none;
   top: 0;
+  
+  margin-bottom: 1px;
 }
 
 ul > li {
