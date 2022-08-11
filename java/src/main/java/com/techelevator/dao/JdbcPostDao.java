@@ -40,7 +40,7 @@ public class JdbcPostDao implements PostDao {
         String sql = "" +
                 "SELECT post_id, user_id, s3_link, description, time " +
                 "FROM  posts " +
-                "WHERE post_id = ?;";
+                "WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
         if  (!results.next()) {
