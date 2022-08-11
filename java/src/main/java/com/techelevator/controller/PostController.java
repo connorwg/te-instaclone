@@ -56,13 +56,11 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public int likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
+    public boolean likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
 
         int userId = userDao.findIdByUsername(principal.getName());
-        int response = postDao.likePost(userId, postId);
 
-
-        return response;
+        return postDao.likePost(userId, postId);
     }
 
     @GetMapping("/liked")
@@ -70,6 +68,12 @@ public class PostController {
 
         int userId = userDao.findIdByUsername(principal.getName());
         return postDao.userLikedPost(userId, postId);
+    }
+
+    @GetMapping("/likes")
+    public int postLikes(@RequestParam("postId") int postId) {
+
+        return postDao.likesCount(postId);
     }
 
 
