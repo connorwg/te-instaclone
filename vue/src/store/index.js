@@ -23,7 +23,7 @@ export default new Vuex.Store({
     icon2: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
     isLiked: false,
     token: currentToken || '',
-    user: currentUser || {},
+    user: currentUser || {},//at the time of login or authentication this user's info is getting stored in this property
     images: [{
       id: '1',
       userId: "Prachi",

@@ -85,7 +85,7 @@ export default {
     likeVerifier(p) {
       let liked = false;
       for (let i=0; i<p.likes.length; i++) {
-        if (p.likes[i] === p.userId) {
+        if (p.likes[i] === this.$store.state.user.id) {
           liked = true;
         }
         
@@ -107,7 +107,8 @@ export default {
       newImage.timeStamp = p.timeStamp;
       newImage.likes = p.likes;
       newImage.comments = p.comments;
-      newImage.likes.push(p.userId); // should be the current user's id here
+      //newImage.likes.push(p.userId); // should be the current user's id here
+      newImage.likes.push(this.$store.state.user.id);
       
 /*
       photoService
@@ -134,7 +135,7 @@ export default {
       newImage.comments = p.comments;
 
       for (let i=0; i<p.likes.length; i++) {
-        if (!(p.likes[i] === p.userId)) {
+        if (!(p.likes[i] === this.$store.state.user.id)) {
           newImage.likes.push(p.likes[i]);
         }
       }
