@@ -1,6 +1,8 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.PostDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.model.Post;
 import com.techelevator.model.User;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -8,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
@@ -16,10 +20,12 @@ import java.security.Principal;
 public class UserController {
 
     private UserDao userDao;
+    private PostDao postDao;
 
 
-    public UserController(UserDao userDao) {
+    public UserController(UserDao userDao, PostDao postDao) {
         this.userDao = userDao;
+        this.postDao = postDao;
     }
 
     @GetMapping(value = "/{userId}")
@@ -53,5 +59,10 @@ public class UserController {
             return new ResponseEntity<>("Unfollowed User.", HttpStatus.OK);
         }
         return new ResponseEntity<>("Fatal Error.", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/{userId}/profile")
+    public List<Post> getAllPostsByUserId(@Valid @PathVariable int userId) {
+        return postDao.getAllPostsByUserId(userId);
     }
 }
