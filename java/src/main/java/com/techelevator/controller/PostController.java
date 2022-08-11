@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -71,11 +69,8 @@ public class PostController {
             return new ResponseEntity<>("Liked", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("oof", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("oof", HttpStatus.NOT_FOUND);
     }
-
-
-
 
 
 }

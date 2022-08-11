@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exceptions.PostNotFoundException;
 import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.Post;
+import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -37,17 +38,22 @@ public class JdbcPostDao implements PostDao {
     //getAllPostsByUserId
     public List<Post> getAllPostsByUserId(int userId) {
         List<Post> posts = new ArrayList<>();
+        List<Integer> userIds = userDao.findAll().stream().map(User::getId).collect(Collectors.toList());
+        if (!userIds.contains(userId)) {
+            throw new UserNotFoundException();
+        }
+
         String sql = "" +
                 "SELECT post_id, user_id, s3_link, description, time " +
                 "FROM  posts " +
-                "WHERE post_id = ?;";
+                "WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
-        if  (!results.next()) {
-            throw new UserNotFoundException();
-        }
         while (results.next()) {
             posts.add(mapRowToPost(results));
+        }
+        if (posts.size() < 1) {
+            throw new PostNotFoundException();
         }
         return posts;
     }
@@ -97,16 +103,7 @@ public class JdbcPostDao implements PostDao {
     }
 
 
-    //FIXME: grabs current users following pictures, sort by timestamp
 
-//    public List<Post> listAllPosts() {
-//
-//        String sql = "SELECT * FROM posts " +
-//                "INNER JOIN comments USING (post_id) " +
-//                "";
-//
-//
-//    }
 
     public List<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
