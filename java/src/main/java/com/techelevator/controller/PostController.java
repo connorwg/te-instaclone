@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -55,7 +57,6 @@ public class PostController {
         return postDao.createPost(currentUserId, url, desc);
     }
 
-
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<String> likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
@@ -73,13 +74,8 @@ public class PostController {
         return new ResponseEntity<>("oof", HttpStatus.BAD_REQUEST);
     }
 
-//    public int likePost(Principal principal, @PathVariable int postId){
-//
-//        int currentUserId = userDao.findIdByUsername(principal.getName());
-//
-//
-//
-//
-//    }
+
+
+
 
 }

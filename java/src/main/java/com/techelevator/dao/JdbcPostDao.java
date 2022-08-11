@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exceptions.PostNotFoundException;
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -32,6 +33,25 @@ public class JdbcPostDao implements PostDao {
             throw new PostNotFoundException();
         }
     }
+
+    //getAllPostsByUserId
+    public List<Post> getAllPostsByUserId(int userId) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "" +
+                "SELECT post_id, user_id, s3_link, description, time " +
+                "FROM  posts " +
+                "WHERE post_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+
+        if  (!results.next()) {
+            throw new UserNotFoundException();
+        }
+        while (results.next()) {
+            posts.add(mapRowToPost(results));
+        }
+        return posts;
+    }
+
 
 
     public Post createPost(int user_id, String s3_link, String description) {
@@ -77,7 +97,7 @@ public class JdbcPostDao implements PostDao {
     }
 
 
-    //grabs current users following pictures, sort by timestamp
+    //FIXME: grabs current users following pictures, sort by timestamp
 
 //    public List<Post> listAllPosts() {
 //
