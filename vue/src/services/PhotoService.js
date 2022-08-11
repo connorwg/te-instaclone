@@ -7,7 +7,7 @@ export default {
   },
 
   addComment(commentObj) {
-      return axios.post('/comments/comment/create', commentObj);
+      return axios.post(`/post/${commentObj.postId}/create`, null, {params: {comment:commentObj.comment}});
   },
 
   addLike(newImage) {
