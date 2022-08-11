@@ -28,9 +28,9 @@
         <img :src="p.picture" alt="none" />
 
         <p button>
-          <button class="btn btn-like" v-on:click="likeThis(p)" v-if="!isLiked">Like</button>
-          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>Unlike</button>
-          {{ p.likes }} Likes
+          <button class="btn btn-like" v-on:click="likeThis(p)" v-if="!likeVerifier(p)">Like <i class="fa-regular fa-thumbs-up"></i></button>
+          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>Unlike <i class="fa-regular fa-thumbs-down"></i></button>
+          {{ p.likes.length }} Likes
         </p>
 
         <p class="comments">
@@ -75,13 +75,23 @@ export default {
         picture: "",
         description: "",
         timeStamp: "",
-        likes: "",
+        likes: [],
         comments: [],
       },
     };
   },
 
   methods: {
+    likeVerifier(p) {
+      let liked = false;
+      for (let i=0; i<p.likes.length; i++) {
+        if (p.likes[i] === this.$store.state.user.id) {
+          liked = true;
+        }
+        
+      }return liked;
+     
+    },
     /*
     addComment(comment) {
       this.$store.images.comments.unshift(comment);
@@ -95,9 +105,11 @@ export default {
       newImage.picture = p.picture;
       newImage.description = p.description;
       newImage.timeStamp = p.timeStamp;
-      newImage.likes = Number.parseInt(p.likes) + 1;
+      newImage.likes = p.likes;
       newImage.comments = p.comments;
-      this.isLiked = true;
+      //newImage.likes.push(p.userId); // should be the current user's id here
+      newImage.likes.push(this.$store.state.user.id);
+      
 /*
       photoService
   
@@ -119,9 +131,15 @@ export default {
       newImage.picture = p.picture;
       newImage.description = p.description;
       newImage.timeStamp = p.timeStamp;
-      newImage.likes = Number.parseInt(p.likes) - 1;
+      newImage.likes = [];
       newImage.comments = p.comments;
-      this.isLiked = false;
+
+      for (let i=0; i<p.likes.length; i++) {
+        if (!(p.likes[i] === this.$store.state.user.id)) {
+          newImage.likes.push(p.likes[i]);
+        }
+      }
+      
 /*
       photoService
   
@@ -213,6 +231,14 @@ section {
 .addComment {
   border: 1px solid lightgray;
   color: purple;
+}
+.btn-like {
+  color: green;
+  
+}
+.btn-unlike {
+  color: red;
+  
 }
 
 </style>
