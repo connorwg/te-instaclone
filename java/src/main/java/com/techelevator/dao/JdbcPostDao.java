@@ -76,7 +76,23 @@ public class JdbcPostDao implements PostDao {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
         String unlikePost = "DELETE FROM likes WHERE (user_id = ? AND post_id = ?);";
+        String likesCount = "SELECT COUNT(DISTINCT likes.user_id) FROM likes WHERE post_id = ?;";
+
         List<Integer> postIds = findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
+
+        if (!postIds.contains(postId)) {
+            throw new PostNotFoundException();
+        }
+        if (userLikedPost(userId, postId)) {
+            jdbcTemplate.update(unlikePost, userId, postId);
+            return jdbcTemplate.queryForObject(likesCount, int.class, postId);
+        }
+
+        jdbcTemplate.update(likePost, userId, postId);
+        return jdbcTemplate.queryForObject(likesCount, int.class, postId);
+    }
+
+    public boolean userLikedPost(int userId, int postId) {
 
         String checkIfUserAlreadyLikes =
                 "SELECT ? IN" +
@@ -87,22 +103,9 @@ public class JdbcPostDao implements PostDao {
                         " ) " +
                         "as user_liked_post;";
 
-        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
-                boolean.class, userId, postId));
-
-        if (!postIds.contains(postId)) {
-            throw new PostNotFoundException();
-        }
-        if (alreadyLiked) {
-            jdbcTemplate.update(unlikePost, userId, postId);
-            return 2;
-        }
-
-        jdbcTemplate.update(likePost, userId, postId);
-        return 1;
+        return jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
+                boolean.class, userId, postId);
     }
-
-
 
 
     public List<Post> findAllPosts() {

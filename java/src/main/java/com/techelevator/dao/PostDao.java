@@ -11,4 +11,7 @@ public interface PostDao {
     int likePost(int userId, int postId);
 
     List<Post> getAllPostsByUserId(int userId);
+
+    public boolean userLikedPost(int userId, int postId);
+
 }
