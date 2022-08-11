@@ -34,10 +34,10 @@
         </p>
 
         <p class="comments">
-          {{ p.comments[0] }}
+          {{ p.comments[1] }}
         </p>
         <p class="comments">
-          {{ p.comments[1] }}
+          {{ p.comments[0] }}
         </p>
 
         <p class="addCom">Add Comment</p>
@@ -48,9 +48,8 @@
           class="addComment"
           placeholder="add your comment here"
           v-model="newComment"
-          v-on:submit="addComment(p.id)"
         />
-        <button class="btn btn-submit" type="submit">Submit</button>
+        <button class="btn btn-submit" type="submit" v-on:click.prevent="addComment(p.id)">Submit</button>
       </section>
     </div>
   </div>
@@ -139,15 +138,13 @@ export default {
     },
 
     addComment(id) {
-      if(this.newComment !== ''){
+      if(this.newComment.trim() !== ''){
         let commentObj = {
-          post_id: id,
-          author_id: this.$store.state.user,
+          postId: id,
           comment: this.newComment
         };
         photoService.addComment(commentObj).then(response => {
           if(response.status === 201){
-            commentObj = response.data;
             this.$store.commit("ADD_COMMENT", commentObj);
             this.$router.push({name: 'home'});
           }

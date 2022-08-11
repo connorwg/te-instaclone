@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JdbcPostDao implements PostDao {
@@ -31,7 +32,7 @@ public class JdbcPostDao implements PostDao {
             throw new PostNotFoundException();
         }
     }
-    //separate for getting comments based on post id
+
 
     public Post createPost(int user_id, String s3_link, String description) {
 
@@ -45,26 +46,33 @@ public class JdbcPostDao implements PostDao {
 
     }
 
-    ;
-
     public int likePost(int userId, int postId) {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
+        String unlikePost = "DELETE FROM likes WHERE (user_id = ? AND post_id = ?);";
+        List<Integer> postIds = findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
 
         String checkIfUserAlreadyLikes =
                 "SELECT ? IN" +
                         " ( " +
                         "SELECT likes.user_id FROM POSTS " +
                         "INNER JOIN likes USING (post_id) " +
-                        "WHERE likes.post_id = 1" +
+                        "WHERE likes.post_id = ?" +
                         " ) " +
                         "as user_liked_post;";
 
-        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes, boolean.class, userId, postId));
+        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
+                boolean.class, userId, postId));
 
-        if (alreadyLiked) {
-            return 1;
+        if (!postIds.contains(postId)) {
+            throw new PostNotFoundException();
         }
+        if (alreadyLiked) {
+            jdbcTemplate.update(unlikePost, userId, postId);
+            return 2;
+        }
+
+        jdbcTemplate.update(likePost, userId, postId);
         return 1;
     }
 
@@ -87,8 +95,7 @@ public class JdbcPostDao implements PostDao {
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
-            Post post = mapRowToPost(results);
-            posts.add(post);
+            posts.add(mapRowToPost(results));
         }
         return posts;
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -29,7 +30,9 @@ public class CommentController {
 
 
     @PostMapping(value = "post/{postId}/create")
-    public ResponseEntity<String> createComment(@RequestParam("comment") @Valid String comment, @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+    public ResponseEntity<String> createComment(@RequestParam("comment") @Valid String comment,
+                                                @PathVariable int postId, Principal principal) throws CommentNotFoundException {
+
         int currentAuthorId = userDao.findIdByUsername(principal.getName());
         int response = commentDao.createComment(comment, postId, currentAuthorId);
 
@@ -47,11 +50,8 @@ public class CommentController {
     }
 
 
-    @GetMapping(value  = "/post/{postId}/comments")
-    public Comment getCommentsByPostId(@Valid @PathVariable int postId) {
+    @GetMapping(value = "/post/{postId}/comments")
+    public List<Comment> getCommentsByPostId(@Valid @PathVariable int postId) {
         return commentDao.getCommentsByPostId(postId);
     }
-
-
-
 }

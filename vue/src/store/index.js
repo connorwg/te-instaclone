@@ -93,8 +93,8 @@ export default new Vuex.Store({
     },
     ADD_COMMENT(state, commentObj){
       state.images.forEach(image => {
-        if(image.id === commentObj.post_id){
-          image.comments.push(0, commentObj.comment);
+        if(image.id === commentObj.postId){
+          image.comments.unshift(commentObj.comment);
         }
       });
     }

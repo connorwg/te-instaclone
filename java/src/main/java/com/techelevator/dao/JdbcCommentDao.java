@@ -6,11 +6,6 @@ import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-<<<<<<< HEAD
-
-@Component
-public class JdbcCommentDao implements CommentDao{
-=======
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +15,6 @@ public class JdbcCommentDao implements CommentDao{
 
     private final JdbcPostDao jdbcPostDao;
 
->>>>>>> 43aa0b88ab378d3b2618e57bb7c385173d8646b3
 
     private final JdbcTemplate jdbcTemplate;
     private final PostDao postDao;
@@ -46,18 +40,19 @@ public class JdbcCommentDao implements CommentDao{
 
     }
 
-    public Comment getCommentsByPostId(int postId) {
-
+    public List<Comment> getCommentsByPostId(int postId) {
+        List<Comment> comments = new ArrayList<>();
         String sql = "SELECT comment_id, comment, post_id, author_id " +
                 "FROM comments " +
                 "WHERE post_id = ?;";
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, postId);
-
-        if (returned.next()) {
-            return mapRowToComment(returned);
-        } else {
+        if (!returned.next()) {
             throw new CommentNotFoundException();
         }
+        while (returned.next()) {
+            comments.add(mapRowToComment(returned));
+        }
+        return comments;
     }
 
     public int createComment(String comment,  int postId, int author_id)  {

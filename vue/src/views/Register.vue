@@ -210,11 +210,11 @@ export default {
 }
 
 h1 {
-  font-family: emoji;
+  font-family:"Billabong";
+  color: cadetblue;
   font-weight: 1000;
   font-style: italic;
   margin-bottom: 0%; 
-  color:black;
 }
 
 #image {
