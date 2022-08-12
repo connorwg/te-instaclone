@@ -19,4 +19,8 @@ public interface UserDao {
     public boolean deleteUserAccount(int userId);
 
     public int followUser(int currentUserId, int userToFollowId);
+
+    public List<User> getFolloweesByUserId(int userId);
+
+    public List<User> getFollowersByUserID(int userId);
 }

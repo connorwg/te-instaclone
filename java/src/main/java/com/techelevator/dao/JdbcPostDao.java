@@ -72,29 +72,11 @@ public class JdbcPostDao implements PostDao {
 
     }
 
-    public boolean likePost(int userId, int postId) {
+    public int likePost(int userId, int postId) {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
         String unlikePost = "DELETE FROM likes WHERE (user_id = ? AND post_id = ?);";
-
         List<Integer> postIds = findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
-
-        if (!postIds.contains(postId)) {
-            throw new PostNotFoundException();
-        }
-        if (userLikedPost(userId, postId)) {
-            return jdbcTemplate.update(unlikePost, userId, postId) == 0;
-        }
-
-        return jdbcTemplate.update(likePost, userId, postId) == 1;
-    }
-
-    public int likesCount(int postId) {
-        String likesCount = "SELECT COUNT(DISTINCT likes.user_id) FROM likes WHERE post_id = ?;";
-        return jdbcTemplate.queryForObject(likesCount, int.class, postId);
-    }
-
-    public boolean userLikedPost(int userId, int postId) {
 
         String checkIfUserAlreadyLikes =
                 "SELECT ? IN" +
@@ -105,9 +87,22 @@ public class JdbcPostDao implements PostDao {
                         " ) " +
                         "as user_liked_post;";
 
-        return jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
-                boolean.class, userId, postId);
+        boolean alreadyLiked = Boolean.TRUE.equals(jdbcTemplate.queryForObject(checkIfUserAlreadyLikes,
+                boolean.class, userId, postId));
+
+        if (!postIds.contains(postId)) {
+            throw new PostNotFoundException();
+        }
+        if (alreadyLiked) {
+            jdbcTemplate.update(unlikePost, userId, postId);
+            return 2;
+        }
+
+        jdbcTemplate.update(likePost, userId, postId);
+        return 1;
     }
+
+
 
 
     public List<Post> findAllPosts() {
@@ -121,9 +116,30 @@ public class JdbcPostDao implements PostDao {
         }
         return posts;
     }
+
+
+    // Returns list of Posts of all users being followed by passing in follower Id
+
+    public List<Post> getAllFolloweePostsByFollowerId(int followerId) {
+        List<Post> followeesPosts = new ArrayList<>();
+
+        String sql = "" +
+                "SELECT posts.user_id, s3_link, description, time " +
+                "FROM following " +
+                "INNER JOIN posts ON following.followee_id = posts.user_id " +
+                "WHERE following.follower_id = ? " +
+                "ORDER BY time DESC;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, followerId);
+
+        while (results.next()) {
+            followeesPosts.add(mapRowToPost(results));
+        }
+        return followeesPosts;
+    }
+
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();
-
         post.setPost_id(rowSet.getInt("post_id"));
         post.setUser_id(rowSet.getInt("user_id"));
         post.setPictureLink(rowSet.getString("s3_link"));

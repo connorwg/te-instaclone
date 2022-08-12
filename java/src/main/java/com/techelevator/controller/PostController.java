@@ -6,6 +6,7 @@ import com.techelevator.model.Post;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,8 @@ public class PostController {
 
 
     @PostMapping(value = "/create")
-    public @ResponseBody Post createPost(@RequestParam("desc") String desc,
+    @ResponseBody
+    public Post createPost(@RequestParam("desc") String desc,
                                          Principal principal, @RequestParam("mpf") MultipartFile mpf) {
 
         int currentUserId = userDao.findIdByUsername(principal.getName());
@@ -59,24 +61,19 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public boolean likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
+    public ResponseEntity<String> likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
 
         int userId = userDao.findIdByUsername(principal.getName());
+        int response = postDao.likePost(userId, postId);
 
-        return postDao.likePost(userId, postId);
-    }
+        if (response == 2) {
+            return new ResponseEntity<>("Unliked", HttpStatus.OK);
+        }
+        if (response == 1) {
+            return new ResponseEntity<>("Liked", HttpStatus.OK);
+        }
 
-    @GetMapping("/liked")
-    public boolean userLikedPost(Principal principal, @RequestParam("postId") int postId) {
-
-        int userId = userDao.findIdByUsername(principal.getName());
-        return postDao.userLikedPost(userId, postId);
-    }
-
-    @GetMapping("/likes")
-    public int postLikes(@RequestParam("postId") int postId) {
-
-        return postDao.likesCount(postId);
+        return new ResponseEntity<>("oof", HttpStatus.NOT_FOUND);
     }
 
 

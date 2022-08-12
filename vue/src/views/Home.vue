@@ -18,7 +18,7 @@
       <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
         
         <p class="author">
-          {{ p.userId }}
+          {{ p.firstName + " " + p.lastName }}
         </p>
 
         <p class="description">

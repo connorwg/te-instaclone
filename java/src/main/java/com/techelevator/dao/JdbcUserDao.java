@@ -128,10 +128,45 @@ public class JdbcUserDao implements UserDao {
         return 1;
     }
 
-//    public List<User> getFolloweesByUserId(int userId) {
-//        List<User> followees = new ArrayList<>();
-//
-//    }
+
+
+     // Gets list of users that this specific user is following
+    public List<User> getFolloweesByUserId(int userId) {
+        List<User> followees = new ArrayList<>();
+
+        String sql = "" +
+                "SELECT user_id " +
+                "FROM users " +
+                "JOIN following ON users.user_id = following.follower_id " +
+                "WHERE user_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (results.next()) {
+            followees.add(mapRowToUser(results));
+        }
+        return followees;
+
+    }
+
+    // Gets list of people that are following this user
+    public List<User> getFollowersByUserID(int userId) {
+        List<User> followers = new ArrayList<>();
+
+        String sql = "" +
+                "SELECT follower_id " +
+                "FROM users " +
+                "JOIN following ON users.user_id = following.followee_id " +
+                "WHERE user_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (results.next()) {
+            followers.add(mapRowToUser(results));
+        }
+        return followers;
+    }
+
 
 
     private User mapRowToUser(SqlRowSet rs) {
