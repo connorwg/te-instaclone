@@ -33,7 +33,8 @@ public class PostController {
 
 
     @PostMapping(value = "/create")
-    public @ResponseBody Post createPost(@RequestParam("desc") String desc,
+    @ResponseBody
+    public Post createPost(@RequestParam("desc") String desc,
                                          Principal principal, @RequestParam("mpf") MultipartFile mpf) {
 
         int currentUserId = userDao.findIdByUsername(principal.getName());
