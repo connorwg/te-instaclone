@@ -72,11 +72,10 @@ public class JdbcPostDao implements PostDao {
 
     }
 
-    public int likePost(int userId, int postId) {
+    public boolean likePost(int userId, int postId) {
 
         String likePost = "INSERT INTO likes (user_id, post_id) VALUES (?,?);";
         String unlikePost = "DELETE FROM likes WHERE (user_id = ? AND post_id = ?);";
-        String likesCount = "SELECT COUNT(DISTINCT likes.user_id) FROM likes WHERE post_id = ?;";
 
         List<Integer> postIds = findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
 
@@ -84,11 +83,14 @@ public class JdbcPostDao implements PostDao {
             throw new PostNotFoundException();
         }
         if (userLikedPost(userId, postId)) {
-            jdbcTemplate.update(unlikePost, userId, postId);
-            return jdbcTemplate.queryForObject(likesCount, int.class, postId);
+            return jdbcTemplate.update(unlikePost, userId, postId) == 0;
         }
 
-        jdbcTemplate.update(likePost, userId, postId);
+        return jdbcTemplate.update(likePost, userId, postId) == 1;
+    }
+
+    public int likesCount(int postId) {
+        String likesCount = "SELECT COUNT(DISTINCT likes.user_id) FROM likes WHERE post_id = ?;";
         return jdbcTemplate.queryForObject(likesCount, int.class, postId);
     }
 
