@@ -14,6 +14,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
+
       <input
         type="text"
         id="username"
@@ -23,6 +24,7 @@
         required
         autofocus
       />
+      
        <input
         type="password"
         id="password"
@@ -32,7 +34,7 @@
         required
       />
       
-      <button type="submit">Log In</button>
+      <button type="submit"  class="btn btn-info">Log In</button><!--added bootstrap-->
     </form>
     <div id="register-user">
       <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
@@ -116,7 +118,6 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   width: 50%;
-  height: 20px;
   margin: 5px;
   margin-left: -10%;
   padding-bottom: 10px;
@@ -124,6 +125,7 @@ export default {
   row-gap: 10px;
   background-color:aliceblue;
   justify-items: center;
+  align-content: center;
 }
 
 #login-image {

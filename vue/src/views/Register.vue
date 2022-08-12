@@ -81,7 +81,8 @@
         />
       </div>
       
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <!--<button class="btn btn-lg btn-primary btn-block" type="submit">-->
+        <button class="btn btn-info" type="submit">
         Create Account
       </button>
     </form>
