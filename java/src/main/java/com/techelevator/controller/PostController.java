@@ -3,8 +3,6 @@ package com.techelevator.controller;
 import com.techelevator.dao.PostDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,14 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
 import java.security.Principal;
 import java.util.Objects;
 
 @RestController
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class PostController {
 
     private PostDao postDao;
@@ -76,5 +73,11 @@ public class PostController {
         return new ResponseEntity<>("oof", HttpStatus.NOT_FOUND);
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteCollection(@RequestParam("postIds") int[] postIds) {
+
+        postDao.deletePostCollection(postIds);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
 
 }

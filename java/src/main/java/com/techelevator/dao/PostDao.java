@@ -13,4 +13,6 @@ public interface PostDao {
     List<Post> getAllPostsByUserId(int userId);
 
     List<Post> getAllFolloweePostsByFollowerId(int followerId);
+
+    public boolean deletePostCollection(int[] postIds);
 }
