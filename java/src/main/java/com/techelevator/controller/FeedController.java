@@ -1,15 +1,13 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.FollowDao;
 import com.techelevator.dao.PostDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,14 +15,19 @@ import java.util.List;
 public class FeedController {
 
     private PostDao postDao;
+    private UserDao userDao;
 
-    public FeedController(PostDao postDao) {
+    public FeedController(PostDao postDao, UserDao userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping(value = "/feed")
-    public List<Post> getAllFolloweePostsByFollowerId(@PathVariable int followerId) {
-        return postDao.getAllFolloweePostsByFollowerId(followerId);
+    public List<Post> getAllFolloweePostsByFollowerId(Principal principal) {
+
+        int userId = userDao.findIdByUsername(principal.getName());
+
+        return postDao.getAllFolloweePostsByFollowerId(userId);
     }
 
 

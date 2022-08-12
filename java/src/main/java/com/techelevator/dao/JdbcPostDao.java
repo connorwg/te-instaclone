@@ -124,7 +124,7 @@ public class JdbcPostDao implements PostDao {
         List<Post> followeesPosts = new ArrayList<>();
 
         String sql = "" +
-                "SELECT posts.user_id, s3_link, description, time " +
+                "SELECT post_id ,posts.user_id, s3_link, description, time " +
                 "FROM following " +
                 "INNER JOIN posts ON following.followee_id = posts.user_id " +
                 "WHERE following.follower_id = ? " +
