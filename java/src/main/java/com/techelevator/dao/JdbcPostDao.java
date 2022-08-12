@@ -116,9 +116,30 @@ public class JdbcPostDao implements PostDao {
         }
         return posts;
     }
+
+
+    // Returns list of Posts of all users being followed by passing in follower Id
+
+    public List<Post> getAllFolloweePostsByFollowerId(int followerId) {
+        List<Post> followeesPosts = new ArrayList<>();
+
+        String sql = "" +
+                "SELECT posts.user_id, s3_link, description, time " +
+                "FROM following " +
+                "INNER JOIN posts ON following.followee_id = posts.user_id " +
+                "WHERE following.follower_id = ? " +
+                "ORDER BY time DESC;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, followerId);
+
+        while (results.next()) {
+            followeesPosts.add(mapRowToPost(results));
+        }
+        return followeesPosts;
+    }
+
     private Post mapRowToPost(SqlRowSet rowSet){
         Post post = new Post();
-
         post.setPost_id(rowSet.getInt("post_id"));
         post.setUser_id(rowSet.getInt("user_id"));
         post.setPictureLink(rowSet.getString("s3_link"));

@@ -11,4 +11,6 @@ public interface PostDao {
     int likePost(int userId, int postId);
 
     List<Post> getAllPostsByUserId(int userId);
+
+    List<Post> getAllFolloweePostsByFollowerId(int followerId);
 }
