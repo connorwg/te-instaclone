@@ -34,7 +34,7 @@
         required
       />
       
-      <button type="submit"  class="btn btn-info">Log In</button><!--added bootstrap-->
+      <button type="submit"  class="badge rounded-pill bg-info">Log In</button><!--added bootstrap-->
     </form>
     <div id="register-user">
       <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
@@ -94,6 +94,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "login-image form-signin"
                        "login-image register-user";
+  background-color:;                      
 }
 
 .form-signin {
@@ -126,6 +127,8 @@ export default {
   background-color:aliceblue;
   justify-items: center;
   align-content: center;
+  font-family:"Billabong";
+  font-size: 200%;
 }
 
 #login-image {
@@ -143,8 +146,9 @@ h1 {
 }
 
 h2 {
-  font-family: emoji;
+  font-family: "Billabong";
   font-style: italic;
   margin: 0%;
 }
+
 </style>
