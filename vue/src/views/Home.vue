@@ -3,54 +3,73 @@
     <h1>
       <Header></Header>
     </h1>
+    <div class="twix">
+      <div
+        style="
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 150px;
+          padding-top: 80px;
+          border-color: black;
+          margin: 10px;
+        "
+      >
+        <section
+          class="post"
+          v-for="p in $store.state.images"
+          v-bind:key="p.id"
+        >
+          <p class="author">
+            {{ p.userId }}
+          </p>
 
-    <div
-      style="
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 150px;
-        padding-top: 80px;
-        border-color: black;
-        margin: 10px;
-      "
-    >
-      <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
-        
-        <p class="author">
-          {{ p.userId }}
-        </p>
+          <p class="description">
+            {{ p.description }}
+          </p>
 
-        <p class="description">
-          {{ p.description }}
-        </p>
-        
-        <img :src="p.picture" alt="none" />
+          <img :src="p.picture" alt="none" />
 
-        <p button>
-          <button class="btn btn-like" v-on:click="likeThis(p)" v-if="!likeVerifier(p)">Like <i class="fa-regular fa-thumbs-up"></i></button>
-          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>Unlike <i class="fa-regular fa-thumbs-down"></i></button>
-          {{ p.likes.length }} Likes
-        </p>
+          <p button>
+            <button
+              class="btn btn-like"
+              v-on:click="likeThis(p)"
+              v-if="!likeVerifier(p)"
+            >
+              Like <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+            <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+              Unlike <i class="fa-regular fa-thumbs-down"></i>
+            </button>
+            {{ p.likes.length }} Likes
+          </p>
 
-        <p class="comments">
-          {{ p.comments[1] }}
-        </p>
-        <p class="comments">
-          {{ p.comments[0] }}
-        </p>
+          <p class="comments">
+            {{ p.comments[1] }}
+          </p>
+          <p class="comments">
+            {{ p.comments[0] }}
+          </p>
 
-        <p class="addCom">Add Comment</p>
+          <p class="addCom">Add Comment</p>
 
-        <input
-          type="addComment"
-          id="name"
-          class="addComment"
-          placeholder="add your comment here"
-          v-model="newComment"
-        />
-        <button class="btn btn-submit" type="submit" v-on:click.prevent="addComment(p.id)">Submit</button>
-      </section>
+          <input
+            type="addComment"
+            id="name"
+            class="addComment"
+            placeholder="add your comment here"
+            v-model="newComment"
+          />
+          <button
+            class="btn btn-submit"
+            type="submit"
+            v-on:click.prevent="addComment(p.id)"
+          >
+            Submit
+          </button>
+        </section>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -84,13 +103,12 @@ export default {
   methods: {
     likeVerifier(p) {
       let liked = false;
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (p.likes[i] === p.userId) {
           liked = true;
         }
-        
-      }return liked;
-     
+      }
+      return liked;
     },
     /*
     addComment(comment) {
@@ -108,8 +126,8 @@ export default {
       newImage.likes = p.likes;
       newImage.comments = p.comments;
       newImage.likes.push(p.userId); // should be the current user's id here
-      
-/*
+
+      /*
       photoService
   
         .addLike(newImage)
@@ -121,7 +139,7 @@ export default {
           this.$router.push({ name: "home" });
         });
         */
-       this.$store.commit("SET_PHOTO_LIKES", newImage);
+      this.$store.commit("SET_PHOTO_LIKES", newImage);
     },
     unLikeThis(p) {
       let newImage = {};
@@ -133,13 +151,13 @@ export default {
       newImage.likes = [];
       newImage.comments = p.comments;
 
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (!(p.likes[i] === p.userId)) {
           newImage.likes.push(p.likes[i]);
         }
       }
-      
-/*
+
+      /*
       photoService
   
         .addLike(newImage)
@@ -151,23 +169,23 @@ export default {
           this.$router.push({ name: "home" });
         });
         */
-       this.$store.commit("SET_PHOTO_LIKES", newImage);
+      this.$store.commit("SET_PHOTO_LIKES", newImage);
     },
 
     addComment(id) {
-      if(this.newComment.trim() !== ''){
+      if (this.newComment.trim() !== "") {
         let commentObj = {
           postId: id,
-          comment: this.newComment
+          comment: this.newComment,
         };
-        photoService.addComment(commentObj).then(response => {
-          if(response.status === 201){
+        photoService.addComment(commentObj).then((response) => {
+          if (response.status === 201) {
             this.$store.commit("ADD_COMMENT", commentObj);
-            this.$router.push({name: 'home'});
+            this.$router.push({ name: "home" });
           }
         });
       }
-    }
+    },
   },
 
   props: ["images"],
@@ -233,11 +251,8 @@ section {
 }
 .btn-like {
   color: green;
-  
 }
 .btn-unlike {
   color: red;
-  
 }
-
 </style>
