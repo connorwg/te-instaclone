@@ -4,6 +4,7 @@ import com.techelevator.dao.PostDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @RestController
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class PostController {
 
     private PostDao postDao;
@@ -57,25 +58,26 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public boolean likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
+    public ResponseEntity<String> likePost(Principal principal, @RequestParam(defaultValue = "postId", value = "postId") int postId) {
 
         int userId = userDao.findIdByUsername(principal.getName());
+        int response = postDao.likePost(userId, postId);
 
-        return postDao.likePost(userId, postId);
+        if (response == 2) {
+            return new ResponseEntity<>("Unliked", HttpStatus.OK);
+        }
+        if (response == 1) {
+            return new ResponseEntity<>("Liked", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("oof", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/liked")
-    public boolean userLikedPost(Principal principal, @RequestParam("postId") int postId) {
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteCollection(@RequestParam("postIds") int[] postIds) {
 
-        int userId = userDao.findIdByUsername(principal.getName());
-        return postDao.userLikedPost(userId, postId);
+        postDao.deletePostCollection(postIds);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
-
-    @GetMapping("/likes")
-    public int postLikes(@RequestParam("postId") int postId) {
-
-        return postDao.likesCount(postId);
-    }
-
 
 }
