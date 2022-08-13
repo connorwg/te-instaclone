@@ -20,17 +20,18 @@ export default new Vuex.Store({
   state: {
     active: 'home',
 
+    activePost: -1,
+
     icon2: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
     isLiked: false,
     token: currentToken || '',
     user: currentUser || {},//at the time of login or authentication this user's info is getting stored in this property
-    currentPostId: -1,
+    
 
     images: [{
       id: '1',
       userId: "11",
-      firstName: "Prachi",
-      lastName: "lastName",
+     
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03E9U67GNL-bd5c7423ccc1-512",
       description: 'photo description here',
       timeStamp: '',
@@ -40,8 +41,7 @@ export default new Vuex.Store({
     {
       id: '2',
       userId: "12",
-      firstName: "Connor",
-      lastName: "lastName",
+      
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3TBG8HK-c6b48e687235-512",
       description: 'photo description here',
       timeStamp: '',
@@ -51,8 +51,7 @@ export default new Vuex.Store({
     {
       id: '3',
       userId: "13",
-      firstName: "Andrew",
-      lastName: "lastName",
+     
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03DK8YV9LZ-3d43d76e3219-512",
       description: 'photo description here',
       timeStamp: '',
@@ -62,8 +61,7 @@ export default new Vuex.Store({
     {
       id: '4',
       userId: "14",
-      firstName: "Dave",
-      lastName: "lastName",
+      
       picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
       description: 'photo description here',
       timeStamp: '',
@@ -74,19 +72,18 @@ export default new Vuex.Store({
     ],
 
     currentImage: {
-      id: "4",
-      userID: "14",
-      firstName: "Dave",
-      lastName: "lastName",
-      picture: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
       description: "this is the photo description",
+      pictureLink: "https://ca.slack-edge.com/T0GNFLF6D-U03B3T73DSR-9631f652a35e-512",
+      post_id: "4",
       timestamp: "",
-      likes: [6],
-      comments: ['blah comments blah', 'comments', 'more than 2 comments']
-
+      user_id: "14",
     }
   },
   mutations: {
+    SET_ACTIVE_POST(state, postId){
+      state.activePost = postId;
+    },
+
     SET_TAB(state, active) {
       state.active = active;
     },

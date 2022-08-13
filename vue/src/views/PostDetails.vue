@@ -1,71 +1,70 @@
 <template>
-
   <div>
-      <h1>
+    <h1>
       <Header></Header>
     </h1>
     <div
-        style="
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          padding-bottom: 150px;
-          padding-top: 80px;
-          border-color: black;
-          margin: 10px;
-        "
-      >
-        <section
-          class="post"
-         
-        >
-          <p class="author">
-            {{   $store.state.currentImage.userid}}
-          </p>
+      style="
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 150px;
+        padding-top: 80px;
+        border-color: black;
+        margin: 10px;
+      "
+    >
+      <section class="post">
+        <p class="author">
+          {{ currentImage.user_id }}
+        </p>
 
-          <p class="description">
-            {{ $store.state.currentImage.description }}
-          </p>
+        <p class="description">
+          {{ currentImage.description }}
+        </p>
 
-          <img :src="$store.state.currentImage.picture" alt="none" />
+        <img :src="currentImage.pictureLink" alt="none" />
 
-          <p button>
-            <button
-              class="btn btn-like"
-              v-on:click="likeThis(p)"
-              v-if="!likeVerifier(p)"
-            >
-              Like <i class="fa-regular fa-thumbs-up"></i>
-            </button>
-            <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
-              Unlike <i class="fa-regular fa-thumbs-down"></i>
-            </button>
-            {{ $store.state.currentImage.likes.length }} Likes
-          </p>
-
-          <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
-            {{ p.comments[i] }}
-          </p>
-          
-
-          <p class="addCom">Add Comment</p>
-
-          <input
-            type="addComment"
-            id="name"
-            class="addComment"
-            placeholder="add your comment here"
-            v-model="newComment"
-          />
+        <p button>
           <button
-            class="btn btn-submit"
-            type="submit"
-            v-on:click.prevent="addComment(p.id)"
+            class="btn btn-like"
+            v-on:click="likeThis(p)"
+            v-if="!likeVerifier(p)"
           >
-            Submit
+            Like <i class="fa-regular fa-thumbs-up"></i>
           </button>
-        </section>
-      </div>
+          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+            Unlike <i class="fa-regular fa-thumbs-down"></i>
+          </button>
+          {{ currentImage.likes.length }} Likes
+        </p>
+
+        <p
+          class="comments"
+          v-for="c in currentImage.comments"
+          v-bind:key="c.id"
+        >
+          {{ p.comments[i] }}
+        </p>
+
+        <p class="addCom">Add Comment</p>
+
+        <input
+          type="addComment"
+          id="name"
+          class="addComment"
+          placeholder="add your comment here"
+          v-model="newComment"
+        />
+        <button
+          class="btn btn-submit"
+          type="submit"
+          v-on:click.prevent="addComment(p.id)"
+        >
+          Submit
+        </button>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -74,32 +73,21 @@ import Header from "./Header.vue";
 import photoService from "../services/PhotoService.js";
 
 export default {
-    name: "postDetails",
-    components: {
+  name: "postDetails",
+  components: {
     Header,
   },
-   
+
   data() {
     return {
       image: [],
-
-      currentImage: {
-        id: "",
-        userId: "",
-        picture: "",
-        description: "",
-        timeStamp: "",
-        likes: [],
-        comments: [],
-      },
-
     };
   },
 
   methods: {
     likeVerifier(p) {
       let liked = false;
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (p.likes[i] === this.$store.state.user.id) {
           liked = true;
         }
@@ -123,8 +111,8 @@ export default {
       newImage.comments = p.comments;
       //newImage.likes.push(p.userId); // should be the current user's id here
       newImage.likes.push(this.$store.state.user.id);
-      
-/*
+
+      /*
       photoService
   
         .addLike(newImage)
@@ -148,7 +136,7 @@ export default {
       newImage.likes = [];
       newImage.comments = p.comments;
 
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (!(p.likes[i] === this.$store.state.user.id)) {
           newImage.likes.push(p.likes[i]);
         }
@@ -184,36 +172,30 @@ export default {
       }
     },
   },
-   props: {
-    postId: {
-      type: Number,
-      default: 0
-    }, 
-    
-  },
-  
-    
+
   computed: {
     currentLikes() {
       return Number.parseInt(this.$store.images.likes);
     },
 
-    current() {
+    currentImage() {
       return this.$store.state.currentImage;
-    }
-  
+    },
   },
 
   created() {
+    let postId = Number.parseInt(this.$route.params.postId);
+    this.$store.commit("SET_ACTIVE_POST", postId);
+
     photoService.getPhotos().then((response) => {
       this.$store.commit("SET_PHOTOS", response.data);
     });
-    photoService.getPhotoById().then((response) => {
-        this.$store.commit("SET_CURRENT_PHOTO", response.data)
-    })
+
+    photoService.getPhotoById(postId).then((response) => {
+      this.$store.commit("SET_CURRENT_PHOTO", response.data);
+    });
   },
 };
-
 </script>
 
 
@@ -287,11 +269,10 @@ section {
 }
 .description {
   background-color: lightblue;
-  
+
   border-radius: 0px 0px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
 }
-
 </style>

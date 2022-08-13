@@ -6,8 +6,8 @@ export default {
     return axios.get('/post');
   },
 
-  getPhotoById(currentPostId) {
-    return axios.get(`/post/${currentPostId}`)
+  getPhotoById(postId) {
+    return axios.get(`/post/${postId}`);
   },
 
   addComment(commentObj) {

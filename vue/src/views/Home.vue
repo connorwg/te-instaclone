@@ -29,7 +29,7 @@
           {{ p.description }}
         </p>
         <router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
-          <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
+          <img :src="p.picture" alt="none" />
         </router-link>
         
 
@@ -101,7 +101,7 @@ export default {
         comments: [],
       },
 
-      currentPostId: -1,
+    
     };
   },
 
@@ -195,11 +195,14 @@ export default {
     },
   },
 
-  props: ["images"],
-   postId: {
+  props: 
+  {
+    postId: {
       type: Number,
       default: 0
     }, 
+  },
+
   computed: {
     currentLikes() {
       return Number.parseInt(this.$store.images.likes);
