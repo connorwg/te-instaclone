@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img id="icon" src="../../public/logo.jpeg" class="rounded"/>
+        <img id="icon" src="../../public/logo.jpeg"/>
     </div>
 </template>
 

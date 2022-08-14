@@ -14,7 +14,6 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-
       <input
         type="text"
         id="username"
@@ -24,7 +23,6 @@
         required
         autofocus
       />
-      
        <input
         type="password"
         id="password"
@@ -34,7 +32,7 @@
         required
       />
       
-      <button type="submit"  class="badge rounded-pill bg-info">Log In</button><!--added bootstrap-->
+      <button type="submit">Log In</button>
     </form>
     <div id="register-user">
       <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
@@ -94,7 +92,6 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "login-image form-signin"
                        "login-image register-user";
-  background-color:;                      
 }
 
 .form-signin {
@@ -119,6 +116,7 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   width: 50%;
+  height: 20px;
   margin: 5px;
   margin-left: -10%;
   padding-bottom: 10px;
@@ -126,9 +124,6 @@ export default {
   row-gap: 10px;
   background-color:aliceblue;
   justify-items: center;
-  align-content: center;
-  font-family:"Billabong";
-  font-size: 200%;
 }
 
 #login-image {
@@ -146,9 +141,8 @@ h1 {
 }
 
 h2 {
-  font-family: "Billabong";
+  font-family: emoji;
   font-style: italic;
   margin: 0%;
 }
-
 </style>

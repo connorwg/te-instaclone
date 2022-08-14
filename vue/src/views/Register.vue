@@ -68,7 +68,7 @@
           v-on:change="checkPassword"
         />
       </div>
-      <div class="alert alert-danger" role="alert" v-if="!validPassword">Password length must be at least 8. It must contain 1 uppercase letter, 1 number and 1 special character @$%!</div>
+      <div class="alert invalidPwd" role="alert" v-if="!validPassword">Password length must be at least 8. It must contain 1 uppercase letter, 1 number and 1 special character @$%!</div>
 
       <div>
         <input
@@ -81,8 +81,7 @@
         />
       </div>
       
-      <!--<button class="btn btn-lg btn-primary btn-block" type="submit">-->
-        <button class="badge rounded-pill bg-info" type="submit">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
     </form>
@@ -197,8 +196,6 @@ export default {
 
 .back-to-login {
   display: grid;
-  font-family:"Billabong";
-  font-size: 180%;
   grid-area: back-to-login;
   border: 1px solid black;
   border-radius: 5px;
@@ -218,7 +215,6 @@ h1 {
   font-weight: 1000;
   font-style: italic;
   margin-bottom: 0%; 
-  margin-top: 5%;
 }
 
 #image {
@@ -228,7 +224,7 @@ h1 {
 }
 
 h2 {
-  font-family: "Billabong";
+  font-family: emoji;
   font-style: italic;
   margin: 0%;
   color:black;
@@ -241,6 +237,7 @@ h2 {
 
 .alert {
   align-self: center;
+  color: red;
 }
 
 .invalidPwd {
