@@ -138,7 +138,20 @@ public class JdbcPostDao implements PostDao {
         return followeesPosts;
     }
 
-    private Post mapRowToPost(SqlRowSet rowSet){
+    public boolean deletePostCollection(int[] postIds) {
+
+        String sql = "BEGIN; " +
+                "DELETE FROM comments WHERE post_id = ?; " +
+                "DELETE FROM likes WHERE post_id = ?; " +
+                "DELETE FROM posts WHERE post_id = ?; " +
+                "END;";
+        for (Integer id : postIds) {
+            jdbcTemplate.update(sql, id, id, id);
+        }
+        return true;
+    }
+
+    private Post mapRowToPost(SqlRowSet rowSet) {
         Post post = new Post();
         post.setPost_id(rowSet.getInt("post_id"));
         post.setUser_id(rowSet.getInt("user_id"));

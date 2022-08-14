@@ -38,16 +38,16 @@ public class JdbcUserDao implements UserDao {
         return userId;
     }
 
-	@Override
-	public User getUserById(int userId) {
-		String sql = "SELECT * FROM users WHERE user_id = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
-		if (results.next()) {
-			return mapRowToUser(results);
-		} else {
-			throw new UserNotFoundException();
-		}
-	}
+    @Override
+    public User getUserById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        if (results.next()) {
+            return mapRowToUser(results);
+        } else {
+            throw new UserNotFoundException();
+        }
+    }
 
     @Override
     public List<User> findAll() {
@@ -130,7 +130,7 @@ public class JdbcUserDao implements UserDao {
 
 
 
-     // Gets list of users that this specific user is following
+    // Gets list of users that this specific user is following
     public List<User> getFolloweesByUserId(int userId) {
         List<User> followees = new ArrayList<>();
 
