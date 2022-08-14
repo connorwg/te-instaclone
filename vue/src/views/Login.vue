@@ -130,6 +130,7 @@ export default {
   grid-area: login-image;
   margin-top: 75px;
   margin-right: -20%;
+  
 }
 
 h1 {

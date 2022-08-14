@@ -13,6 +13,7 @@ export default {
 <style>
     #icon {
         width: 400px;
-        height: 400px; 
+        height: 400px;
+        border-radius: 40px; 
     }
 </style>

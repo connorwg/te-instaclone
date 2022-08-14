@@ -98,6 +98,7 @@ ul > li {
     width: 50px;
     margin-left: 20px;
     line-height: 10px;
+    border-radius: 15px 15px 10px 10px;
     
    
 }
