@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exceptions.CommentNotFoundException;
+import com.techelevator.exceptions.PostNotFoundException;
 import com.techelevator.model.Comment;
 import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JdbcCommentDao implements CommentDao{
@@ -41,29 +43,30 @@ public class JdbcCommentDao implements CommentDao{
     }
 
     public List<Comment> getCommentsByPostId(int postId) {
+
         List<Comment> comments = new ArrayList<>();
+        List<Integer> postIds = jdbcPostDao.findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
+
         String sql = "SELECT comment_id, comment, post_id, author_id " +
                 "FROM comments " +
                 "WHERE post_id = ?;";
+
+        if (!postIds.contains(postId)) throw new PostNotFoundException();
         SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, postId);
-        if (!returned.next()) {
-            throw new CommentNotFoundException();
-        }
+
         while (returned.next()) {
             comments.add(mapRowToComment(returned));
+        }
+        if (comments.size() < 1) {
+            throw new CommentNotFoundException();
         }
         return comments;
     }
 
     public int createComment(String comment,  int postId, int author_id)  {
-// check if post exists
 
-        List<Post> posts = jdbcPostDao.findAllPosts();
-        List<Integer> postIds  = new ArrayList<>();
 
-        for(Post post : posts) {
-            postIds.add(post.getPost_id());
-        }
+        List<Integer> postIds = jdbcPostDao.findAllPosts().stream().map(Post::getPost_id).collect(Collectors.toList());
 
         String sql = "" +
                 "INSERT INTO comments (comment, post_id, author_id) " +
@@ -76,7 +79,7 @@ public class JdbcCommentDao implements CommentDao{
                 author_id);
 
         if (!postIds.contains(postId)) {
-            return -1;
+            throw new PostNotFoundException();
         }
 
         return 1;

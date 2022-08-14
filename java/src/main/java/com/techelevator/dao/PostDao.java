@@ -8,7 +8,12 @@ public interface PostDao {
 
     Post createPost(int user_id, String s3_link, String description);
 
-    int likePost(int userId, int postId);
+    boolean likePost(int userId, int postId);
 
     List<Post> getAllPostsByUserId(int userId);
+
+    public boolean userLikedPost(int userId, int postId);
+
+    public int likesCount(int postId);
+
 }

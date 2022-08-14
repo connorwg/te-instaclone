@@ -128,6 +128,11 @@ public class JdbcUserDao implements UserDao {
         return 1;
     }
 
+//    public List<User> getFolloweesByUserId(int userId) {
+//        List<User> followees = new ArrayList<>();
+//
+//    }
+
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
@@ -142,4 +147,6 @@ public class JdbcUserDao implements UserDao {
         user.setActivated(true);
         return user;
     }
+
+
 }
