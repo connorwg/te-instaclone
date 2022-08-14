@@ -3,75 +3,73 @@
     <h1>
       <Header></Header>
     </h1>
-
-    <div
-      style="
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-bottom: 10px;
-        padding-top: 80px;
-        padding-left: 10px;
-        padding-right: 10px;
-        border-color: black;
-        margin: 10px;
-        justify-content: space-evenly;
-        background-color: cadetblue;
-      "
-    >
-      <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
-        <p class="author">
-          {{ p.userId }}
-        </p>
-
-        <p class="description">
-          {{ p.description }}
-        </p>
-        <router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
-          <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
-        </router-link>
-        
-
-        <p button>
-          <button
-            class="btn btn-like"
-            v-on:click="likeThis(p)"
-            v-if="!likeVerifier(p)"
-          >
-            Like <i class="fa-regular fa-thumbs-up"></i>
-          </button>
-          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
-            Unlike <i class="fa-regular fa-thumbs-down"></i>
-          </button>
-          {{ p.likes.length }} Likes
-        </p>
-
-        <p class="comments">
-          {{ p.comments[1] }}
-        </p>
-
-        <p class="comments">
-          {{ p.comments[0] }}
-        </p>
-
-        <p class="addCom">Add Comment</p>
-
-        <input
-          type="addComment"
-          id="name"
-          class="addComment"
-          placeholder="add your comment here"
-          v-model="newComment"
-        />
-        <button
-          class="btn btn-submit"
-          type="submit"
-          v-on:click.prevent="addComment(p.id)"
+    <div class="twix">
+      <div
+        style="
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 150px;
+          padding-top: 80px;
+          border-color: black;
+          margin: 10px;
+        "
+      >
+        <section
+          class="post"
+          v-for="p in $store.state.images"
+          v-bind:key="p.id"
         >
-          Submit
-        </button>
-      </section>
+          <p class="author">
+            {{ p.userId }}
+          </p>
+
+          <p class="description">
+            {{ p.description }}
+          </p>
+
+          <img :src="p.picture" alt="none" />
+
+          <p button>
+            <button
+              class="btn btn-like"
+              v-on:click="likeThis(p)"
+              v-if="!likeVerifier(p)"
+            >
+              Like <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+            <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+              Unlike <i class="fa-regular fa-thumbs-down"></i>
+            </button>
+            {{ p.likes.length }} Likes
+          </p>
+
+          <p class="comments">
+            {{ p.comments[1] }}
+          </p>
+          <p class="comments">
+            {{ p.comments[0] }}
+          </p>
+
+          <p class="addCom">Add Comment</p>
+
+          <input
+            type="addComment"
+            id="name"
+            class="addComment"
+            placeholder="add your comment here"
+            v-model="newComment"
+          />
+          <button
+            class="btn btn-submit"
+            type="submit"
+            v-on:click.prevent="addComment(p.id)"
+          >
+            Submit
+          </button>
+        </section>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -86,7 +84,6 @@ export default {
   components: {
     Header,
   },
-
   data() {
     return {
       image: [],
@@ -100,17 +97,14 @@ export default {
         likes: [],
         comments: [],
       },
-
-      currentPostId: -1,
     };
   },
 
   methods: {
-  
     likeVerifier(p) {
       let liked = false;
       for (let i = 0; i < p.likes.length; i++) {
-        if (p.likes[i] === this.$store.state.user.id) {
+        if (p.likes[i] === p.userId) {
           liked = true;
         }
       }
@@ -131,8 +125,7 @@ export default {
       newImage.timeStamp = p.timeStamp;
       newImage.likes = p.likes;
       newImage.comments = p.comments;
-      //newImage.likes.push(p.userId); // should be the current user's id here
-      newImage.likes.push(this.$store.state.user.id);
+      newImage.likes.push(p.userId); // should be the current user's id here
 
       /*
       photoService
@@ -159,7 +152,7 @@ export default {
       newImage.comments = p.comments;
 
       for (let i = 0; i < p.likes.length; i++) {
-        if (!(p.likes[i] === this.$store.state.user.id)) {
+        if (!(p.likes[i] === p.userId)) {
           newImage.likes.push(p.likes[i]);
         }
       }
@@ -196,10 +189,6 @@ export default {
   },
 
   props: ["images"],
-   postId: {
-      type: Number,
-      default: 0
-    }, 
   computed: {
     currentLikes() {
       return Number.parseInt(this.$store.images.likes);
@@ -252,42 +241,18 @@ section {
 .author {
   font-size: 1rem;
   background-color: lightgray;
-  border-radius: 5px 5px 0px 0px;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  line-height: 30px;
 }
 .addCom {
   color: purple;
-  border-radius: 5px;
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 .addComment {
   border: 1px solid lightgray;
   color: purple;
-  border-radius: 5px;
 }
 .btn-like {
   color: green;
-  border-radius: 5px;
 }
 .btn-unlike {
   color: red;
-  border-radius: 5px;
-}
-.comments {
-  background-color: linen;
-  border-radius: 5px;
-  margin-top: 0px;
-  margin-bottom: 5px;
-}
-.description {
-  background-color: lightblue;
-
-  border-radius: 0px 0px 0px 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  line-height: 40px;
 }
 </style>

@@ -5,7 +5,7 @@
     <li></li>
     <li
       v-if="$route.name != 'home'"
-      @click="home"
+      @click="this.$router.push({ name: 'home' })"
       :class="{ active: $store.state.active === 'home' }"
     >
       Home
@@ -22,7 +22,7 @@
 
 
     <li
-      @click="postpic"
+      @click="setTab('post')"
       :class="{ active: $store.state.active === 'post' }"
     >
       Post a Picture
@@ -49,14 +49,6 @@ export default {
     setTab(active) {
       this.$store.commit("SET_TAB", active);
     },
-    postpic(){
-      this.setTab('post');
-      this.$router.push({name: 'postpic'});
-    },
-    home(){
-      this.setTab('home');
-      this.$router.push({name: 'home'});
-    }
   },
 };
 </script>
