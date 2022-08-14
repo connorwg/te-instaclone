@@ -10,6 +10,7 @@ export default {
     return axios.get(`/post/${currentPostId}`)
   },
 
+
   addComment(commentObj) {
       return axios.post(`/post/${commentObj.postId}/create`, null, {params: {comment:commentObj.comment}});
   },

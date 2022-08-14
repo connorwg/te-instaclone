@@ -10,10 +10,10 @@
              id="caption"
              v-model="item.caption"
              placeholder="Add a Caption!"/>
-             <button id="postpicture" v-on:click.prevent="postPicture">Post</button>
+             <button id="postpicture" v-on:click.prevent="postPicture">Post</button><!--to .prevent default function of click-->
              <div>
               <label style="color: red" v-if="!gotResponse && postRequestSent">Uploading... Please wait...</label>
-              <label style="color: blue, font-weight: bold" v-else-if="gotResponse">Picture uploaded!</label>
+              <label style="color: blue; font-weight: bold" v-else-if="gotResponse">Picture uploaded!</label>
              </div> 
         </div>
     </div>
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     preview(event) {
-      const file = event.target.files[0]
+      const file = event.target.files[0]//to retrieve data from event
       this.item.image = file
       this.item.imageUrl = URL.createObjectURL(file)
     },
