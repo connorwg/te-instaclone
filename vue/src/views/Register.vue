@@ -174,9 +174,12 @@ export default {
 #register {
   display: grid;
   justify-items: center;
+  height: 100vh;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "image form-register"
-                       "image back-to-login";                                         
+                       "image back-to-login";   
+   background: rgb(0,246,255);
+  background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);                                                           
 }
 
 .form-register {
