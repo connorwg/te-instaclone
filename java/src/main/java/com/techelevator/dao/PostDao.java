@@ -19,4 +19,6 @@ public interface PostDao {
     public boolean userLikedPost(int userId, int postId);
 
     public int likesCount(int postId);
+
+    public List<Post> findAllPosts();
 }

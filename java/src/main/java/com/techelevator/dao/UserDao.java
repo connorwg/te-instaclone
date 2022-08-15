@@ -23,4 +23,6 @@ public interface UserDao {
     public List<User> getFolloweesByUserId(int userId);
 
     public List<User> getFollowersByUserID(int userId);
+
+    public void uploadProfilePicture(int userid, String s3Link);
 }
