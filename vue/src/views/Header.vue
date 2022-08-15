@@ -1,6 +1,9 @@
 <template>
   <ul>
-    <li class="logo">ClicknShare  <img  class="ico" src="../../public/logo.jpeg"/> </li>
+    <li class="logo" @click="home"
+      :class="{ active: $store.state.active === 'home' }">
+      ClicknShare  
+      <img  class="ico" src="../../public/logo.jpeg"/> </li>
   
     <li></li>
     <li
