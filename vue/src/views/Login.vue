@@ -1,4 +1,5 @@
 <template>
+<!-- <div class="container"> -->
   <div id="login" class="text-center">
     <icon-image id="login-image"/>
     <form class="form-signin" @submit.prevent="login">
@@ -34,12 +35,13 @@
         required
       />
       
-      <button type="submit"  class="badge rounded-pill bg-info">Log In</button><!--added bootstrap-->
+      <button id="loginButton" type="submit"  class="badge rounded-pill bg-info">Log In</button><!--added bootstrap-->
     </form>
     <div id="register-user">
       <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -88,15 +90,28 @@ export default {
 </script>
 
 <style>
+.container {
+  
+  background: rgb(0,246,255);
+  background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);
+}
+
 #login {
   display: grid;
   justify-items: center;
-  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 50vw 50vw;
+  
   grid-template-areas: "login-image form-signin"
-                       "login-image register-user";                     
+                       "login-image register-user";      
+  background: rgb(0,246,255);
+  background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);
+               
 }
 
 .form-signin {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: grid;
   grid-area: form-signin;
   border: 1px solid black;
@@ -113,6 +128,7 @@ export default {
 }
 
 #register-user {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: grid;
   grid-area: register-user;
   border: 1px solid black;
@@ -150,5 +166,20 @@ h2 {
   font-style: italic;
   margin: 0%;
 }
+
+
+
+#username {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#password {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#loginButton {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 </style>
