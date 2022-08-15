@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>
+    <h1 id="home-header">
       <Header></Header>
     </h1>
 
@@ -20,18 +20,18 @@
         background-color: cadetblue;
       "
     >
-      <section class="post" v-for="p in $store.state.images" v-bind:key="p.id">
-        <p class="author">
+      <section class="post" v-for="p in filterPosts" v-bind:key="p.id">
+        <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
           {{ p.firstName + ' ' + p.lastName }}
-        </p>
+        </a>
 
         <p class="description">
           {{ p.description }}
         </p>
-        <router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
+        <!--<router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
           <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
-        </router-link>
-        
+        </router-link>-->
+        <img :src="p.picture" alt="none"  @click.prevent="postDetails(p)"/>
 
         <p button>
           <button
@@ -65,7 +65,8 @@
           v-model="newComment"
         />
         <button
-          class="btn btn-submit"
+          id="commentb"
+          class="badge bg-info"
           type="submit"
           v-on:click.prevent="addComment(p.id)"
         >
@@ -86,11 +87,10 @@ export default {
   components: {
     Header,
   },
-
   data() {
     return {
       image: [],
-
+      filteredImages: [],
       newImage: {
         id: "",
         userId: "",
@@ -106,7 +106,13 @@ export default {
   },
 
   methods: {
-  
+    postDetails(currentImage){
+      this.$store.commit("SET_CURRENT_PHOTO", currentImage);
+      this.$router.push({name: "postdetails"});
+    },
+    userprofile(userId){
+      this.$router.push({name: 'userprofile', params :{userId: userId}});
+    },
     likeVerifier(p) {
       let liked = false;
       for (let i = 0; i < p.likes.length; i++) {
@@ -195,7 +201,7 @@ export default {
     },
   },
 
-  props: ["images"],
+  props: ["images", "userId_filter"],
    postId: {
       type: Number,
       default: 0
@@ -204,6 +210,15 @@ export default {
     currentLikes() {
       return Number.parseInt(this.$store.images.likes);
     },
+    filterPosts(){
+      if(this.userId_filter!=null){
+        return this.$store.state.images.filter(image => {
+          return image.userId===this.userId_filter;
+        });
+      } else{
+        return this.$store.state.images
+      }
+    }
   },
 
   created() {
@@ -228,15 +243,17 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+
 h1 {
   position: fixed;
   margin-top: 0;
   top: 0;
   z-index: 200;
-  background-color: rgb(230, 230, 230);
+  background-color: aliceblue;
   width: 100%;
   justify-content: space-around;
 }
+
 
 section {
   display: grid;
@@ -249,6 +266,7 @@ section {
   font-size: 0.8rem;
   text-align: left;
 }
+
 .author {
   font-size: 1rem;
   background-color: lightgray;
@@ -256,6 +274,7 @@ section {
   margin-top: 10px;
   margin-bottom: 0px;
   line-height: 30px;
+  width: 50%;
 }
 .addCom {
   color: purple;
@@ -285,9 +304,18 @@ section {
 .description {
   background-color: lightblue;
 
-  border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
+
+}
+#commentb {
+  width: 20%;
+  height:150%
+}
+
+#home-header {
+font-family:"Billabong";
 }
 </style>

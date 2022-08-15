@@ -10,6 +10,9 @@ export default {
     return axios.get(`/post/${currentPostId}`)
   },
 
+  getPhotoByUserId(userId) {
+    return axios.get(`/post/${userId}`)
+  },
 
   addComment(commentObj) {
       return axios.post(`/post/${commentObj.postId}/create`, null, {params: {comment:commentObj.comment}});
@@ -25,7 +28,6 @@ export default {
   },
 
   getUser(userId) {
-    alert('inside getUser');
     return axios.get(`/user/${userId}`);
   },
 

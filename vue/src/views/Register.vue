@@ -2,8 +2,8 @@
   <div id="register" class="text-center">
     <icon-image id="image"/>
     <form class="form-register" @submit.prevent="register">
-      <h1>ClicknShare</h1>
-      <h2 class="h3 mb-3 font-weight-normal">Create an Account</h2>
+      <h1 id="register-banner" >ClicknShare</h1>
+      <h2 id="register-text" class="h3 mb-3 font-weight-normal">Create an Account</h2>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -212,7 +212,7 @@ export default {
   justify-items: center;
 }
 
-h1 {
+#register-banner {
   font-family:"Billabong";
   color: cadetblue;
   font-weight: 1000;
@@ -227,7 +227,7 @@ h1 {
   margin-top: 75px;
 }
 
-h2 {
+#register-text {
   font-family: "Billabong";
   font-style: italic;
   margin: 0%;

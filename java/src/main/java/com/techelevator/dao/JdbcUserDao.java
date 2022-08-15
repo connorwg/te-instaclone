@@ -167,7 +167,12 @@ public class JdbcUserDao implements UserDao {
         return followers;
     }
 
+    public void uploadProfilePicture(int userid, String s3Link) {
 
+        String sql = "UPDATE users SET profile_picture_link  = ? WHERE user_id = ?;";
+
+        jdbcTemplate.update(sql, s3Link, userid);
+    }
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();

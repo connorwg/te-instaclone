@@ -3,8 +3,8 @@
   <div id="login" class="text-center">
     <icon-image id="login-image"/>
     <form class="form-signin" @submit.prevent="login">
-      <h1>ClicknShare</h1>
-      <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
+      <h1 id="login-banner">ClicknShare</h1>
+      <h2 id="login-text" class="h3 mb-3 font-weight-normal">Please sign in</h2>
       <div
         class="alert alert-danger"
         role="alert"
@@ -153,7 +153,7 @@ export default {
   
 }
 
-h1 {
+#login-banner {
   font-family:"Billabong";
   color: cadetblue;
   font-weight: 1000;
@@ -161,7 +161,7 @@ h1 {
   margin-bottom: 0%; 
 }
 
-h2 {
+#login-text {
   font-family: "Billabong";
   font-style: italic;
   margin: 0%;
@@ -180,6 +180,5 @@ h2 {
 #loginButton {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 </style>
