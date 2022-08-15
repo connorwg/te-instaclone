@@ -243,6 +243,7 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+
 h1 {
   position: fixed;
   margin-top: 0;
@@ -252,6 +253,7 @@ h1 {
   width: 100%;
   justify-content: space-around;
 }
+
 
 section {
   display: grid;
@@ -264,6 +266,7 @@ section {
   font-size: 0.8rem;
   text-align: left;
 }
+
 .author {
   font-size: 1rem;
   background-color: lightgray;
@@ -301,7 +304,7 @@ section {
 .description {
   background-color: lightblue;
 
-  border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;

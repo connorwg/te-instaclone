@@ -79,7 +79,7 @@ export default new Vuex.Store({
       description: "this is the photo description",
       timestamp: "",
       likes: [6],
-      comments: ['blah comments blah', 'comments', 'more than 2 comments']
+      comments: ['blah comments blah', 'comments', 'more than 2 comments', 'last comment']
 
     }
 

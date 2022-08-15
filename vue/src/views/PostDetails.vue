@@ -10,57 +10,63 @@
           display: flex;
           flex-direction: column;
           padding-bottom: 150px;
-          padding-top: 80px;
+          padding-top: 120px;
+          padding-left: 170px;
+          padding-right: 170px;
           border-color: black;
           margin: 10px;
+          background-color: cadetblue;
         " 
+        
       >
-        <section class="post" >
-          <p class="author">
-            {{$store.state.currentImage.userId}}
-          </p>
+        <section class="singlepost" >
+          <img class="singlepostimage" :src="$store.state.currentImage.picture" alt="none" />
 
-          <p class="description">
-            {{ $store.state.currentImage.description }}
-          </p>
+          <div class="right-side-of-box">
+            <p class="author">
+              {{$store.state.currentImage.firstName + " " + $store.state.currentImage.lastName}}
+            </p>
 
-          <img :src="$store.state.currentImage.picture" alt="none" />
+            <p class="description">
+              {{ $store.state.currentImage.description }}
+            </p>
 
-          <p button>
+            <p button>
+              <button
+                class="btn btn-like"
+                v-on:click="likeThis($store.state.currentImage)"
+                v-if="!likeVerifier($store.state.currentImage)"
+              >
+                Like <i class="fa-regular fa-thumbs-up"></i>
+              </button>
+              <button class="btn btn-unlike" v-on:click="unLikeThis($store.state.currentImage)" v-else>
+                Unlike <i class="fa-regular fa-thumbs-down"></i>
+              </button>
+              {{ $store.state.currentImage.likes.length }} Likes
+            </p>
+
+            <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
+              {{ $store.state.currentImage.comments[i] }}
+            </p>
+            
+
+            <p class="addCom">Add Comment</p>
+
+            <input
+              type="addComment"
+              id="name"
+              class="addComment"
+              placeholder="add your comment here"
+              v-model="newComment"
+            />
             <button
-              class="btn btn-like"
-              v-on:click="likeThis($store.state.currentImage)"
-              v-if="!likeVerifier($store.state.currentImage)"
+              class="btn btn-submit"
+              type="submit"
+              v-on:click.prevent="addComment($store.state.currentImage.id)"
             >
-              Like <i class="fa-regular fa-thumbs-up"></i>
+              Submit
             </button>
-            <button class="btn btn-unlike" v-on:click="unLikeThis($store.state.currentImage)" v-else>
-              Unlike <i class="fa-regular fa-thumbs-down"></i>
-            </button>
-            {{ $store.state.currentImage.likes.length }} Likes
-          </p>
-
-          <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
-            {{ $store.state.currentImage.comments[i] }}
-          </p>
-          
-
-          <p class="addCom">Add Comment</p>
-
-          <input
-            type="addComment"
-            id="name"
-            class="addComment"
-            placeholder="add your comment here"
-            v-model="newComment"
-          />
-          <button
-            class="btn btn-submit"
-            type="submit"
-            v-on:click.prevent="addComment($store.state.currentImage.id)"
-          >
-            Submit
-          </button>
+          </div>
         </section>
       </div>
   </div>
@@ -236,6 +242,7 @@ export default {
   background-color: rgb(230, 230, 230);
   width: 100%;
   justify-content: space-around;
+  font-family:"Billabong";
 }
 
 section {
@@ -256,6 +263,7 @@ section {
   margin-top: 10px;
   margin-bottom: 0px;
   line-height: 30px;
+  width: 50%;
 }
 .addCom {
   color: purple;
@@ -291,4 +299,21 @@ section {
   line-height: 40px;
 }
 
+
+
+.singlepost {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 80vh;
+  
+  
+}
+.singlepostimage {
+  height: 75vh;
+}
+.right-side-of-box {
+  display: grid;
+  grid-template-rows: .5fr 1fr .5fr 2fr 2fr 2fr 1fr;
+  
+}
 </style>
