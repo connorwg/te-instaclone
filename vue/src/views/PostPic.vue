@@ -10,9 +10,10 @@
              id="caption"
              v-model="item.caption"
              placeholder="Add a Caption!"/>
-             <button id="postpicture" v-on:click.prevent="postPicture">Post</button><!--to .prevent default function of click-->
+             <button id="postpicture" class="badge bg-info" v-on:click.prevent="postPicture">Post</button><!--to .prevent default function of click-->
+             <button id="cancelpost" class="badge bg-secondary" v-on:click.prevent="reset">Cancel</button>
              <div>
-              <label style="color: red" v-if="!gotResponse && postRequestSent">Uploading... Please wait...</label>
+              <label class="progress-bar" style="color: red" v-if="!gotResponse && postRequestSent">Uploading... Please wait...</label>
               <label style="color: blue; font-weight: bold" v-else-if="gotResponse">Picture uploaded!</label>
              </div> 
         </div>
@@ -58,6 +59,11 @@ export default {
           alert(error.response.status);
           alert('Message upload failed');
         });
+      },
+      reset(){
+          this.item.image = null,
+          this.item.imageUrl = null,
+          this.item.caption = null
       }
   }
 }
@@ -79,11 +85,13 @@ export default {
   }
   #postpic-header {
     grid-area: postpic-header;
-    background-color: rgb(230, 230, 230);
+    font-family:"Billabong";
+    background-color:aliceblue;
     width: 100%;
-    justify-content: space-around;
+    margin-top: 0%;
   }
   #upload {
     grid-area: upload;
+    margin-top: 10%;
   }
 </style>

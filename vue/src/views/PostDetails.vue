@@ -1,7 +1,7 @@
 <template>
 
   <div>
-      <h1>
+    <h1 id="postdetail-h1">
       <Header></Header>
     </h1>
     <div
@@ -13,14 +13,11 @@
           padding-top: 80px;
           border-color: black;
           margin: 10px;
-        "
+        " 
       >
-        <section
-          class="post"
-         
-        >
+        <section class="post" >
           <p class="author">
-            {{   $store.state.currentImage.userid}}
+            {{$store.state.currentImage.userId}}
           </p>
 
           <p class="description">
@@ -32,19 +29,19 @@
           <p button>
             <button
               class="btn btn-like"
-              v-on:click="likeThis(p)"
-              v-if="!likeVerifier(p)"
+              v-on:click="likeThis($store.state.currentImage)"
+              v-if="!likeVerifier($store.state.currentImage)"
             >
               Like <i class="fa-regular fa-thumbs-up"></i>
             </button>
-            <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+            <button class="btn btn-unlike" v-on:click="unLikeThis($store.state.currentImage)" v-else>
               Unlike <i class="fa-regular fa-thumbs-down"></i>
             </button>
             {{ $store.state.currentImage.likes.length }} Likes
           </p>
 
           <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
-            {{ p.comments[i] }}
+            {{ $store.state.currentImage.comments[i] }}
           </p>
           
 
@@ -60,7 +57,7 @@
           <button
             class="btn btn-submit"
             type="submit"
-            v-on:click.prevent="addComment(p.id)"
+            v-on:click.prevent="addComment($store.state.currentImage.id)"
           >
             Submit
           </button>
@@ -204,14 +201,14 @@ export default {
   
   },
 
-  created() {
+  /*created() {
     photoService.getPhotos().then((response) => {
       this.$store.commit("SET_PHOTOS", response.data);
     });
     photoService.getPhotoById().then((response) => {
         this.$store.commit("SET_CURRENT_PHOTO", response.data)
     })
-  },
+  },*/
 };
 
 </script>
@@ -231,7 +228,7 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-h1 {
+#postdetail-h1 {
   position: fixed;
   margin-top: 0;
   top: 0;

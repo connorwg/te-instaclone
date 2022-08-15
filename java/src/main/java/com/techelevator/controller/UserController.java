@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/user", method = {RequestMethod.GET, RequestMethod.DELETE})
 public class UserController {
@@ -32,7 +33,6 @@ public class UserController {
     public User getUserById(@PathVariable int userId) {
         return userDao.getUserById(userId);
     }
-
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUserAccount(@NotNull Principal principal) {

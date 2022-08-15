@@ -67,7 +67,7 @@ export default new Vuex.Store({
       timeStamp: '',
       likes: [6],
       comments: ['blah comments blah', 'comments']
-    },
+    }
 
     ],
     currentImage: {
@@ -97,7 +97,9 @@ export default new Vuex.Store({
       state.images = data;
     },
     SET_CURRENT_PHOTO(state, data) {
+      alert(data.id);
       state.currentImage = data;
+      alert(state.currentImage.id);
     },
     ADD_PHOTOS(state, data) {
       let image = {

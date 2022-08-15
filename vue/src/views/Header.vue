@@ -27,6 +27,14 @@
     >
       Post a Picture
     </li>
+
+    <li
+      @click="userprofile"
+      :class="{ active: $store.state.active === 'userprofile' }"
+    >
+      My Profile
+    </li>
+
     <li
       @click="setTab('logout')"
       :class="{ active: $store.state.active === 'logout' }"
@@ -56,6 +64,10 @@ export default {
     home(){
       this.setTab('home');
       this.$router.push({name: 'home'});
+    },
+    userprofile(){
+      this.setTab('userprofile');
+      this.$router.push({name: 'userprofile', params :{userId: this.$store.state.user.id}});
     }
   },
 };
