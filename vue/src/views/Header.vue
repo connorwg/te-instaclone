@@ -28,7 +28,7 @@
       @click="postpic"
       :class="{ active: $store.state.active === 'post' }"
     >
-      Post a Picture
+      Post a Picture +
     </li>
 
     <li

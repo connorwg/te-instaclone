@@ -37,4 +37,5 @@ export default {
     formData.append('mpf', picture);
     return axios.post(`/post/create`, formData, {headers: {'Content-Type': 'multipart/form-data'}});
   }//will return fields in an object - post_id, user_id, pictureLink, description ,timestamp
+
 }

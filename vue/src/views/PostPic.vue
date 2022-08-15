@@ -3,7 +3,9 @@
         <h1 id="postpic-header">
           <Header></Header>
         </h1>
-        <input id="upload" ref="imagefile" type="file" accept="image/*" @change="preview" />
+    
+        <input id="upload" 
+ ref="imagefile" type="file" accept="image/*" @change="preview" />
         <div v-if="item.imageUrl">
             <img id="preview" :src="item.imageUrl" />
             <input type="text"
@@ -96,4 +98,5 @@ export default {
     grid-area: upload;
     margin-top: 10%;
   }
+  
 </style>

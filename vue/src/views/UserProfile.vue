@@ -1,14 +1,20 @@
 <template>
-    <div>
-        <img src="../../public/default_profile_picture.jpeg"/>
-        <div>User Id : {{user.id}}</div>
-        <div>Username : {{user.username}}</div>
-        <div>First Name : {{user.firstName}}</div>
-        <div>Last Name : {{user.lastName}}</div>
-        <div>email : {{user.email}}</div>
-        <div>{{user.firstName}} {{user.lastName}}'s Posts</div>
-        <home v-bind:userId_filter="userId"></home>
-    </div>
+        <div id="user-profile">
+            <div id="profile-pic">
+                <img src="../../public/default_profile_picture.jpeg"/>
+            </div>
+            <label id="upload-label" v-if="user.id===$store.state.user.id">Upload Profile Picture</label>
+            <input id="upload-dp" v-if="user.id===$store.state.user.id" ref="imagefile" type="file" accept="image/*" />
+            <div id="user-detail">
+                <div>User Id : {{user.id}}</div>
+                <div>Username : {{user.username}}</div>
+                <div>First Name : {{user.firstName}}</div>
+                <div>Last Name : {{user.lastName}}</div>
+                <div>email : {{user.email}}</div>
+                <div>{{user.firstName}} {{user.lastName}}'s Posts:</div>
+            </div>
+            <home id="posts" v-bind:userId_filter="userId"></home>
+        </div>
 </template>
 
 <script>
@@ -46,3 +52,37 @@ export default {
     }
 }
 </script>
+
+<style>
+#user-profile{
+    display: grid;
+    grid-template-areas: "profile-pic user-detail"
+                         "upload-label user-detail"
+                         "upload-dp user-detail"
+                         "posts posts";
+}
+#profile-pic {
+    margin-top: 10%;
+    margin-left: 15%;
+    grid-area: profile-pic;
+    align-self: center;
+}
+#user-detail {
+    grid-area: user-detail;
+    align-self: center;
+}
+#posts {
+    grid-area: posts;
+}
+#upload-dp{
+    grid-area: upload-dp;
+    margin-left: 25%;
+    align-self: center;
+}
+#upload-label{
+    grid-area: upload-label;
+    margin-left: 30%;
+    margin-bottom: 10px;
+    align-self: center;
+}
+</style>
