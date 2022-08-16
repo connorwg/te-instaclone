@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -89,12 +90,14 @@ public class PostController {
     public boolean favoritePost(@PathVariable int postId, Principal principal) {
         int currentUserId = userDao.findIdByUsername(principal.getName());
 //        favorite a post
+        return postDao.favoritePost(currentUserId, postId);
     }
 
     @GetMapping("/favorites")
-    public boolean favoritePost(Principal principal) {
+    public List<Post> favoritePost(Principal principal) {
         int currentUserId = userDao.findIdByUsername(principal.getName());
 //        get all favorites
+        return postDao.listAllFavorites(currentUserId);
     }
 
 }

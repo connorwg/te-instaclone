@@ -156,6 +156,35 @@ public class JdbcPostDao implements PostDao {
         return true;
     }
 
+    public boolean favoritePost(int userId, int postId) {
+
+        String favoritePost = "INSERT INTO favorites (post_id, user_id) VALUES (?,?);";
+        String deleteFavorite = "DELETE FROM favorites WHERE (post_id = ? AND user_id = ?);";
+        String checkFavorited = "SELECT ? IN" +
+                " ( " +
+                "SELECT favorites.user_id FROM posts " +
+                "INNER JOIN favorites USING (post_id) " +
+                "WHERE favorites.post_id = ?" +
+                " ) " +
+                "as user_liked_post;";
+        if (jdbcTemplate.queryForObject(checkFavorited, boolean.class, userId, postId)) {
+            jdbcTemplate.update(deleteFavorite, postId, userId);
+            return false;
+        }
+        return jdbcTemplate.update(favoritePost, postId, userId) == 1;
+    }
+
+
+    public List<Post> listAllFavorites(int userId) {
+        List<Post> favorites = new ArrayList<>();
+        String sql = "SELECT * FROM posts INNER JOIN favorites USING (post_id) WHERE favorites.user_id = ?;";
+        SqlRowSet returned = jdbcTemplate.queryForRowSet(sql, userId);
+        while (returned.next()) {
+            favorites.add(mapRowToPost(returned));
+        }
+        return favorites;
+    }
+
     private Post mapRowToPost(SqlRowSet rowSet) {
         Post post = new Post();
         post.setPost_id(rowSet.getInt("post_id"));
