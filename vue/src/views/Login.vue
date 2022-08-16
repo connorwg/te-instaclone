@@ -90,23 +90,22 @@ export default {
 </script>
 
 <style>
-.container {
+/* .container {
   
   background: rgb(0,246,255);
   background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);
-}
+} */
 
 #login {
   display: grid;
   justify-items: center;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
   grid-template-columns: 50vw 50vw;
   
   grid-template-areas: "login-image form-signin"
                        "login-image register-user";      
-  background: rgb(0,246,255);
-  background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);
+  
                
 }
 
@@ -116,9 +115,9 @@ export default {
   grid-area: form-signin;
   border: 1px solid black;
   border-radius: 5px;
-  width: 50%;
+  width: 35%;
   margin: 5px;
-  margin-top: 110px;
+  margin-top: 105px;
   margin-left: -10%;
   row-gap: 10px;
   column-gap: 30px;
@@ -133,7 +132,7 @@ export default {
   grid-area: register-user;
   border: 1px solid black;
   border-radius: 5px;
-  width: 50%;
+  width: 35%;
   margin: 5px;
   margin-left: -10%;
   padding-bottom: 10px;
