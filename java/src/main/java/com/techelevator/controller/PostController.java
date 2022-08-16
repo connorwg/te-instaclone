@@ -81,9 +81,20 @@ public class PostController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResponseEntity<String> deleteCollection(@RequestParam("postIds") int[] postIds) {
-
         postDao.deletePostCollection(postIds);
         return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
+
+    @PostMapping("/{postId}/favorite")
+    public boolean favoritePost(@PathVariable int postId, Principal principal) {
+        int currentUserId = userDao.findIdByUsername(principal.getName());
+//        favorite a post
+    }
+
+    @GetMapping("/favorites")
+    public boolean favoritePost(Principal principal) {
+        int currentUserId = userDao.findIdByUsername(principal.getName());
+//        get all favorites
     }
 
 }
