@@ -30,6 +30,12 @@ public class FeedController {
         return postDao.getAllFolloweePostsByFollowerId(userId);
     }
 
+    @PreAuthorize("permitAll()")
+    @GetMapping(value = "/landing-page")
+    public List<Post> findAllPosts() {
+        return postDao.findAllPosts();
+    }
+
 
 }
 
