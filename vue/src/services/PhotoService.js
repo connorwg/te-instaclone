@@ -36,6 +36,16 @@ export default {
     formData.append('desc', caption);
     formData.append('mpf', picture);
     return axios.post(`/post/create`, formData, {headers: {'Content-Type': 'multipart/form-data'}});
-  }//will return fields in an object - post_id, user_id, pictureLink, description ,timestamp
+  },//will return fields in an object - post_id, user_id, pictureLink, description ,timestamp
 
+  addDisplayPicture(picture) {
+    const formData = new FormData();
+    formData.append('mpf', picture);
+    return axios.post(`/user/profilePicture`, formData, {headers: {'Content-Type': 'multipart/form-data'}});
+  },//will return fields in an object - post_id, user_id, pictureLink, description ,timestamp
+
+  deletePosts(postIds){
+    alert(postIds.length);
+    return axios.post(`/post/delete`, null, {params: {postIds:postIds}});
+  }
 }

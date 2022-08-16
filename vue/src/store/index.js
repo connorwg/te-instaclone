@@ -25,7 +25,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},//at the time of login or authentication this user's info is getting stored in this property
     currentPostId: -1,
-    
+    postsToDelete: [],
     images: [{
       id: '1',
       userId: "11",
@@ -141,6 +141,19 @@ export default new Vuex.Store({
           image.comments.unshift(commentObj.comment);
         }
       });
+    },
+    ADD_POSTS_TO_DELETE(state, postId){
+      if(state.postsToDelete.includes(postId)){
+        state.postsToDelete.splice(postId, 1);
+      } else {
+        state.postsToDelete.push(postId);
+      }
+    },
+    REMOVE_POST_TO_DELETE(state, postId){
+      state.images.splice(state.images.findIndex(image => image.id === postId), 1);
+    },
+    RESET_POSTS_TO_DELETE(state){
+      state.postsToDelete = [];
     }
   }
 })
