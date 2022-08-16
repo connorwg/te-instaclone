@@ -72,6 +72,9 @@
         >
           Submit
         </button>
+        <div id="select-post" v-if="userId_filter && userId_filter===$store.state.user.id">
+          <input type="checkbox" @change="$store.commit('ADD_POSTS_TO_DELETE', p.id)"/>
+        </div>
       </section>
     </div>
   </div>
@@ -317,5 +320,9 @@ section {
 
 #home-header {
 font-family:"Billabong";
+}
+
+#select-post{
+  margin-top: 20px;
 }
 </style>
