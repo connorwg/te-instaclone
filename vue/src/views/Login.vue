@@ -99,8 +99,6 @@ export default {
 #login {
   display: grid;
   justify-items: center;
-  /* height: 100vh;
-  width: 100vw; */
   grid-template-columns: 50vw 50vw;
   
   grid-template-areas: "login-image form-signin"
