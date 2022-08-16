@@ -9,9 +9,10 @@ INSERT INTO users (username,password_hash,role, email, first_name, last_name) VA
 
 INSERT INTO posts (user_id, s3_link, description, time)  VALUES (1, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_90s_desktop_computer_full_set_10.jpg', 'Got a new PC!', NOW());
 INSERT INTO posts (user_id, s3_link, description, time)  VALUES (1, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_logo.jpeg', 'Our Logo!', NOW());
-INSERT INTO posts (user_id, s3_link, description, time)  VALUES (2, 'hahahahahaha', 'WOW', NOW());
-INSERT INTO posts (user_id, s3_link, description, time)  VALUES (3, 'BOOMER FOOD PICTURE', 'yum xD', NOW());
-INSERT INTO posts (user_id, s3_link, description, time)  VALUES (1, 'blurry pic', 'i am artsy :p', NOW());
+INSERT INTO posts (user_id, s3_link, description, time)  VALUES (2, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_90s-pattern-46.jpg', 'Might wallpaper my living room with this... thoughts??', NOW());
+INSERT INTO posts (user_id, s3_link, description, time)  VALUES (3, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_Image_from_iOS.jpg', 'Web3 Networking Event', NOW());
+INSERT INTO posts (user_id, s3_link, description, time)  VALUES (4, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_Untitled-2022-06-08-1411.png', 'Just a snippet from my "How to Host Lucrative Events" E-class. On Sale for just $99 a month!', NOW());
+INSERT INTO posts (user_id, s3_link, description, time)  VALUES (5, 'https://finalprojectco.s3.us-east-2.amazonaws.com/projectimages/6_photo_14598_(1).jpg', 'Wow, nice grass!', NOW());
 
 INSERT INTO comments (comment, author_id, post_id) VALUES ('wow this is cool' , 3, 1);
 INSERT INTO comments (comment, author_id, post_id) VALUES ('nice hahahahahah wowowowow' , 3, 3);
