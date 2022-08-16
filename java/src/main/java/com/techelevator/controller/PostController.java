@@ -80,10 +80,10 @@ public class PostController {
     }
 
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCollection(@RequestParam("postIds") int[] postIds) {
         postDao.deletePostCollection(postIds);
-        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Deleted", HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/{postId}/favorite")

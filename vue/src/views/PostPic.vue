@@ -5,7 +5,7 @@
         </h1>
     
         <input id="upload" 
- ref="imagefile" type="file" accept="image/*" @change="preview" />
+        ref="imagefile" type="file" accept="image/*" @change="preview" />
         <div v-if="item.imageUrl">
             <img id="preview" :src="item.imageUrl" />
             <input type="text"
