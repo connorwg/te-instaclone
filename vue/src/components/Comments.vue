@@ -38,11 +38,13 @@ export default {
   methods: {
     async getComments(id) {
       return await axios.get(`http://localhost:9000/post/${id}/comments`)
+    },
+    postComment() {
+
     }
   },
   async created() {
     this.comments = (await this.getComments(this.post_id)).data
-
     },
 }
 </script>
