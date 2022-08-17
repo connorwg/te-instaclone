@@ -257,14 +257,17 @@ export default {
 }
 .home {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   background: rgb(255, 255, 255);
   color: rgb(38, 38, 38);
   font-size: 14px;
   line-height: 18px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: cadetblue;
 }
 
 
