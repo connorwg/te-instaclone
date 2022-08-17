@@ -94,13 +94,13 @@ export default {
         },
         deletePosts(){
             photoService.deletePosts(this.$store.state.postsToDelete).then(response => {
-                if(response.status === 200){
+                if(response.status === 204){
                     this.$store.state.postsToDelete.forEach(post => {
                         this.$store.commit('REMOVE_POST_TO_DELETE', post);
                     });
+                    this.$store.commit('RESET_POSTS_TO_DELETE');
                 }
             });
-            this.$store.commit('RESET_POSTS_TO_DELETE');
         }
     }
 }
