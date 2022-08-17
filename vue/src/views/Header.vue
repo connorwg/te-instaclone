@@ -32,6 +32,13 @@
     </li>
 
     <li
+      @click="favorites"
+      :class="{ active: $store.state.active === 'favorites' }"
+    >
+      My Favorites
+    </li>
+
+    <li
       @click="userprofile"
       :class="{ active: $store.state.active === 'userprofile' }"
     >
@@ -49,7 +56,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from 'vue';
+//import photoService from '../services/PhotoService.js';
 Vue.prototype.$window = window
 
 export default {
@@ -71,6 +79,10 @@ export default {
     userprofile(){
       this.setTab('userprofile');
       this.$router.push({name: 'userprofile', params :{userId: this.$store.state.user.id}});
+    },
+    favorites(){
+      this.setTab('favorites');
+      this.$router.push({name: 'favorites'});
     }
   },
 };

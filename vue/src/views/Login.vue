@@ -1,5 +1,5 @@
 <template>
-<!-- <div class="container"> -->
+
   <div id="login" class="text-center">
     <icon-image id="login-image"/>
     <form class="form-signin" @submit.prevent="login">
@@ -41,7 +41,7 @@
       <label>Need an account? <router-link :to="{ name: 'register' }">Sign up</router-link></label>
     </div>
   </div>
-  <!-- </div> -->
+  
 </template>
 
 <script>
@@ -90,25 +90,17 @@ export default {
 </script>
 
 <style>
-/* .container {
-  
-  background: rgb(0,246,255);
-  background: linear-gradient(0deg, rgba(0,246,255,1) 0%, rgba(46,107,152,0.9814385150812065) 33%, rgba(0,212,255,1) 100%);
-} */
 
 #login {
   display: grid;
   justify-items: center;
-  grid-template-columns: 50vw 50vw;
-  
+  grid-template-columns: 1fr 1fr;
   grid-template-areas: "login-image form-signin"
-                       "login-image register-user";      
-  
-               
+                       "login-image register-user";                
 }
 
 .form-signin {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
   display: grid;
   grid-area: form-signin;
   border: 1px solid black;
@@ -122,6 +114,7 @@ export default {
   padding-bottom: 20px;
   background-color: aliceblue;
   justify-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #register-user {
@@ -155,6 +148,7 @@ export default {
   color: cadetblue;
   font-weight: 1000;
   font-style: italic;
+  margin-top: 10%;
   margin-bottom: 0%; 
 }
 
@@ -167,15 +161,30 @@ export default {
 
 
 #username {
+  width: 75%;
+  height: 90%;
+  font-size: 15pt;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%
 }
 
 #password {
+  width: 75%;
+  height: 88%;
+  font-size: 15pt;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 4%
 }
 
 #loginButton {
+  font-size: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+#loginButton:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 </style>

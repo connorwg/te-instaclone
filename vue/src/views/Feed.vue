@@ -1,92 +1,81 @@
 <template>
-
-  <div>
-    <h1 id="postdetail-h1">
+  <div class="home">
+    <h1 id="home-header">
       <Header></Header>
     </h1>
-    <div
-        style="
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          padding-bottom: 150px;
-          padding-top: 120px;
-          padding-left: 170px;
-          padding-right: 170px;
-          border-color: black;
-          margin: 10px;
-          background-color: cadetblue;
-        " 
-        
-      >
-        <section class="singlepost" >
-          <img class="singlepostimage" :src="$store.state.currentImage.picture" alt="none" />
 
-          <div class="rightbox">
-            <p class="author">
-              {{$store.state.currentImage.userId}}
-            </p>
+    <div id="homepage">
+      <section class="post" v-for="p in filterPosts" v-bind:key="p.id">
+        <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
+          {{ p.firstName + ' ' + p.lastName }}
+        </a>
 
-            <p class="description">
-              {{ $store.state.currentImage.description }}
-            </p>
+        <p class="description">
+          {{ p.description }}
+        </p>
+        <!--<router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
+          <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
+        </router-link>-->
+        <img :src="p.picture" alt="none"  @click.prevent="postDetails(p)"/>
 
-            <p button>
-              <button
-                class="btn btn-like"
-                v-on:click="likeThis($store.state.currentImage)"
-                v-if="!likeVerifier($store.state.currentImage)"
-              >
-                Like <i class="fa-regular fa-thumbs-up"></i>
-              </button>
-              <button class="btn btn-unlike" v-on:click="unLikeThis($store.state.currentImage)" v-else>
-                Unlike <i class="fa-regular fa-thumbs-down"></i>
-              </button>
-              {{ $store.state.currentImage.likes.length }} Likes
-            </p>
+        <p button>
+          <button
+            class="btn btn-like"
+            v-on:click="likeThis(p)"
+            v-if="!likeVerifier(p)"
+          >
+            Like <i class="fa-regular fa-thumbs-up"></i>
+          </button>
+          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+            Unlike <i class="fa-regular fa-thumbs-down"></i>
+          </button>
+          {{ p.likes.length }} Likes
+        </p>
 
-            <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
-              {{ $store.state.currentImage.comments }}
-            </p>
-            
+        <p class="comments">
+          {{ p.comments[1] }}
+        </p>
 
-            <p class="addCom">Add Comment</p>
+        <p class="comments">
+          {{ p.comments[0] }}
+        </p>
 
-            <input
-              type="addComment"
-              id="name"
-              class="addComment"
-              placeholder="add your comment here"
-              v-model="newComment"
-            />
-            <button
-              class="btn btn-submit"
-              type="submit"
-              v-on:click.prevent="addComment($store.state.currentImage.id)"
-            >
-              Submit
-            </button>
-          </div>
-        </section>
-      </div>
+        <p class="addCom">Add Comment</p>
+
+        <input
+          type="addComment"
+          id="name"
+          class="addComment"
+          placeholder="add your comment here"
+          v-model="newComment"
+        />
+        <button
+          id="commentb"
+          class="badge bg-info"
+          type="submit"
+          v-on:click.prevent="addComment(p.id)"
+        >
+          Submit
+        </button>
+      </section>
+    </div>
   </div>
 </template>
 
-<script>
-import Header from "./Header.vue";
+<script>import Header from "./Header.vue";
+
 import photoService from "../services/PhotoService.js";
 
 export default {
-    name: "postDetails",
-    components: {
+  name: "home",
+  components: {
     Header,
   },
-   
   data() {
     return {
       image: [],
-
-      currentImage: {
+      filteredImages: [],
+      newImage: {
         id: "",
         userId: "",
         picture: "",
@@ -96,14 +85,21 @@ export default {
         comments: [],
       },
 
+      currentPostId: -1,
     };
   },
 
   methods: {
-    
+    postDetails(currentImage){
+      this.$store.commit("SET_CURRENT_PHOTO", currentImage);
+      this.$router.push({name: "postdetails"});
+    },
+    userprofile(userId){
+      this.$router.push({name: 'userprofile', params :{userId: userId}});
+    },
     likeVerifier(p) {
       let liked = false;
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (p.likes[i] === this.$store.state.user.id) {
           liked = true;
         }
@@ -127,8 +123,8 @@ export default {
       newImage.comments = p.comments;
       //newImage.likes.push(p.userId); // should be the current user's id here
       newImage.likes.push(this.$store.state.user.id);
-      
-/*
+
+      /*
       photoService
   
         .addLike(newImage)
@@ -152,7 +148,7 @@ export default {
       newImage.likes = [];
       newImage.comments = p.comments;
 
-      for (let i=0; i<p.likes.length; i++) {
+      for (let i = 0; i < p.likes.length; i++) {
         if (!(p.likes[i] === this.$store.state.user.id)) {
           newImage.likes.push(p.likes[i]);
         }
@@ -188,40 +184,51 @@ export default {
       }
     },
   },
-   props: {
-    postId: {
+
+  props: ["images", "userId_filter"],
+   postId: {
       type: Number,
       default: 0
     }, 
-    
-  },
-  
-    
   computed: {
     currentLikes() {
       return Number.parseInt(this.$store.images.likes);
     },
-
-    current() {
-      return this.$store.state.currentImage;
+    filterPosts(){
+      if(this.userId_filter!=null){
+        return this.$store.state.images.filter(image => {
+          return image.userId===this.userId_filter;
+        });
+      } else{
+        return this.$store.state.images
+      }
     }
-  
   },
 
-  /*created() {
-    photoService.getPhotos().then((response) => {
+  created() {
+    photoService.getFeed().then((response) => {
       this.$store.commit("SET_PHOTOS", response.data);
     });
-    photoService.getPhotoById().then((response) => {
-        this.$store.commit("SET_CURRENT_PHOTO", response.data)
-    })
-  },*/
+  },
 };
 
 </script>
 
-
-<style>
+<style scoped>
+#homepage {
+  position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-bottom: 10px;
+        padding-top: 80px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-color: black;
+        margin: 10px;
+        justify-content: space-evenly;
+        background-color: cadetblue;
+}
 .home {
   display: flex;
   flex-direction: column;
@@ -235,16 +242,17 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-#postdetail-h1 {
+
+h1 {
   position: fixed;
   margin-top: 0;
   top: 0;
   z-index: 200;
-  background-color: rgb(230, 230, 230);
+  background-color: aliceblue;
   width: 100%;
   justify-content: space-around;
-  font-family:"Billabong";
 }
+
 
 section {
   display: grid;
@@ -257,6 +265,7 @@ section {
   font-size: 0.8rem;
   text-align: left;
 }
+
 .author {
   font-size: 1rem;
   background-color: lightgray;
@@ -290,43 +299,23 @@ section {
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 5px;
-  color: black;
 }
 .description {
   background-color: lightblue;
-  
-  border-radius: 0px 0px 0px 0px;
+
+  border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
+
+}
+#commentb {
+  width: 20%;
+  height:150%
 }
 
+#home-header {
+font-family:"Billabong";
+}
 
-
-.singlepost {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-height: 80vh;
-  max-width: 80vw;
-  
-  
-}
-.singlepostimage {
-  flex-basis: 50%;
-  height: 50vh;
-  width: 50vw;
-  max-width: 1fr;
-  max-height: 1fr;
-  
-  
-}
-.rightbox {
-  flex-basis: 50%;
-  flex-grow: 1;
-  display: grid;
-  grid-template-rows: .5fr 1fr .5fr 2fr 2fr 2fr 1fr;
-  max-width: 1fr;
-  max-height: 1fr;
-}
 </style>

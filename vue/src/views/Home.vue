@@ -129,9 +129,18 @@ export default {
         });
       }
     },
+    addToFavorite(postId){
+      photoService.addToFavorite(postId).then(response => {
+        alert(response.status);
+        if(response.status === 201){
+          this.addedToFavorite = true;
+          alert(response.data);
+        }
+      });
+    }
   },
 
-  props: ["images", "userId_filter"],
+  props: ["images", "userId_filter", "isFavorites"],
    postId: {
       type: Number,
       default: 0
@@ -145,8 +154,10 @@ export default {
         return this.$store.state.images.filter(image => {
           return image.userId===this.userId_filter;
         });
-      } else{
-        return this.$store.state.images
+      } else if(this.isFavorites === true){
+        return this.$store.state.favorites;
+      } else {
+        return this.$store.state.images;
       }
     }
   },
@@ -155,17 +166,33 @@ export default {
     photoService.getPhotos().then((response) => {
       this.posts = response.data;
     });
-  },
+    }
+  }
+  }
 };
 </script>
 
 <style scoped>
+#homepage {
+  position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-bottom: 10px;
+        padding-top: 80px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-color: black;
+        margin: 10px;
+        justify-content: space-evenly;
+        background-color: cadetblue;
+        
+}
 .home {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: rgb(255, 255, 255);
-
   color: rgb(38, 38, 38);
   font-size: 14px;
   line-height: 18px;
@@ -187,6 +214,7 @@ h1 {
 
 section {
   display: grid;
+  grid-template-rows: 50px 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 10px 25px;
   border-radius: 10px;
   background-color: white;
   color: black;
@@ -195,7 +223,9 @@ section {
   padding: 20px;
   font-size: 0.8rem;
   text-align: left;
-}
+  max-height: 800px;
+  max-width: 800px;
+ }
 
 .author {
   font-size: 1rem;
@@ -206,40 +236,47 @@ section {
   line-height: 30px;
   width: 50%;
 }
+
 .addCom {
   color: purple;
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 .addComment {
   border: 1px solid lightgray;
   color: purple;
   border-radius: 5px;
 }
+
 .btn-like {
   color: green;
   border-radius: 5px;
 }
+
 .btn-unlike {
   color: red;
   border-radius: 5px;
 }
+
 .comments {
   background-color: linen;
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 5px;
+  min-height: 20px;
+  max-height: 50px;
 }
+
 .description {
   background-color: lightblue;
-
   border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
-
 }
+
 #commentb {
   width: 20%;
   height:150%
@@ -252,4 +289,18 @@ font-family:"Billabong";
 #select-post{
   margin-top: 20px;
 }
+
+img {
+  max-height: 500px;
+  max-width: 500px;
+}
+
+.badge {
+  max-height: 25px;
+}
+
+#addToFavb {
+  width: 50%;
+}
+
 </style>
