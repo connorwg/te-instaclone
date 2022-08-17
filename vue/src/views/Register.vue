@@ -43,7 +43,7 @@
         />
       </div>
 
-      <div>
+      <div class="register-input">
         <!-- <label for="username" class="sr-only">Username</label> -->
       <input
         type="text"
@@ -56,7 +56,7 @@
       />
       </div>
       
-      <div>
+      <div class="register-input">
          <!--<label for="password" class="sr-only">Password</label> -->
         <input
           type="password"
@@ -82,7 +82,7 @@
       </div>
       
       <!--<button class="btn btn-lg btn-primary btn-block" type="submit">-->
-        <button class="badge rounded-pill bg-info" type="submit">
+        <button class="badge rounded-pill bg-info" type="submit" id="submitButton">
         Create Account
       </button>
     </form>
@@ -181,19 +181,21 @@ export default {
 }
 
 .form-register {
+  
   display: grid;
   grid-area: form-register;
   border: 1px solid black;
   border-radius: 5px;
-  width: 50%;
+  width: 40%;
   margin: 5px;
+  margin-top: 105px;
   margin-left: -10%;
   row-gap: 10px;
-  margin-top: 40px;
   column-gap: 30px;
   padding-bottom: 20px;
   background-color:aliceblue;
   justify-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .back-to-login {
@@ -203,7 +205,7 @@ export default {
   grid-area: back-to-login;
   border: 1px solid black;
   border-radius: 5px;
-  width: 50%;
+  width: 40%;
   margin: 5px;
   margin-left: -10%;
   padding-bottom: 10px;
@@ -238,6 +240,7 @@ export default {
 .form-control {
   width: 200px;
   height: 30px;
+  
 }
 
 .alert {
@@ -246,6 +249,72 @@ export default {
 
 .invalidPwd {
   margin-left: 20px;
+}
+
+#firstName {
+  
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+  
+}
+
+#lastName {
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+}
+
+#emailid {
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+}
+
+.register-input #username {
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+}
+
+.register-input #password {
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+}
+
+#confirmPassword {
+  width: 85%;
+  height: 90%;
+  font-size: 15pt;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 2%;
+  margin-left: 10%;
+}
+
+#submitButton {
+  font-size: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#submitButton:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 </style>
