@@ -16,8 +16,8 @@
       "
   >
     <section>
-      <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
-        {{ this.username }}
+      <a class="author" href="userprofile" @click.prevent="userprofile(this.userId)">
+        {{ currentUsername }}
       </a>
 
       <p class="description">
@@ -51,10 +51,11 @@ import Comments from "./Comments";
 export default {
   name: "Post",
   components: {Comments},
-  props: ['post_id', 'username', 'pictureLink', 'description'],
+  props: ['post_id', 'user_id', 'pictureLink', 'description'],
   data() {
     return {
       likes: 0,
+      currentUsername: "",
     }
   },
   methods: {
@@ -62,13 +63,14 @@ export default {
       return await axios.get(`http://localhost:9000/post/likes?postId=` + id)
 
     },
-    getComments() {
-
+    async getUserame(id) {
+      return await axios.get(`http://localhost:9000/user/` + id)
     }
 
   },
   async created() {
-    this.likes = (await this.getLikes(this.post_id)).data
+    this.likes = (await this.getLikes(this.post_id)).data;
+    this.currentUsername = (await this.getUserame(this.user_id)).data.username
   }
 
 }
