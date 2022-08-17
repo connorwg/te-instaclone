@@ -3,78 +3,14 @@
     <h1 id="home-header">
       <Header></Header>
     </h1>
-
-    <div
-      style="
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-bottom: 10px;
-        padding-top: 80px;
-        padding-left: 10px;
-        padding-right: 10px;
-        border-color: black;
-        margin: 10px;
-        justify-content: space-evenly;
-        background-color: cadetblue;
-      "
-    >
-      <section class="post" v-for="p in posts" v-bind:key="p.id">
-        <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
-          {{ p.firstName + ' ' + p.lastName }}
-        </a>
-
-        <p class="description">
-          {{ p.description }}
-        </p>
-        <!--<router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
-          <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
-        </router-link>-->
-        <img :src="p.pictureLink" alt="none"  @click.prevent="postDetails(p)"/>
-
-        <p button>
-          <button
-            class="btn btn-like"
-          >
-<!--            Like <i class="fa-regular fa-thumbs-up"></i>-->
-<!--          </button>-->
-<!--          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>-->
-<!--            Unlike <i class="fa-regular fa-thumbs-down"></i>-->
-          </button>
-<!--          {{ p.likes.length }} Likes-->
-<!--        </p>-->
-
-<!--        <p class="comments">-->
-<!--          {{ p.comments[1] }}-->
-<!--        </p>-->
-
-<!--        <p class="comments">-->
-<!--          {{ p.comments[0] }}-->
-<!--        </p>-->
-
-        <p class="addCom">Add Comment</p>
-
-        <input
-          type="addComment"
-          id="name"
-          class="addComment"
-          placeholder="add your comment here"
-          v-model="newComment"
-        />
-        <button
-          id="commentb"
-          class="badge bg-info"
-          type="submit"
-          v-on:click.prevent="addComment(p.id)"
-        >
-          Submit
-        </button>
-        <div id="select-post" v-if="userId_filter && userId_filter===$store.state.user.id">
-          <input type="checkbox" @change="$store.commit('ADD_POSTS_TO_DELETE', p.id)"/>
-        </div>
-      </section>
-    </div>
+    <Post
+    v-for="post in posts"
+    v-bind:key="post.id"
+    :post_id = post.postId
+    :picture-link="post.pictureLink"
+    :description="post.description"
+    :username="ya"
+    />
   </div>
 </template>
 
@@ -82,10 +18,12 @@
 import Header from "./Header.vue";
 
 import photoService from "../services/PhotoService.js";
+import Post from "../components/Post";
 
 export default {
   name: "home",
   components: {
+    Post,
     Header,
   },
   data() {
