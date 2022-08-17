@@ -9,7 +9,7 @@
     :post_id = post.post_id
     :picture-link="post.pictureLink"
     :description="post.description"
-    :username="ya"
+    :user_id="post.user_id"
     />
   </div>
 </template>
