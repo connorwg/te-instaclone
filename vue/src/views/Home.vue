@@ -6,7 +6,7 @@
     <Post
     v-for="post in posts"
     v-bind:key="post.id"
-    :post_id = post.postId
+    :post_id = post.post_id
     :picture-link="post.pictureLink"
     :description="post.description"
     :username="ya"

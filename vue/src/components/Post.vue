@@ -37,16 +37,13 @@
           <!--          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>-->
           <!--            Unlike <i class="fa-regular fa-thumbs-down"></i>-->
         </button>
-                  {{ this.likes}} Likes
+                  <p id="likes" >{{ likes }} </p>
         <!--        </p>-->
 
-        <!--        <p class="comments">-->
-        <!--          {{ p.comments[1] }}-->
-        <!--        </p>-->
+                <p class="comments" v-for="comment in comments" v-bind:key="comment.comment_id">
+                  {{ comment.comment }} - {{comment.author_id}}
+                </p>
 
-        <!--        <p class="comments">-->
-        <!--          {{ p.comments[0] }}-->
-        <!--        </p>-->
 
       <p class="addCom">Add Comment</p>
 
@@ -70,10 +67,29 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Post",
-  props: ['post_id', 'username', 'pictureLink','description','likes', 'comments']
+  props: ['post_id', 'username', 'pictureLink','description'],
+  data(){
+    return {
+      likes: 0,
+    }
+  },
+  methods: {
+    async getLikes(id) {
+      return await axios.get(`http://localhost:9000/post/likes?postId=`+id)
+
+    }
+
+  },
+  async created() {
+   this.likes =  (await this.getLikes(this.post_id)).data
+  }
+
 }
+
 </script>
 
 <style scoped>
