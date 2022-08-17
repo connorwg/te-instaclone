@@ -28,31 +28,28 @@
       </router-link>-->
       <img :src="this.pictureLink" alt="none"/>
 
-      <p button>
-        <button
-            class="btn btn-like"
-        >
-          <!--            Like <i class="fa-regular fa-thumbs-up"></i>-->
-          <!--          </button>-->
-          <!--          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>-->
-          <!--            Unlike <i class="fa-regular fa-thumbs-down"></i>-->
+      <p>
+        <button class="btn btn-like">
+          Like <i class="fa-regular fa-thumbs-up"></i>
         </button>
-                  <p id="likes" >{{ likes }} </p>
-        <!--        </p>-->
+        <button class="btn btn-unlike">
+          Unlike <i class="fa-regular fa-thumbs-down"></i>
+        </button>
+      <p id="likes">{{ likes }} </p>
 
-                <p class="comments" v-for="comment in comments" v-bind:key="comment.comment_id">
-                  {{ comment.comment }} - {{comment.author_id}}
-                </p>
+      <p v-for="comment in comments" v-bind:key="comment.comment_id" class="comments">
+        {{ comment.comment }} - {{ comment.author_id }}
+      </p>
 
 
       <p class="addCom">Add Comment</p>
 
       <input
-          type="addComment"
           id="name"
+          v-model="newComment"
           class="addComment"
           placeholder="add your comment here"
-          v-model="newComment"
+          type="addComment"
       />
       <button
           id="commentb"
@@ -71,21 +68,24 @@ import axios from "axios";
 
 export default {
   name: "Post",
-  props: ['post_id', 'username', 'pictureLink','description'],
-  data(){
+  props: ['post_id', 'username', 'pictureLink', 'description'],
+  data() {
     return {
       likes: 0,
     }
   },
   methods: {
     async getLikes(id) {
-      return await axios.get(`http://localhost:9000/post/likes?postId=`+id)
+      return await axios.get(`http://localhost:9000/post/likes?postId=` + id)
+
+    },
+    getComments() {
 
     }
 
   },
   async created() {
-   this.likes =  (await this.getLikes(this.post_id)).data
+    this.likes = (await this.getLikes(this.post_id)).data
   }
 
 }
