@@ -215,12 +215,23 @@ export default {
             this.$store.state.postsToDelete.forEach((post) => {
               this.$store.commit("REMOVE_POST_TO_DELETE", post);
             });
-            this.$store.commit("RESET_POSTS_TO_DELETE");
-          }
-        });
-    },
+            this.$store.commit('RESET_POSTS_TO_DELETE');
+            }
+        
+    });
   },
-};
+    
+        reset(){
+          this.item.image = null,
+          this.item.imageUrl = null,
+          this.item.caption = null,
+          this.gotResponse = false,
+          this.postRequestSent = false;
+        }
+  }
+   
+
+
 </script>
 
 <style>

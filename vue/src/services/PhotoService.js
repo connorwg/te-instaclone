@@ -3,7 +3,7 @@ import qs from 'qs';
 export default {
 
   getPhotos() {
-    return axios.get('/feed');
+    return axios.get('/post');
   },
 
   getPhotoById(currentPostId) {
@@ -50,5 +50,13 @@ export default {
         return qs.stringify(params, {arrayFormat: 'repeat'})
       }
     });
+  },
+
+  addToFavorite(postId){
+    return axios.post(`/post/${postId}/favorite`);
+  },
+
+  getFavorites(){
+    return axios.get('/post/favorites');
   }
 }

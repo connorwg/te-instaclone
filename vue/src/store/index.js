@@ -26,6 +26,7 @@ export default new Vuex.Store({
     user: currentUser || {},//at the time of login or authentication this user's info is getting stored in this property
     currentPostId: -1,
     postsToDelete: [],
+    favorites: [],
     images: [{
       id: '1',
       userId: "11",
@@ -95,6 +96,9 @@ export default new Vuex.Store({
     },
     SET_PHOTOS(state, data) {
       state.images = data;
+    },
+    SET_FAVORITES(state, data) {
+      state.favorites = data;
     },
     SET_CURRENT_PHOTO(state, data) {
       alert(data.id);
