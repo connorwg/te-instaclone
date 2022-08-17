@@ -228,7 +228,8 @@ export default {
           this.gotResponse = false,
           this.postRequestSent = false;
         }
-  }
+  },
+};
    
 
 
@@ -331,8 +332,7 @@ background: linear-gradient(0deg, rgba(46,107,152,0.9814385150812065) 5%, rgba(0
 } */
 </style>
 
-<!-- 
-
+<!--
  <div id="user-profile">
             <h1 id="profile-header">
               <Header></Header>
@@ -347,9 +347,9 @@ background: linear-gradient(0deg, rgba(46,107,152,0.9814385150812065) 5%, rgba(0
                     <div id="profile-pic" v-if="item.imageUrl">
                     <img :src="item.imageUrl"/>
                 </div>
-            -- <div id="profile-pic" v-else-if="user.profileImage">
+             <div id="profile-pic" v-else-if="user.profileImage">
                 <img :src="user.profileImage"/>
-            </div> --
+            </div> 
             <div id="profile-pic" v-else>
                 <img class="rounded-circle mt-5" src="../../public/default_profile_picture.jpeg"/>
             </div>
@@ -382,9 +382,9 @@ background: linear-gradient(0deg, rgba(46,107,152,0.9814385150812065) 5%, rgba(0
             </div>
         </div> 
     </div>
--->
 
 
-<!-- <div id="profile-pic" v-else-if="user.profileImage">
+
+ <div id="profile-pic" v-else-if="user.profileImage">
                 <img :src="user.profileImage"/>
             </div> -->

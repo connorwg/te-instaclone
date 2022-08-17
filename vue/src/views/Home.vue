@@ -167,9 +167,9 @@ export default {
       this.posts = response.data;
     });
     }
-  }
-  }
-};
+  };
+  
+
 </script>
 
 <style scoped>
