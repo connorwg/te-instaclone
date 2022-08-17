@@ -1,9 +1,9 @@
 <template>
   <div id="user-profile">
-    <h1 id="profile-header">
+    <h1 class="fixed-top" id="profile-header">
       <Header></Header>
     </h1>
-    <div class="row  py-5 px-4">
+    <div class="row py-5 px-4">
       <div class="col-md-5 mx-auto ">
         <!-- Profile -->
         <div class="bg-white shadow rounded">
@@ -78,19 +78,19 @@
               <div class="bg-light p-4 d-flex justify-content-end text-center">
                 <ul class="list-inline mb-0">
                   <li class="list-inline-item">
-                    <h5 class="font-weight-bold mb-0 d-block">215</h5>
+                    <h5 class="font-weight-bold mb-0 d-block">4</h5>
                     <small class="text-muted">
                       <i class="fas fa-image mr-1"></i>Photos</small
                     >
                   </li>
                   <li class="list-inline-item">
-                    <h5 class="font-weight-bold mb-0 d-block">745</h5>
+                    <h5 class="font-weight-bold mb-0 d-block">5</h5>
                     <small class="text-muted">
                       <i class="fas fa-user mr-1"></i>Followers</small
                     >
                   </li>
                   <li class="list-inline-item">
-                    <h5 class="font-weight-bold mb-0 d-block">340</h5>
+                    <h5 class="font-weight-bold mb-0 d-block">3</h5>
                     <small class="text-muted">
                       <i class="fas fa-user mr-1"></i>Following</small
                     >

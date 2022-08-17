@@ -3,7 +3,7 @@ import qs from 'qs';
 export default {
 
   getPhotos() {
-    return axios.get('/feed');
+    return axios.get('/landing-page');
   },
 
   getPhotoById(currentPostId) {
