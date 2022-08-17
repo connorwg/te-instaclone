@@ -235,7 +235,6 @@ export default {
           return image.userId===this.userId_filter;
         });
       } else if(this.isFavorites === true){
-        alert('computed');
         return this.$store.state.favorites;
       } else {
         return this.$store.state.images;
@@ -245,7 +244,6 @@ export default {
 
   created() {
     if(this.isFavorites === true){
-      alert('created');
       photoService.getFavorites().then(response => {
           this.$store.commit('SET_FAVORITES', response.data);
         });
