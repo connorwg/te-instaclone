@@ -52,6 +52,11 @@ public class CommentController {
 
     @GetMapping(value = "/post/{postId}/comments")
     public List<Comment> getCommentsByPostId(@Valid @PathVariable int postId) {
-        return commentDao.getCommentsByPostId(postId);
+        List<Comment> toReturn = commentDao.getCommentsByPostId(postId);
+        for(Comment element : toReturn) {
+            element.setUsername(userDao.getUserById(element.getAuthor_id()).getUsername());
+        }
+
+        return toReturn;
     }
 }

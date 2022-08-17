@@ -1,8 +1,8 @@
 <template>
   <div>
+
     <p v-for="comment in comments" v-bind:key="comment.comment_id" class="comments">
-      {{ comment.comment }} - {{ comment.author_id }}
-    </p>
+      @{{ comment.username }}: {{ comment.comment }}
 
 
     <p class="addCom">Add Comment</p>
@@ -32,18 +32,18 @@ export default {
   props: ["post_id"],
   data() {
     return {
-      comments: []
+        comments: []
     }
   },
   methods: {
     async getComments(id) {
       return await axios.get(`http://localhost:9000/post/${id}/comments`)
-
-    },
+    }
   },
   async created() {
     this.comments = (await this.getComments(this.post_id)).data
-  }
+
+    },
 }
 </script>
 

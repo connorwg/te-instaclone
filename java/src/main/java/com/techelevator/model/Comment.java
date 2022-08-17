@@ -10,12 +10,22 @@ public class Comment {
     @NotNull
     private int post_id;
     private int author_id;
+    private String username;
 
-    public Comment(int comment_id, String comment, int post_id, int author_id) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Comment(int comment_id, String comment, int post_id, int author_id,String username) {
         this.comment_id = comment_id;
         this.comment = comment;
         this.post_id = post_id;
         this.author_id = author_id;
+        this.username = username;
     }
 
     public Comment() {
