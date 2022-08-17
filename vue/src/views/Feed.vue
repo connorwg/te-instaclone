@@ -7,15 +7,9 @@
     <div id="homepage">
       <section class="post" v-for="p in filterPosts" v-bind:key="p.id">
         <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
-          {{ p.userId }}
+          {{ p.firstName + ' ' + p.lastName }}
         </a>
-        <button
-          id="addToFavb"
-          class="badge bg-info"
-          v-on:click.prevent="addToFavorite(p.id)"
-        >
-          Favorite
-        </button>
+
         <p class="description">
           {{ p.description }}
         </p>
@@ -63,18 +57,12 @@
         >
           Submit
         </button>
-
-       
-        <div id="select-post" v-if="userId_filter && userId_filter===$store.state.user.id">
-          <input type="checkbox" @change="$store.commit('ADD_POSTS_TO_DELETE', p.id)"/>
-        </div>
       </section>
     </div>
   </div>
 </template>
 
-<script>
-import Header from "./Header.vue";
+<script>import Header from "./Header.vue";
 
 import photoService from "../services/PhotoService.js";
 
@@ -96,8 +84,8 @@ export default {
         likes: [],
         comments: [],
       },
+
       currentPostId: -1,
-      addedToFavorite: false
     };
   },
 
@@ -195,18 +183,9 @@ export default {
         });
       }
     },
-    addToFavorite(postId){
-      photoService.addToFavorite(postId).then(response => {
-        alert(response.status);
-        if(response.status === 201){
-          this.addedToFavorite = true;
-          alert(response.data);
-        }
-      });
-    }
   },
 
-  props: ["images", "userId_filter", "isFavorites"],
+  props: ["images", "userId_filter"],
    postId: {
       type: Number,
       default: 0
@@ -220,33 +199,19 @@ export default {
         return this.$store.state.images.filter(image => {
           return image.userId===this.userId_filter;
         });
-      } else if(this.isFavorites === true){
-        return this.$store.state.favorites;
-      } else {
-        return this.$store.state.images;
+      } else{
+        return this.$store.state.images
       }
     }
   },
 
   created() {
-    if(this.isFavorites === true){
-      photoService.getFavorites().then(response => {
-          this.$store.commit('SET_FAVORITES', response.data);
-        });
-    } else{
-      photoService.getPhotos().then((response) => {
-        this.$store.commit("ADD_PHOTOS", response.data);
-      });
-      
-    this.$store.state.images = [];
-    for(let i=1; i<9; i++) {
-    photoService.getPhotoById(i).then((response) => {
-      this.$store.commit("ADD_PHOTOS", response.data);
+    photoService.getFeed().then((response) => {
+      this.$store.commit("SET_PHOTOS", response.data);
     });
-    }
-  }
-  }
+  },
 };
+
 </script>
 
 <style scoped>
@@ -263,13 +228,13 @@ export default {
         margin: 10px;
         justify-content: space-evenly;
         background-color: cadetblue;
-        
 }
 .home {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: rgb(255, 255, 255);
+
   color: rgb(38, 38, 38);
   font-size: 14px;
   line-height: 18px;
@@ -291,7 +256,6 @@ h1 {
 
 section {
   display: grid;
-  grid-template-rows: 50px 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 10px 25px;
   border-radius: 10px;
   background-color: white;
   color: black;
@@ -300,9 +264,7 @@ section {
   padding: 20px;
   font-size: 0.8rem;
   text-align: left;
-  max-height: 800px;
-  max-width: 800px;
- }
+}
 
 .author {
   font-size: 1rem;
@@ -313,47 +275,40 @@ section {
   line-height: 30px;
   width: 50%;
 }
-
 .addCom {
   color: purple;
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
-
 .addComment {
   border: 1px solid lightgray;
   color: purple;
   border-radius: 5px;
 }
-
 .btn-like {
   color: green;
   border-radius: 5px;
 }
-
 .btn-unlike {
   color: red;
   border-radius: 5px;
 }
-
 .comments {
   background-color: linen;
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 5px;
-  min-height: 20px;
-  max-height: 50px;
 }
-
 .description {
   background-color: lightblue;
+
   border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
-}
 
+}
 #commentb {
   width: 20%;
   height:150%
@@ -361,23 +316,6 @@ section {
 
 #home-header {
 font-family:"Billabong";
-}
-
-#select-post{
-  margin-top: 20px;
-}
-
-img {
-  max-height: 500px;
-  max-width: 500px;
-}
-
-.badge {
-  max-height: 25px;
-}
-
-#addToFavb {
-  width: 50%;
 }
 
 </style>
