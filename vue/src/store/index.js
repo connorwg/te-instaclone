@@ -19,7 +19,7 @@ if (currentToken != null) {
 export default new Vuex.Store({
   state: {
     active: 'home',
-    
+
     icon2: 'https://th.bing.com/th/id/As7xDOIkJIOgEcA480x360?&rs=1&pid=ImgDet',
     isLiked: false,
     token: currentToken || '',
@@ -27,6 +27,7 @@ export default new Vuex.Store({
     currentPostId: -1,
     postsToDelete: [],
     favorites: [],
+
     images: [{
       id: '1',
       userId: "11",
@@ -101,10 +102,11 @@ export default new Vuex.Store({
       state.favorites = data;
     },
     SET_CURRENT_PHOTO(state, data) {
-      alert(data.id);
+
       state.currentImage = data;
-      alert(state.currentImage.id);
+
     },
+
     ADD_PHOTOS(state, data) {
       let image = {
         id: data.post_id,
@@ -121,12 +123,13 @@ export default new Vuex.Store({
       image.lastName = state.user.lastName;
       state.images.unshift(image);
     },
+    
     SET_PHOTO_LIKES(state, data) {
       let photoToUpdate = state.images.findIndex(photo => {
-         return photo.id == data.id
+        return photo.id == data.id
       });
-      state.images[photoToUpdate].likes= data.likes;
-    
+      state.images[photoToUpdate].likes = data.likes;
+
     },
     SET_USER(state, user) {
       state.user = user;
@@ -139,9 +142,9 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
-    ADD_COMMENT(state, commentObj){
+    ADD_COMMENT(state, commentObj) {
       state.images.forEach(image => {
-        if(image.id === commentObj.postId){
+        if (image.id === commentObj.postId) {
           image.comments.unshift(commentObj.comment);
         }
       });

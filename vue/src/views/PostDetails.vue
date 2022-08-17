@@ -22,9 +22,9 @@
         <section class="singlepost" >
           <img class="singlepostimage" :src="$store.state.currentImage.picture" alt="none" />
 
-          <div class="right-side-of-box">
+          <div class="rightbox">
             <p class="author">
-              {{$store.state.currentImage.firstName + " " + $store.state.currentImage.lastName}}
+              {{$store.state.currentImage.userId}}
             </p>
 
             <p class="description">
@@ -46,7 +46,7 @@
             </p>
 
             <p class="comments" v-for="c in $store.state.currentImage.comments" v-bind:key="c.id">
-              {{ $store.state.currentImage.comments[i] }}
+              {{ $store.state.currentImage.comments }}
             </p>
             
 
@@ -100,6 +100,7 @@ export default {
   },
 
   methods: {
+    
     likeVerifier(p) {
       let liked = false;
       for (let i=0; i<p.likes.length; i++) {
@@ -289,6 +290,7 @@ section {
   border-radius: 5px;
   margin-top: 0px;
   margin-bottom: 5px;
+  color: black;
 }
 .description {
   background-color: lightblue;
@@ -302,18 +304,29 @@ section {
 
 
 .singlepost {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: 80vh;
+  max-width: 80vw;
   
   
 }
 .singlepostimage {
-  height: 75vh;
+  flex-basis: 50%;
+  height: 50vh;
+  width: 50vw;
+  max-width: 1fr;
+  max-height: 1fr;
+  
+  
 }
-.right-side-of-box {
+.rightbox {
+  flex-basis: 50%;
+  flex-grow: 1;
   display: grid;
   grid-template-rows: .5fr 1fr .5fr 2fr 2fr 2fr 1fr;
-  
+  max-width: 1fr;
+  max-height: 1fr;
 }
 </style>
