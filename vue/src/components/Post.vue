@@ -36,38 +36,21 @@
           Unlike <i class="fa-regular fa-thumbs-down"></i>
         </button>
       <p id="likes">{{ likes }} </p>
-
-      <p v-for="comment in comments" v-bind:key="comment.comment_id" class="comments">
-        {{ comment.comment }} - {{ comment.author_id }}
-      </p>
-
-
-      <p class="addCom">Add Comment</p>
-
-      <input
-          id="name"
-          v-model="newComment"
-          class="addComment"
-          placeholder="add your comment here"
-          type="addComment"
+      <comments
+          :post_id=this.post_id
       />
-      <button
-          id="commentb"
-          class="badge bg-info"
-          type="submit"
-          v-on:click.prevent="addComment(p.id)"
-      >
-        Submit
-      </button>
+
     </section>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Comments from "./Comments";
 
 export default {
   name: "Post",
+  components: {Comments},
   props: ['post_id', 'username', 'pictureLink', 'description'],
   data() {
     return {
