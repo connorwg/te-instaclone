@@ -8,6 +8,7 @@ import store from '../store/index'
 import PostPic from '../views/PostPic.vue'
 import PostDetails from '../views/PostDetails.vue'
 import UserProfile from '../views/UserProfile.vue'
+import Favorites from '../views/Favorites.vue'
 Vue.use(Router)
 
 /**
@@ -75,6 +76,14 @@ const router = new Router({
       path: "/userprofile/:userId",
       name: "userprofile",
       component: UserProfile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/favorites",
+      name: "favorites",
+      component: Favorites,
       meta: {
         requiresAuth: true
       }

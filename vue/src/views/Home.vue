@@ -72,6 +72,13 @@
         >
           Submit
         </button>
+        <button
+          id="addToFavb"
+          class="badge bg-info"
+          v-on:click.prevent="addToFavorite(p.id)"
+        >
+          Favorite
+        </button>
         <div id="select-post" v-if="userId_filter && userId_filter===$store.state.user.id">
           <input type="checkbox" @change="$store.commit('ADD_POSTS_TO_DELETE', p.id)"/>
         </div>
@@ -103,8 +110,8 @@ export default {
         likes: [],
         comments: [],
       },
-
       currentPostId: -1,
+      addedToFavorite: false
     };
   },
 
@@ -202,9 +209,18 @@ export default {
         });
       }
     },
+    addToFavorite(postId){
+      photoService.addToFavorite(postId).then(response => {
+        alert(response.status);
+        if(response.status === 201){
+          this.addedToFavorite = true;
+          alert(response.data);
+        }
+      });
+    }
   },
 
-  props: ["images", "userId_filter"],
+  props: ["images", "userId_filter", "isFavorites"],
    postId: {
       type: Number,
       default: 0
@@ -218,16 +234,26 @@ export default {
         return this.$store.state.images.filter(image => {
           return image.userId===this.userId_filter;
         });
-      } else{
-        return this.$store.state.images
+      } else if(this.isFavorites === true){
+        alert('computed');
+        return this.$store.state.favorites;
+      } else {
+        return this.$store.state.images;
       }
     }
   },
 
   created() {
-    photoService.getPhotos().then((response) => {
-      this.$store.commit("SET_PHOTOS", response.data);
-    });
+    if(this.isFavorites === true){
+      alert('created');
+      photoService.getFavorites().then(response => {
+          this.$store.commit('SET_FAVORITES', response.data);
+        });
+    } else{
+      photoService.getPhotos().then((response) => {
+        this.$store.commit("SET_PHOTOS", response.data);
+      });
+    }
   },
 };
 </script>

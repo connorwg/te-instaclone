@@ -88,6 +88,7 @@ public class PostController {
 
     @PostMapping("/{postId}/favorite")
     public boolean favoritePost(@PathVariable int postId, Principal principal) {
+        System.out.println(postId);
         int currentUserId = userDao.findIdByUsername(principal.getName());
 //        favorite a post
         return postDao.favoritePost(currentUserId, postId);
