@@ -163,7 +163,7 @@ export default {
   },
 
   created() {
-    photoService.getPhotos().then((response) => {
+    photoService.getLandingPagePhotos().then((response) => {
       this.posts = response.data;
     });
     }

@@ -6,6 +6,10 @@ export default {
     return axios.get('/feed');
   },
 
+  getLandingPagePhotos() {
+    return axios.get('/landing-page');
+  },
+
   getPhotoById(currentPostId) {
     return axios.get(`/post/${currentPostId}`)
   },
