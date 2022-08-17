@@ -11,6 +11,65 @@
     :description="post.description"
     :user_id="post.user_id"
     />
+
+    <!-- <div id="homepage">
+      <section class="post" v-for="p in filterPosts" v-bind:key="p.id">
+        <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
+          {{ p.userId }}
+        </a>
+
+        <p class="description">
+          {{ p.description }}
+        </p>-->
+        <!--<router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
+          <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
+        </router-link>-->
+      <!--  <img :src="p.picture" alt="none"  @click.prevent="postDetails(p)"/>
+
+        <p button>
+          <button
+            class="btn btn-like"
+            v-on:click="likeThis(p)"
+            v-if="!likeVerifier(p)"
+          >
+            Like <i class="fa-regular fa-thumbs-up"></i>
+          </button>
+          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+            Unlike <i class="fa-regular fa-thumbs-down"></i>
+          </button>
+          {{ p.likes.length }} Likes
+        </p>
+
+        <p class="comments">
+          {{ p.comments[1] }}
+        </p>
+
+        <p class="comments">
+          {{ p.comments[0] }}
+        </p>
+
+        <p class="addCom">Add Comment</p>
+
+        <input
+          type="addComment"
+          id="name"
+          class="addComment"
+          placeholder="add your comment here"
+          v-model="newComment"
+        />
+        <button
+          id="commentb"
+          class="badge bg-info"
+          type="submit"
+          v-on:click.prevent="addComment(p.id)"
+        >
+          Submit
+        </button>
+        <div id="select-post" v-if="userId_filter && userId_filter===$store.state.user.id">
+          <input type="checkbox" @change="$store.commit('ADD_POSTS_TO_DELETE', p.id)"/>
+        </div>
+      </section>
+    </div> -->
   </div>
 </template>
 
@@ -170,6 +229,14 @@ export default {
   };
   
 
+    // this.$store.state.images = [];
+    // for(let i=1; i<9; i++) {
+    // photoService.getPhotoById(i).then((response) => {
+    //   this.$store.commit("ADD_PHOTOS", response.data);
+    // });
+    // }
+  // },
+// };
 </script>
 
 <style scoped>
@@ -228,6 +295,7 @@ section {
  }
 
 .author {
+  
   font-size: 1rem;
   background-color: lightgray;
   border-radius: 5px 5px 0px 0px;
@@ -238,6 +306,7 @@ section {
 }
 
 .addCom {
+  
   color: purple;
   border-radius: 5px;
   margin-top: 0px;
@@ -245,6 +314,7 @@ section {
 }
 
 .addComment {
+ 
   border: 1px solid lightgray;
   color: purple;
   border-radius: 5px;
@@ -270,6 +340,7 @@ section {
 }
 
 .description {
+  
   background-color: lightblue;
   border-radius: 0px 5px 0px 0px;
   margin-top: 0px;
