@@ -20,9 +20,9 @@
         background-color: cadetblue;
       "
     >
-      <section class="post" v-for="p in filterPosts" v-bind:key="p.id">
+      <section class="post" v-for="p in posts" v-bind:key="p.id">
         <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
-          {{ p.firstName + ' ' + p.lastName }}
+          {{ p.username }} - new post!
         </a>
 
         <p class="description">
@@ -31,29 +31,28 @@
         <!--<router-link v-bind:to="{ name: 'postdetails', params: {postId: p.id} }">
           <img :src="p.picture" alt="none"  @click="this.$store.state.currentPostId = p.id;"/>
         </router-link>-->
-        <img :src="p.picture" alt="none"  @click.prevent="postDetails(p)"/>
+        <img :src="p.pictureLink" alt="none"  @click.prevent="postDetails(p)"/>
 
         <p button>
           <button
             class="btn btn-like"
-            v-on:click="likeThis(p)"
-            v-if="!likeVerifier(p)"
           >
             Like <i class="fa-regular fa-thumbs-up"></i>
           </button>
-          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>
+          <button class="btn btn-unlike"  >
             Unlike <i class="fa-regular fa-thumbs-down"></i>
           </button>
-          {{ p.likes.length }} Likes
-        </p>
+<!--          {{ p.likes.length }} Likes-->
+<!--        </p>-->
 
-        <p class="comments">
-          {{ p.comments[1] }}
-        </p>
+<!--        <p class="comments">-->
+<!--          {{ p.comments[1] }}-->
+<!--        </p>-->
 
-        <p class="comments">
-          {{ p.comments[0] }}
-        </p>
+<!--        <p class="comments">-->
+<!--          {{ p.comments[0] }}-->
+        </p >
+
 
         <p class="addCom">Add Comment</p>
 
@@ -94,16 +93,7 @@ export default {
     return {
       image: [],
       filteredImages: [],
-      newImage: {
-        id: "",
-        userId: "",
-        picture: "",
-        description: "",
-        timeStamp: "",
-        likes: [],
-        comments: [],
-      },
-
+      posts: [],
       currentPostId: -1,
     };
   },
@@ -226,9 +216,10 @@ export default {
 
   created() {
     photoService.getPhotos().then((response) => {
-      this.$store.commit("SET_PHOTOS", response.data);
+      this.posts = response.data;
+      console.log(this.posts)
     });
-  },
+  }
 };
 </script>
 
