@@ -38,7 +38,6 @@ public class FeedController {
         return postDao.findAllPosts();
     }
 
-
 }
 
 
