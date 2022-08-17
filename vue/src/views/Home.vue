@@ -22,7 +22,7 @@
     >
       <section class="post" v-for="p in posts" v-bind:key="p.id">
         <a class="author" href="userprofile" @click.prevent="userprofile(p.userId)">
-          {{ p.username }} - new post!
+          {{ p.firstName + ' ' + p.lastName }}
         </a>
 
         <p class="description">
@@ -37,10 +37,10 @@
           <button
             class="btn btn-like"
           >
-            Like <i class="fa-regular fa-thumbs-up"></i>
-          </button>
-          <button class="btn btn-unlike"  >
-            Unlike <i class="fa-regular fa-thumbs-down"></i>
+<!--            Like <i class="fa-regular fa-thumbs-up"></i>-->
+<!--          </button>-->
+<!--          <button class="btn btn-unlike" v-on:click="unLikeThis(p)" v-else>-->
+<!--            Unlike <i class="fa-regular fa-thumbs-down"></i>-->
           </button>
 <!--          {{ p.likes.length }} Likes-->
 <!--        </p>-->
@@ -51,8 +51,7 @@
 
 <!--        <p class="comments">-->
 <!--          {{ p.comments[0] }}-->
-        </p >
-
+<!--        </p>-->
 
         <p class="addCom">Add Comment</p>
 
@@ -91,10 +90,10 @@ export default {
   },
   data() {
     return {
-      image: [],
-      filteredImages: [],
+
       posts: [],
-      currentPostId: -1,
+
+
     };
   },
 
@@ -217,9 +216,8 @@ export default {
   created() {
     photoService.getPhotos().then((response) => {
       this.posts = response.data;
-      console.log(this.posts)
     });
-  }
+  },
 };
 </script>
 
