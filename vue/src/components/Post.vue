@@ -16,10 +16,10 @@
       <img :src="this.pictureLink" alt="none"/>
 
       <p>
-        <button class="btn btn-like">
+        <button class="btn btn-like" v-if="!userLikes" @click="likePicture(post_id)">
           Like <i class="fa-regular fa-thumbs-up"></i>
         </button>
-        <button class="btn btn-unlike">
+        <button class="btn btn-unlike" v-if="userLikes" @click="likePicture(post_id)">
           Unlike <i class="fa-regular fa-thumbs-down"></i>
         </button>
       <p id="likes">{{ likes }} </p>
@@ -42,6 +42,7 @@ export default {
   data() {
     return {
       likes: 0,
+      userLikes: "",
       currentUsername: "",
     }
   },
@@ -52,11 +53,27 @@ export default {
     },
     async getUserame(id) {
       return await axios.get(`http://localhost:9000/user/` + id)
+    },
+    async checkIfLiked(id) {
+      return await axios.get(`http://localhost:9000/post/liked?postId=` + id)
+    },
+    likePicture(id) {
+      axios.post(`http://localhost:9000/post/like?postId=` + id)
+          .then(async (res) => {
+            if(res.data) {
+              this.userLikes = true;
+            } else {
+              this.userLikes = false;
+            }
+            this.likes = (await this.getLikes(this.post_id)).data;
+          })
     }
+
 
   },
   async created() {
     this.likes = (await this.getLikes(this.post_id)).data;
+    this.userLikes = (await this.checkIfLiked(this.user_id)).data;
     this.currentUsername = (await this.getUserame(this.user_id)).data.username
   }
 

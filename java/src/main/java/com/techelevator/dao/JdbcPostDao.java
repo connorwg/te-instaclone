@@ -185,6 +185,9 @@ public class JdbcPostDao implements PostDao {
         return favorites;
     }
 
+
+
+
     private Post mapRowToPost(SqlRowSet rowSet) {
         Post post = new Post();
         post.setPost_id(rowSet.getInt("post_id"));
